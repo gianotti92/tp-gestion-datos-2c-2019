@@ -1,2 +1,10 @@
 C:\Users\Matias\Desktop\Groupon2019\src\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.exe.config
 C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.exe.config
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.exe
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.pdb
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csprojResolveAssemblyReference.cache
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Properties.Resources.resources
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.Cache
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.exe
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.pdb
+C:\Users\Lucas\Downloads\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Form1.resources

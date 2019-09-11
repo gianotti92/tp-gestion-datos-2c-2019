@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.Repository;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas
 {
@@ -14,9 +16,12 @@ namespace FrbaOfertas
         [STAThread]
         static void Main()
         {
+            LoginDao loginDao = new LoginDao();
+            LoginServiceImpl loginServiceImpl = new LoginServiceImpl(loginDao);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Form1(loginServiceImpl));
         }
     }
 }
