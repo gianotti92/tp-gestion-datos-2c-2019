@@ -7,7 +7,7 @@ using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.Repository
 {
-    class LoginDao : LoginRepository
+    public class LoginDao : LoginRepository
     {
         public Boolean validateLoginUser(PersonLogin personLogin)
         {

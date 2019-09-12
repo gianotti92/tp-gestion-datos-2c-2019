@@ -8,9 +8,9 @@ using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.Service
 {
-    class LoginServiceImpl : LoginService
+    public class LoginServiceImpl : LoginService
     {
-        private LoginRepository loginRepository;
+        public LoginRepository loginRepository;
         
         public LoginServiceImpl(LoginRepository _loginRepository)
         {

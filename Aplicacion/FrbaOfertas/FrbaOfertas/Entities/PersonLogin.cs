@@ -6,25 +6,9 @@ using System.Threading.Tasks;
 
 namespace FrbaOfertas.Entities
 {
-    class PersonLogin
+    public class PersonLogin
     {
-        private string usuario;
-        private string contrasena;
-
-        public string Usuario
-        {
-            get { return usuario; }
-            set { usuario = value; }
-        }
-
-        public string Contrasena
-        {
-            get { return contrasena; }
-            set { contrasena = value; }
-        }
-
-
-
-
+        public string usuario { get; set; }
+        public string contrasena { get; set; }
     }
 }

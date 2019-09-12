@@ -19,9 +19,13 @@ namespace FrbaOfertas
             LoginDao loginDao = new LoginDao();
             LoginServiceImpl loginServiceImpl = new LoginServiceImpl(loginDao);
 
+            RolServiceImpl rolServiceImpl = new RolServiceImpl();
+
+            PersonLoginServiceImpl personLoginServiceImpl = new PersonLoginServiceImpl(loginServiceImpl, rolServiceImpl);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(loginServiceImpl));
+            Application.Run(new LoginForm(personLoginServiceImpl));
         }
     }
 }

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using FrbaOfertas.Entities;
 
-namespace FrbaOfertas.Repository
+namespace FrbaOfertas.Service
 {
-    public interface LoginRepository
+    public interface RolService
     {
-        Boolean validateLoginUser(PersonLogin personLogin);
+        int getRolType(PersonLogin personLogin);
     }
 }

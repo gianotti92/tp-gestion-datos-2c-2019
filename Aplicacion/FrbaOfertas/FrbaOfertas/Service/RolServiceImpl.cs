@@ -7,8 +7,11 @@ using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.Service
 {
-    public interface LoginService
+    public class RolServiceImpl : RolService
     {
-       Boolean validateLoginUser(PersonLogin personLogin);
+        public int getRolType(PersonLogin personLogin)
+        {
+            return 1;
+        }
     }
 }

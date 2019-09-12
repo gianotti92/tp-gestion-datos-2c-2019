@@ -12,13 +12,13 @@ using FrbaOfertas.Entities;
 
 namespace FrbaOfertas
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
-        private LoginService loginService;
+        private PersonLoginService personLoginService;
 
-        public Form1(LoginService _loginService)
+        public LoginForm(PersonLoginService personLoginService)
         {
-            this.loginService = _loginService;
+            this.personLoginService = personLoginService;
             InitializeComponent();
         }
 
@@ -29,13 +29,10 @@ namespace FrbaOfertas
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
-           //TODO: obtener los valores de los input, no tengo idea de como se hace
-            //Discutir uso de dtos (probablemente sea al pepe)
             PersonLogin personLogin = new PersonLogin();
-            personLogin.Usuario = "saraza";
-            personLogin.Contrasena = "saraza";
-            Boolean validLogin = loginService.validateLoginUser(personLogin);
+            personLogin.contrasena = contrasenaTxt.Text;
+            personLogin.usuario = nameTxt.Text; 
+            personLoginService.loginUser(personLogin);
         }
     }
 }
