@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FrbaOfertas.Entities;
+using FrbaOfertas.Repository;
 
 namespace FrbaOfertas.Service
 {
-    public interface RolService
+    public class RolService
     {
-        int getRolType(PersonLogin personLogin);
+        private RolRepository rolRepository;
+
+        public RolService(RolRepository rolRepository)
+        {
+            rolRepository = rolRepository;
+        }
+
+        public List<Rol> searchRoles(string usuario)
+        {
+            return rolRepository.searchRoles(usuario);
+        }
     }
 }
