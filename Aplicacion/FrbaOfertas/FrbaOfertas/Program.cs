@@ -16,16 +16,26 @@ namespace FrbaOfertas
         [STAThread]
         static void Main()
         {
-            LoginDao loginDao = new LoginDao();
-            LoginServiceImpl loginServiceImpl = new LoginServiceImpl(loginDao);
+            UsuarioRepository usuarioDao = new UsuarioDao();
+            UsuarioService usuarioService = new UsuarioService(usuarioDao);
 
-            RolServiceImpl rolServiceImpl = new RolServiceImpl();
+            FuncionalidadDao funcionalidadDao = new FuncionalidadDao();
+            FuncionalidadService funcionalidadService = new FuncionalidadService(funcionalidadDao);
 
-            PersonLoginServiceImpl personLoginServiceImpl = new PersonLoginServiceImpl(loginServiceImpl, rolServiceImpl);
+            RolDao rolDao = new RolDao();
+            RolService rolService = new RolService(rolDao);
+
+            FuncionalidadPorRolService funcionalidadPorRolService =
+                new FuncionalidadPorRolService(rolService, funcionalidadService);
+
+            UsuarioLoginService usuarioLoginService =
+                new UsuarioLoginService(funcionalidadService, rolService, usuarioService);
+            usuarioLoginService = new UsuarioLoginService(funcionalidadService, rolService, usuarioService);
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm(personLoginServiceImpl));
+            Application.Run(new LoginForm(usuarioLoginService, funcionalidadPorRolService));
         }
     }
 }
