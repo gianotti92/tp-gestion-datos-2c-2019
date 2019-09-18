@@ -1,9 +1,12 @@
-﻿﻿namespace FrbaOfertas.AbmRol.ejecutores
+﻿﻿using System;
+
+ namespace FrbaOfertas.AbmRol.ejecutores
 {
     public class AbmClienteExec : BotonFuncionalidadAEjecutar
     {
-        public void execute()
+        public void execute(object sender, EventArgs e)
         {
+            Console.WriteLine("asd");
             //abrir el form correspondiente
         }
     }

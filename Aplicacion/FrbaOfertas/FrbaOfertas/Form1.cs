@@ -28,7 +28,7 @@ using System.Windows.Forms;
         private void button1_Click(object sender, EventArgs e)
         {
             
-            string usuario = nameTxt.Text;
+            /*string usuario = nameTxt.Text;
             string contrasena = contrasenaTxt.Text;
 
             if (usuarioLoginService.esUsuarioValido(usuario, contrasena))
@@ -42,7 +42,9 @@ using System.Windows.Forms;
             {
                 usuarioLoginService.agregarReintento(usuario);
                 //MOSTRAR POP UP DICIENDO QUE NO SE PUDO INICIALIZAR
-            }
+            }*/
+
+            abrirPantallaBotonesPorRoles(new List<Funcionalidad>());
         }
 
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
