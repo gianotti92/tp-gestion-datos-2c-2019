@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Lucas\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Lucas\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_FrbaOfertas.-656119235.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Lucas\Desktop\TP Frba Cupon 1.0 - 2C 2019\Aplicacion\FrbaOfertas" t="IncludeFlat">
+      <e p="FrbaOfertas" t="IncludeRecursive">
+        <e p="AbmCliente" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="AbmProveedor" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="AbmRol" t="Include">
+          <e p="ejecutores" t="Include">
+            <e p="AbmClienteExec.cs" t="Include" />
+            <e p="AbmProovedorExec.cs" t="Include" />
+            <e p="BotonFuncionalidadAEjecutar.cs" t="Include" />
+          </e>
+          <e p="EjecutorFactory.cs" t="Include" />
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ComprarOferta" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="Connection" t="Include" />
+        <e p="CragaCredito" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="CrearOferta" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="Dao" t="Include">
+          <e p="FuncionalidadDao.cs" t="Include" />
+          <e p="RolDao.cs" t="Include" />
+          <e p="UsuarioDao.cs" t="Include" />
+        </e>
+        <e p="Entities" t="Include">
+          <e p="EstadoRol.cs" t="Include" />
+          <e p="EstadoUsuario.cs" t="Include" />
+          <e p="Funcionalidad.cs" t="Include" />
+          <e p="Rol.cs" t="Include" />
+          <e p="TipoUsuario.cs" t="Include" />
+          <e p="Usuario.cs" t="Include" />
+        </e>
+        <e p="Facturar" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="Form1.cs" t="Include" />
+        <e p="Form1.Designer.cs" t="Include" />
+        <e p="FrbaOfertas.csproj" t="IncludeRecursive" />
+        <e p="ListadoEstadistico" t="Include">
+          <e p="Form1.cs" t="Include" />
+          <e p="Form1.Designer.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="Repository" t="Include">
+          <e p="FuncionalidadRepository.cs" t="Include" />
+          <e p="RolRepository.cs" t="Include" />
+          <e p="UsuarioRepository.cs" t="Include" />
+        </e>
+        <e p="Service" t="Include">
+          <e p="FuncionalidadPorRolService.cs" t="Include" />
+          <e p="FuncionalidadService.cs" t="Include" />
+          <e p="RolService.cs" t="Include" />
+          <e p="UsuarioLoginService.cs" t="Include" />
+          <e p="UsuarioService.cs" t="Include" />
+        </e>
+      </e>
+      <e p="FrbaOfertas.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
