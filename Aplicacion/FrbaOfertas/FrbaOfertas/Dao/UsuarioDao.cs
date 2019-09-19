@@ -13,10 +13,10 @@ namespace FrbaOfertas.Dao
     {
         public Usuario getUsuario(string nombreUsuario)
         {
-            //TODO: aca este sp agarra todos deberia crear un valor especifico para nombre
-            SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER_BY_NAME", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(SqlParameter("@nombre", usuario.userName);
            
             SqlDataReader consulta = cmd.ExecuteReader();
             if (!consulta.Read())
@@ -40,9 +40,10 @@ namespace FrbaOfertas.Dao
         public Usuario getUsuario(int id)
         {
             //TODO: aca este sp agarra todos deberia crear un valor especifico para id
-            SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER_BY_ID", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(SqlParameter("@id_usuario", usuario.id));
 
             SqlDataReader consulta = cmd.ExecuteReader();
             if (!consulta.Read())

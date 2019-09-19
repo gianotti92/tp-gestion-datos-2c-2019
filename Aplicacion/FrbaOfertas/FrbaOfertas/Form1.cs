@@ -33,8 +33,8 @@ using System.Windows.Forms;
             if (usuarioLoginService.esUsuarioValido(usuario, contrasena))
             {
                 usuarioLoginService.limpiarReintentos(usuario);
-                List<Rol> roles = funcionalidadPorRolService.searchRoles(usuario);
-                List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(roles);
+                //List<Rol> roles = funcionalidadPorRolService.searchRoles(usuario);
+                List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
                 abrirPantallaBotonesPorRoles(funcionalidades);
             }
             else

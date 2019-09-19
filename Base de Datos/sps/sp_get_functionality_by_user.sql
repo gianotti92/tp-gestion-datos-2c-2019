@@ -1,0 +1,4 @@
+CREATE PROCEDURE SP_GET_FUNCTIONALITY_BY_USER
+(@id_usuario INT)
+AS
+select * from 
