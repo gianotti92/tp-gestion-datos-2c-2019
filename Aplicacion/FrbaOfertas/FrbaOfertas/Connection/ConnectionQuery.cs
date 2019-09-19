@@ -5,46 +5,30 @@ namespace FrbaOfertas.Connection
 {
     public class ConnectionQuery
     {
-        string ConnectionString = @"Source=DESKTOP-CIU60FJ\SQLSERVER2012;Initial Catalog=tempdb;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
+        public static SqlConnection conexion = null;
 
-
-        SqlConnection con;
-
-        public void OpenConection()
-        {
-            con = new SqlConnection(ConnectionString);
-            con.Open();
+        static ConnectionQuery() { 
         }
 
-
-        public void CloseConnection()
+        public static void cerrarConexion()
         {
-            con.Close();
+            conexion.Close();
         }
 
-
-        public void ExecuteQueries(string Query_)
+        public static void abrirConexion()
         {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            cmd.ExecuteNonQuery();
+            conexion.Open();
         }
 
-
-        public SqlDataReader DataReader(string Query_)
+        public static SqlConnection Instance()
         {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            return dr;
+            if (conexion == null)
+            {
+                conexion = new SqlConnection();
+                conexion.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Conexion"].ConnectionString;
+            }
+            return conexion;
         }
-
-
-        public object ShowDataInGridView(string Query_)
-        {
-            SqlDataAdapter dr = new SqlDataAdapter(Query_, ConnectionString);
-            DataSet ds = new DataSet();
-            dr.Fill(ds);
-            object dataum = ds.Tables[0];
-            return dataum;
-        }
+       
     }
 }
