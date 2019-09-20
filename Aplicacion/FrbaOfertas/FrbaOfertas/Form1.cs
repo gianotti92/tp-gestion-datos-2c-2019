@@ -27,19 +27,19 @@ using System.Windows.Forms;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string usuario = nameTxt.Text;
+            string nombreUsuario = nameTxt.Text;
             string contrasena = contrasenaTxt.Text;
 
-            if (usuarioLoginService.esUsuarioValido(usuario, contrasena))
+            if (usuarioLoginService.esUsuarioValido(nombreUsuario, contrasena))
             {
-                usuarioLoginService.limpiarReintentos(usuario);
-                //List<Rol> roles = funcionalidadPorRolService.searchRoles(usuario);
+                usuarioLoginService.limpiarReintentos(nombreUsuario);
+                Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
                 List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
                 abrirPantallaBotonesPorRoles(funcionalidades);
             }
             else
             {
-                usuarioLoginService.agregarReintento(usuario);
+                usuarioLoginService.agregarReintento(nombreUsuario);
                 //MOSTRAR POP UP DICIENDO QUE NO SE PUDO INICIALIZAR
             }
         }

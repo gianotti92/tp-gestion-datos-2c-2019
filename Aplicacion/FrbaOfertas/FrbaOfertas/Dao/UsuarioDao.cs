@@ -16,7 +16,7 @@ namespace FrbaOfertas.Dao
             SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER_BY_NAME", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(SqlParameter("@nombre", usuario.userName);
+            cmd.Parameters.Add(new SqlParameter("@nombre", nombreUsuario));
            
             SqlDataReader consulta = cmd.ExecuteReader();
             if (!consulta.Read())
@@ -43,7 +43,7 @@ namespace FrbaOfertas.Dao
             SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER_BY_ID", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(SqlParameter("@id_usuario", usuario.id));
+            cmd.Parameters.Add(new SqlParameter("@id_usuario", id));
 
             SqlDataReader consulta = cmd.ExecuteReader();
             if (!consulta.Read())

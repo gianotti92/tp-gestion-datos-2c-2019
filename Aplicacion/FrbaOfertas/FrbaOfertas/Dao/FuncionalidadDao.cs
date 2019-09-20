@@ -1,6 +1,9 @@
 ﻿﻿using System.Collections.Generic;
  using FrbaOfertas.Entities;
  using FrbaOfertas.Repository;
+using FrbaOfertas.Connection;
+using System.Data.SqlClient;
+using System.Data;
 
  namespace FrbaOfertas.Dao
 {
@@ -11,7 +14,7 @@
             SqlCommand cmd = new SqlCommand("dbo.SP_GET_FUNCTIONALITY_BY_USER", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(SqlParameter("@id_usuario", usuario.userName);
+            cmd.Parameters.Add(new SqlParameter("@id_usuario", usuario.userName));
 
             SqlDataReader consulta = cmd.ExecuteReader();
 
