@@ -15,6 +15,11 @@ namespace FrbaOfertas.Service
             this.funcionalidadService = funcionalidadService;
         }
 
+        public void CreateRol(Rol rol)
+        {
+            rolService.Create(rol);
+        }
+
         public List<Rol> searchRoles(string usuario)
         {
             return rolService.searchRoles(usuario);
@@ -23,6 +28,11 @@ namespace FrbaOfertas.Service
         public List<Funcionalidad> searchFuncionalidades(Usuario usuario)
         {   
             return funcionalidadService.searchFuncionalidad(usuario);
+        }
+
+        public Funcionalidad GetFuncionalidadById(int id)
+        {
+            return funcionalidadService.GetById(id);
         }
     }
 }

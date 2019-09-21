@@ -4,6 +4,7 @@
 using FrbaOfertas.Connection;
 using System.Data.SqlClient;
 using System.Data;
+using System;
 
  namespace FrbaOfertas.Dao
 {
@@ -33,6 +34,26 @@ using System.Data;
             ConnectionQuery.cerrarConexion();
 
             return funcionalidades;
+        }
+
+        public Funcionalidad GetById(int id)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.FUNCIONALIDAD WHERE id = " + id, ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            SqlDataReader r_funcionalidad = cmd.ExecuteReader();
+
+            Funcionalidad funcionalidad = new Funcionalidad();
+
+            if (r_funcionalidad.Read())
+            {
+                funcionalidad.id = Convert.ToInt32(r_funcionalidad["id"]);
+                funcionalidad.nombre = r_funcionalidad["nombre"].ToString();
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return funcionalidad;
         }
     }
 }

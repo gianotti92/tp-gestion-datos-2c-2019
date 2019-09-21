@@ -17,5 +17,10 @@ namespace FrbaOfertas.Service
         {
             return funcionalidadRepository.searchFuncionalidad(usuario);
         }
+
+        public Funcionalidad GetById(int id)
+        {
+            return funcionalidadRepository.GetById(id);
+        }
     }
 }
