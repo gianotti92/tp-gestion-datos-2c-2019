@@ -4,7 +4,12 @@
 {
     public class AbmClienteExec : BotonFuncionalidadAEjecutar
     {
-        public void execute(object sender, EventArgs e)
+        public AbmClienteExec(string nombreParaMostrar)
+        { 
+            base.nombreParaMostrar = nombreParaMostrar;
+        }
+
+        public override void execute(object sender, EventArgs e)
         {
             Console.WriteLine("asd");
             //abrir el form correspondiente

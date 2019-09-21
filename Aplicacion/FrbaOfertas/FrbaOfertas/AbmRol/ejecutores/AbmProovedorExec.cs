@@ -4,7 +4,14 @@
 {
     public class AbmProovedorExec : BotonFuncionalidadAEjecutar
     {
-        public void execute(object sender, EventArgs e)
+        string nombreParaMostrar { get; set; }
+
+        public AbmProovedorExec(string nombreParaMostrar)
+        {
+            this.nombreParaMostrar = nombreParaMostrar;
+        }
+
+        public override void execute(object sender, EventArgs e)
         {
             Console.WriteLine("asd");
             //abrir el form correspondiente

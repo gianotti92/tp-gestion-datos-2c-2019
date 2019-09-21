@@ -2,8 +2,9 @@
 
  namespace FrbaOfertas.AbmRol.ejecutores
 {
-    public interface BotonFuncionalidadAEjecutar
+    public abstract class BotonFuncionalidadAEjecutar
     {
-        void execute(object sender, EventArgs e);
+        public string nombreParaMostrar { get; set; }
+        public abstract void execute(object sender, EventArgs e);
     }
 }

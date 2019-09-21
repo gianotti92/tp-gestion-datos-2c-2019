@@ -18,17 +18,9 @@ namespace FrbaOfertas.AbmRol
             foreach (var botonAEjecutar in botonesAEjecutar)
             {
                 Button b = new Button();
-                b.Text = "saraza";
+                b.Text = botonAEjecutar.nombreParaMostrar;
                 b.Click += new EventHandler(botonAEjecutar.execute);
-                //TODO:Averiguar como poner nombre y hacer que con el on click se ejecute la lista de botonesAEjecutar
                 b.Visible = true;
-                b.Size = new System.Drawing.Size(75, 23);
-                b.TabIndex = 1;
-                b.AutoSize = true;
-                b.BackColor = Color.LightBlue;
-                b.Location = new System.Drawing.Point(184, 118);
-                b.Show();
-                b.Update();
                 Controls.Add(b);
             }
         }
@@ -39,7 +31,7 @@ namespace FrbaOfertas.AbmRol
                 new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)
             {
-                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad.nombre));
+                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad));
             }
 
             return listaBotonesFuncionalidadAEjecutar;
