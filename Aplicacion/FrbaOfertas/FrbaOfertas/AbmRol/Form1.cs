@@ -14,14 +14,17 @@ namespace FrbaOfertas.AbmRol
             InitializeComponent();
             //TODO:pensar un nombre a ejecutar x dios jajaja
             List<BotonFuncionalidadAEjecutar> botonesAEjecutar = generarBotonesCorrespondientes(funcionalidades);
-
+            FlowLayoutPanel panel = new FlowLayoutPanel();
+            panel.Dock = DockStyle.Fill;
+            this.Controls.Add(panel);
             foreach (var botonAEjecutar in botonesAEjecutar)
             {
                 Button b = new Button();
                 b.Text = botonAEjecutar.nombreParaMostrar;
                 b.Click += new EventHandler(botonAEjecutar.execute);
                 b.Visible = true;
-                Controls.Add(b);
+                
+                panel.Controls.Add(b);
             }
         }
 
