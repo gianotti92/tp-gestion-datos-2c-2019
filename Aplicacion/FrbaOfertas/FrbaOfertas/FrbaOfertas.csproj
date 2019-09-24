@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,7 +59,15 @@
     </Compile>
     <Compile Include="AbmRol\ejecutores\AbmClienteExec.cs" />
     <Compile Include="AbmRol\ejecutores\AbmProovedorExec.cs" />
+    <Compile Include="AbmRol\ejecutores\AbmRolExec.cs" />
     <Compile Include="AbmRol\ejecutores\BotonFuncionalidadAEjecutar.cs" />
+    <Compile Include="AbmRol\ejecutores\CargaCreditoExec.cs" />
+    <Compile Include="AbmRol\ejecutores\ComprarOfertaExec.cs" />
+    <Compile Include="AbmRol\ejecutores\ConfeccionYPublicacionOfertasExec.cs" />
+    <Compile Include="AbmRol\ejecutores\FacturacionAProveedorExec.cs" />
+    <Compile Include="AbmRol\ejecutores\ListadoEstadisticoExec.cs" />
+    <Compile Include="AbmRol\ejecutores\LoginYSeguridadExec.cs" />
+    <Compile Include="AbmRol\ejecutores\RegistoDeUsuarioExec.cs" />
     <Compile Include="AbmRol\EjecutorFactory.cs" />
     <Compile Include="AbmRol\Form1.cs">
       <SubType>Form</SubType>
@@ -122,6 +131,12 @@
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
+    <EmbeddedResource Include="AbmRol\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

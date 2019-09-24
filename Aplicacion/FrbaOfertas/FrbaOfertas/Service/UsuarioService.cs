@@ -17,11 +17,6 @@ namespace FrbaOfertas.Service
             return usuarioRepository.getUsuario(nombreUsuario);
         }
 
-        public Usuario searchUsuario(int userId)
-        {
-            return usuarioRepository.getUsuario(userId);
-        }
-
         public void saveUsuario(Usuario usuario)
         {
             usuarioRepository.saveUsuario(usuario);

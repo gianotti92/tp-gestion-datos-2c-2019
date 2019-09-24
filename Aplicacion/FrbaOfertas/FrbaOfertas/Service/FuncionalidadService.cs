@@ -13,9 +13,9 @@ namespace FrbaOfertas.Service
             this.funcionalidadRepository = funcionalidadRepository;
         }
 
-        public List<Funcionalidad> searchFuncionalidad(Rol rol)
+        public List<Funcionalidad> searchFuncionalidad(Usuario usuario)
         {
-            return funcionalidadRepository.searchFuncionalidad(rol);
+            return funcionalidadRepository.searchFuncionalidad(usuario);
         }
     }
 }

@@ -7,14 +7,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+ using FrbaOfertas.Dao;
+ using FrbaOfertas.Entities;
+ using FrbaOfertas.Repository;
+ using FrbaOfertas.Service;
 
-namespace FrbaOfertas
+ namespace FrbaOfertas
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        private UsuarioLoginService usuarioLoginService;
+        private FuncionalidadPorRolService funcionalidadPorRolService;
+        public Form1(UsuarioLoginService usuarioLoginService, FuncionalidadPorRolService funcionalidadPorRolService)
         {
+            this.usuarioLoginService = usuarioLoginService;
+            this.funcionalidadPorRolService = funcionalidadPorRolService;
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string nombreUsuario = nameTxt.Text;
+            string contrasena = contrasenaTxt.Text;
+
+            if (usuarioLoginService.esUsuarioValido(nombreUsuario, contrasena))
+            {
+                usuarioLoginService.limpiarReintentos(nombreUsuario);
+                Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
+                List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
+                abrirPantallaBotonesPorRoles(funcionalidades);
+            }
+            else
+            {
+                usuarioLoginService.agregarReintento(nombreUsuario);
+                //MOSTRAR POP UP DICIENDO QUE NO SE PUDO INICIALIZAR
+            }
+        }
+
+        private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
+        {
+            Form botonesPorRoles = new AbmRol.Form1(funcionalidades);
+            botonesPorRoles.Show();
+            this.Hide();
         }
     }
 }

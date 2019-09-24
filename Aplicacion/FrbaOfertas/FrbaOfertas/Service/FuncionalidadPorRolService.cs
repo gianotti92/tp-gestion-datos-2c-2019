@@ -20,20 +20,9 @@ namespace FrbaOfertas.Service
             return rolService.searchRoles(usuario);
         }
 
-        public List<Funcionalidad> searchFuncionalidades(List<Rol> roles)
-        {
-            if (roles.Count <= 0)
-            {
-                throw new Exception("che loco no hay roles...");
-            }
-
-            List<Funcionalidad> funcionalidadesTotalesParaTodosLosRoles = new List<Funcionalidad>();
-            foreach (var rol in roles)
-            {
-                funcionalidadesTotalesParaTodosLosRoles.AddRange(funcionalidadService.searchFuncionalidad(rol));
-            }
-
-            return funcionalidadesTotalesParaTodosLosRoles;
+        public List<Funcionalidad> searchFuncionalidades(Usuario usuario)
+        {   
+            return funcionalidadService.searchFuncionalidad(usuario);
         }
     }
 }
