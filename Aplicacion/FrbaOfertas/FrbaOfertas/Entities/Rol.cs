@@ -9,5 +9,10 @@ namespace FrbaOfertas.Entities
         public EstadoRol estado { get; set; }
         public List<Funcionalidad> funcionalidades;
 
+        public Rol()
+        {
+            funcionalidades = new List<Funcionalidad>();
+        }
+
     }
 }
