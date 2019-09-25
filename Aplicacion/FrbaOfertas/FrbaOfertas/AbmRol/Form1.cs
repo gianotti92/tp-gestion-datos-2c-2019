@@ -34,7 +34,7 @@ namespace FrbaOfertas.AbmRol
                 new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)
             {
-                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad));
+                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad, this));
             }
 
             return listaBotonesFuncionalidadAEjecutar;

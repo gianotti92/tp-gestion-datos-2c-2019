@@ -31,11 +31,14 @@
             this.ingresarBtn = new System.Windows.Forms.Button();
             this.nameTxt = new System.Windows.Forms.TextBox();
             this.contrasenaTxt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ingresarBtn
             // 
-            this.ingresarBtn.Location = new System.Drawing.Point(115, 183);
+            this.ingresarBtn.Location = new System.Drawing.Point(107, 195);
             this.ingresarBtn.Name = "ingresarBtn";
             this.ingresarBtn.Size = new System.Drawing.Size(128, 46);
             this.ingresarBtn.TabIndex = 0;
@@ -52,16 +55,43 @@
             // 
             // contrasenaTxt
             // 
-            this.contrasenaTxt.Location = new System.Drawing.Point(76, 123);
+            this.contrasenaTxt.Location = new System.Drawing.Point(76, 147);
             this.contrasenaTxt.Name = "contrasenaTxt";
             this.contrasenaTxt.Size = new System.Drawing.Size(203, 23);
             this.contrasenaTxt.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(141, 47);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 18);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Usuario";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(141, 123);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(97, 20);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Contraseña";
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(76, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(203, 25);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Ingrese Usuario y  Contraseña";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 301);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.contrasenaTxt);
             this.Controls.Add(this.nameTxt);
             this.Controls.Add(this.ingresarBtn);
@@ -76,6 +106,9 @@
         private System.Windows.Forms.Button ingresarBtn;
         private System.Windows.Forms.TextBox nameTxt;
         private System.Windows.Forms.TextBox contrasenaTxt;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -1,18 +1,22 @@
-﻿﻿using System;
+﻿using System;
+using System.Windows.Forms;
 
- namespace FrbaOfertas.AbmRol.ejecutores
+namespace FrbaOfertas.AbmRol.ejecutores
 {
     public class AbmClienteExec : BotonFuncionalidadAEjecutar
     {
-        public AbmClienteExec(string nombreParaMostrar)
-        { 
+        public AbmClienteExec(string nombreParaMostrar, Form formToClose)
+        {
             base.nombreParaMostrar = nombreParaMostrar;
+            base.formToClose = formToClose;
         }
 
         public override void execute(object sender, EventArgs e)
         {
-            Console.WriteLine("asd");
-            //abrir el form correspondiente
+            formToClose.Hide();
+            AbmCliente.Form1 abmClientes = new AbmCliente.Form1();
+            abmClientes.Show();
+            
         }
     }
 }
