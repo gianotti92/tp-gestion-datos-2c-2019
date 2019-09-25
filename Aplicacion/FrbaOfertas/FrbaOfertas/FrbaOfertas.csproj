@@ -98,7 +98,6 @@
     <Compile Include="Dao\RolDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
-    <Compile Include="Entities\EstadoUsuario.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
     <Compile Include="Entities\Rol.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
