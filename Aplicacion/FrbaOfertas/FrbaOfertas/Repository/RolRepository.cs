@@ -6,6 +6,9 @@ namespace FrbaOfertas.Repository
 {
     public interface RolRepository
     {
+        Rol GetById(int id);
+        void Create(Rol rol);
+        void Update(Rol rol);
         List<Rol> searchRoles(string usuario);
     }
 }
