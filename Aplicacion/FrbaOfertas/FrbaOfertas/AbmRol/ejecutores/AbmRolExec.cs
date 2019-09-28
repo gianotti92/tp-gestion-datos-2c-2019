@@ -5,8 +5,6 @@ namespace FrbaOfertas.AbmRol
 {
     public class AbmRolExec : BotonFuncionalidadAEjecutar
     {
-        string nombreParaMostrar { get; set; }
-
         public AbmRolExec(string nombreParaMostrar)
         {
             this.nombreParaMostrar = nombreParaMostrar;
