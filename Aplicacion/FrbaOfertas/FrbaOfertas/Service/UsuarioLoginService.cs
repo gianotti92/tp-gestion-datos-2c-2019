@@ -42,5 +42,10 @@ namespace FrbaOfertas.Service
             usuario.intento = 0;
             usuarioService.saveUsuario(usuario);
         }
+
+        public Usuario searchUsuario(string name)
+        {
+            return usuarioService.searchUsuario(name);
+        }
     }
 }

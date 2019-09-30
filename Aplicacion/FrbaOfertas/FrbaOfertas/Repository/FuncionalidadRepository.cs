@@ -5,6 +5,6 @@ namespace FrbaOfertas.Repository
 {
     public interface FuncionalidadRepository
     {
-        List<Funcionalidad> searchFuncionalidad(Rol rol);
+        List<Funcionalidad> searchFuncionalidad(Usuario usuario);
     }
 }

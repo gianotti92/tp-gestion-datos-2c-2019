@@ -1,22 +1,56 @@
-﻿﻿using FrbaOfertas.AbmRol.ejecutores;
+﻿using FrbaOfertas.AbmRol.ejecutores;
+using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.AbmRol
 {
     public class EjecutorFactory
     {
-        public static BotonFuncionalidadAEjecutar create(string nombreFuncionalidad)
+        public static BotonFuncionalidadAEjecutar create(Funcionalidad funcionalidad)
         {
-            if (nombreFuncionalidad.Equals("pepe"))
+            if (funcionalidad.id == 1)
             {
-                return new AbmClienteExec();
+                return new LoginYSeguridadExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 2)
+            {
+                return new AbmRolExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 3)
+            {
+                return new RegistoDeUsuarioExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 4)
+            {
+                return new AbmClienteExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 5)
+            {
+                return new AbmProovedorExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 6)
+            {
+                return new CargaCreditoExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 7)
+            {
+                return new ComprarOfertaExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 8)
+            {
+                return new ConfeccionYPublicacionOfertasExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 9)
+            {
+                return new FacturacionAProveedorExec(funcionalidad.nombre);
+            }
+            else if (funcionalidad.id == 10)
+            {
+                return new ListadoEstadisticoExec(funcionalidad.nombre);
             }
             else
             {
-                return new AbmProovedorExec();
+                return null;
             }
-            
-            //TODO: completar el factory y buscar en google uno como la gente
-            //TODO tambien revisar el tema de los servicios como singleton
         }
     }
 }

@@ -1,15 +1,9 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
-using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol
 {
@@ -17,29 +11,30 @@ namespace FrbaOfertas.AbmRol
     {
         public Form1(List<Funcionalidad> funcionalidades)
         {
-            
+            InitializeComponent();
             //TODO:pensar un nombre a ejecutar x dios jajaja
             List<BotonFuncionalidadAEjecutar> botonesAEjecutar = generarBotonesCorrespondientes(funcionalidades);
-
-            foreach (var funcionalidad in funcionalidades)
+            FlowLayoutPanel panel = new FlowLayoutPanel();
+            panel.Dock = DockStyle.Fill;
+            this.Controls.Add(panel);
+            foreach (var botonAEjecutar in botonesAEjecutar)
             {
                 Button b = new Button();
+                b.Text = botonAEjecutar.nombreParaMostrar;
+                b.Click += new EventHandler(botonAEjecutar.execute);
+                b.Visible = true;
                 
-                //TODO:Averiguar como poner nombre y hacer que con el on click se ejecute la lista de botonesAEjecutar
-                
-                this.Controls.Add(b);
+                panel.Controls.Add(b);
             }
-           
-            InitializeComponent();
-           
         }
 
         private List<BotonFuncionalidadAEjecutar> generarBotonesCorrespondientes(List<Funcionalidad> funcionalidades)
         {
-            List<BotonFuncionalidadAEjecutar> listaBotonesFuncionalidadAEjecutar = new List<BotonFuncionalidadAEjecutar>();
+            List<BotonFuncionalidadAEjecutar> listaBotonesFuncionalidadAEjecutar =
+                new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)
             {
-                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad.nombre));
+                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad));
             }
 
             return listaBotonesFuncionalidadAEjecutar;

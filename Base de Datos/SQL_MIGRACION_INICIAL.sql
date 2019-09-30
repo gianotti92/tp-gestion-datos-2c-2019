@@ -22,6 +22,8 @@ IF(OBJECT_ID('SP_SAVE_USER') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_USER
 IF(OBJECT_ID('SP_UPDATE_USER') IS NOT NULL)
 	DROP PROCEDURE SP_UPDATE_USER
+IF(OBJECT_ID('SP_GET_FUNCTIONALITY_BY_USER') IS NOT NULL)
+	DROP PROCEDURE SP_GET_FUNCTIONALITY_BY_USER
 
 GO
 CREATE PROCEDURE SP_CREAR_TABLAS
@@ -83,7 +85,7 @@ AS
 			username VARCHAR(40) NOT NULL PRIMARY KEY,
 			tipo INT,
 			pass VARCHAR(40) NOT NULL,
-			estado BIT DEFAULT(1),
+			habilitado BIT DEFAULT(1),
 			intentos INT DEFAULT(0)
 		);
 
@@ -332,14 +334,14 @@ GO
 		CREATE PROCEDURE SP_SAVE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
-		 @estado INT,
+		 @habilitado BIT,
 		 @tipo INT,
 		 @intentos INT
 		)
 		AS
 		BEGIN
-		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, estado, tipo, intentos) 
-		values (@username, @pass, @estado, @tipo, @intentos);
+		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, habilitado, tipo, intentos) 
+		values (@username, @pass, @habilitado, @tipo, @intentos);
 		END
 
 
@@ -348,7 +350,7 @@ GO
 		CREATE PROCEDURE SP_UPDATE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
-		 @estado INT,
+		 @habilitado BIT,
 		 @tipo INT,
 		 @intentos INT
 		)
@@ -358,7 +360,7 @@ GO
 		SET
 		username = @username,
 		pass = @pass,
-		estado = @estado,
+		habilitado = @habilitado,
 		tipo = @tipo,
 		intentos = @intentos
 
@@ -376,11 +378,11 @@ GO
 				(3, 'Registro de Usuario'),
 				(4, 'ABM de Cliente'),
 				(5, 'ABM de Proveedor'),
-				(6, 'Cargar Crédito'),
+				(6, 'Cargar Credito'),
 				(7, 'Comprar Oferta'),
-				(8, 'Confección y publicación de Ofertas'),
-				(9, 'Facturación a Proveedor'),
-				(10, 'Listado Estadístico');
+				(8, 'Confeccion y publicacion de Ofertas'),
+				(9, 'Facturacion a Proveedor'),
+				(10, 'Listado Estadistico');
 
 		/* DATOS ROL */
 		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
