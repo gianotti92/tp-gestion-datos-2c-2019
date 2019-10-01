@@ -6,6 +6,7 @@ namespace FrbaOfertas.Entities
     {
         public int id { get; set; }
         public EstadoRol estado { get; set; }
+        public string nombre {get; set;}
         public List<Funcionalidad> funcionalidades;
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 
 namespace FrbaOfertas.AbmRol
@@ -7,14 +8,16 @@ namespace FrbaOfertas.AbmRol
     {
         string nombreParaMostrar { get; set; }
 
-        public AbmRolExec(string nombreParaMostrar)
+        public AbmRolExec(string nombreParaMostrar, Form formToClose)
         {
             this.nombreParaMostrar = nombreParaMostrar;
+            this.formToClose = formToClose;
         }
 
         public override void execute(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+        {    this.formToClose.Hide();
+            MenuRolForm rolMenu = new MenuRolForm();
+            rolMenu.Show();
         }
     }
 }

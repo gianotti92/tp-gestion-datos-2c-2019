@@ -10,7 +10,7 @@ namespace FrbaOfertas.Service
 
         public RolService(RolRepository rolRepository)
         {
-            rolRepository = rolRepository;
+            this.rolRepository = rolRepository;
         }
 
         public List<Rol> searchRoles(string usuario)
