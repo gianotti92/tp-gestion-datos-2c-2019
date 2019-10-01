@@ -32,11 +32,12 @@
             this.nameTxt = new System.Windows.Forms.TextBox();
             this.contrasenaTxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ingresarBtn
             // 
-            this.ingresarBtn.Location = new System.Drawing.Point(115, 183);
+            this.ingresarBtn.Location = new System.Drawing.Point(103, 164);
             this.ingresarBtn.Name = "ingresarBtn";
             this.ingresarBtn.Size = new System.Drawing.Size(128, 46);
             this.ingresarBtn.TabIndex = 0;
@@ -53,24 +54,33 @@
             // 
             // contrasenaTxt
             // 
-            this.contrasenaTxt.Location = new System.Drawing.Point(76, 123);
+            this.contrasenaTxt.Location = new System.Drawing.Point(76, 135);
             this.contrasenaTxt.Name = "contrasenaTxt";
             this.contrasenaTxt.Size = new System.Drawing.Size(203, 23);
             this.contrasenaTxt.TabIndex = 2;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(133, 28);
+            this.label1.Location = new System.Drawing.Point(134, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 25);
+            this.label1.Size = new System.Drawing.Size(81, 25);
             this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.label1.Text = "Usuario";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(134, 114);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 18);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Contraseña";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 301);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.contrasenaTxt);
             this.Controls.Add(this.nameTxt);
@@ -87,6 +97,7 @@
         private System.Windows.Forms.TextBox nameTxt;
         private System.Windows.Forms.TextBox contrasenaTxt;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
