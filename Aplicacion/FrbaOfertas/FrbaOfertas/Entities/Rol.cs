@@ -13,6 +13,5 @@ namespace FrbaOfertas.Entities
         {
             funcionalidades = new List<Funcionalidad>();
         }
-
     }
 }

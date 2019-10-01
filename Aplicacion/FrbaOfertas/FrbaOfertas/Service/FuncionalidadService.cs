@@ -12,7 +12,7 @@ namespace FrbaOfertas.Service
         {
             this.funcionalidadRepository = funcionalidadRepository;
         }
-
+        
         public List<Funcionalidad> searchFuncionalidad(Usuario usuario)
         {
             return funcionalidadRepository.searchFuncionalidad(usuario);

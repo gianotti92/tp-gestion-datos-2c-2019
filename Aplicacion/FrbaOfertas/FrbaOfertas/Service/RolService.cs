@@ -15,7 +15,7 @@ namespace FrbaOfertas.Service
 
         public Rol GetById(int id)
         {
-            return rolRepository.GetById(id); 
+            return rolRepository.GetById(id);
         }
 
         public void Create(Rol rol)

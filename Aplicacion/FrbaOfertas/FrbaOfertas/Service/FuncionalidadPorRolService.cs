@@ -14,12 +14,12 @@ namespace FrbaOfertas.Service
             this.rolService = rolService;
             this.funcionalidadService = funcionalidadService;
         }
-
-        public Rol GetRolById(int id) 
+        
+        public Rol GetRolById(int id)
         {
             return rolService.GetById(id);
         }
-
+        
         public void CreateRol(Rol rol)
         {
             rolService.Create(rol);
@@ -35,14 +35,14 @@ namespace FrbaOfertas.Service
             return rolService.searchRoles(usuario);
         }
 
-        public List<Funcionalidad> searchFuncionalidades(Usuario usuario)
-        {   
-            return funcionalidadService.searchFuncionalidad(usuario);
-        }
-
         public Funcionalidad GetFuncionalidadById(int id)
         {
             return funcionalidadService.GetById(id);
+        }
+
+        public List<Funcionalidad> searchFuncionalidades(Usuario usuario)
+        {   
+            return funcionalidadService.searchFuncionalidad(usuario);
         }
     }
 }

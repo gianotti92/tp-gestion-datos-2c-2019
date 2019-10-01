@@ -10,6 +10,7 @@ using System;
 {
     public class FuncionalidadDao : FuncionalidadRepository
     {
+
         public List<Funcionalidad> searchFuncionalidad(Usuario usuario)
         {
             SqlCommand cmd = new SqlCommand("dbo.SP_GET_FUNCTIONALITY_BY_USER", ConnectionQuery.Instance());

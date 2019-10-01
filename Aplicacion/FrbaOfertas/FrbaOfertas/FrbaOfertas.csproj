@@ -69,11 +69,11 @@
     <Compile Include="AbmRol\ejecutores\LoginYSeguridadExec.cs" />
     <Compile Include="AbmRol\ejecutores\RegistoDeUsuarioExec.cs" />
     <Compile Include="AbmRol\EjecutorFactory.cs" />
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\AbmRolMenuFrom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\AbmRolMenuFrom.Designer.cs">
+      <DependentUpon>AbmRolMenuFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="ComprarOferta\Form1.cs">
       <SubType>Form</SubType>
@@ -98,7 +98,6 @@
     <Compile Include="Dao\RolDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
-    <Compile Include="Entities\EstadoUsuario.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
     <Compile Include="Entities\Rol.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
@@ -131,8 +130,8 @@
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
-    <EmbeddedResource Include="AbmRol\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\AbmRolMenuFrom.resx">
+      <DependentUpon>AbmRolMenuFrom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

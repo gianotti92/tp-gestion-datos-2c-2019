@@ -31,6 +31,7 @@
             this.ingresarBtn = new System.Windows.Forms.Button();
             this.nameTxt = new System.Windows.Forms.TextBox();
             this.contrasenaTxt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ingresarBtn
@@ -57,11 +58,20 @@
             this.contrasenaTxt.Size = new System.Drawing.Size(203, 23);
             this.contrasenaTxt.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(133, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 25);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 301);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.contrasenaTxt);
             this.Controls.Add(this.nameTxt);
             this.Controls.Add(this.ingresarBtn);
@@ -76,6 +86,7 @@
         private System.Windows.Forms.Button ingresarBtn;
         private System.Windows.Forms.TextBox nameTxt;
         private System.Windows.Forms.TextBox contrasenaTxt;
+        private System.Windows.Forms.Label label1;
     }
 }
 

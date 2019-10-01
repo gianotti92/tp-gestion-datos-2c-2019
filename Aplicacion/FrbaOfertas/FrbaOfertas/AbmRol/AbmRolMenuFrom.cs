@@ -21,6 +21,7 @@ namespace FrbaOfertas.AbmRol
             {
                 Button b = new Button();
                 b.Text = botonAEjecutar.nombreParaMostrar;
+                b.AutoSize = true;
                 b.Click += new EventHandler(botonAEjecutar.execute);
                 b.Visible = true;
                 

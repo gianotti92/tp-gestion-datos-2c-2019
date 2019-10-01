@@ -2,6 +2,7 @@
 {
     public enum EstadoRol
     {
-        INACTIVO, ACTIVO
+        INACTIVO,
+        ACTIVO
     }
 }
