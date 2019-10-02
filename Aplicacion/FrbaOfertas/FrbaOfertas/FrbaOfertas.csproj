@@ -69,16 +69,22 @@
     <Compile Include="AbmRol\ejecutores\LoginYSeguridadExec.cs" />
     <Compile Include="AbmRol\ejecutores\RegistoDeUsuarioExec.cs" />
     <Compile Include="AbmRol\EjecutorFactory.cs" />
-    <Compile Include="AbmRol\AbmRolMenuFrom.cs">
+    <Compile Include="AbmRol\SeleccionFuncionalidadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\AbmRolMenuFrom.Designer.cs">
-      <DependentUpon>AbmRolMenuFrom.cs</DependentUpon>
+    <Compile Include="AbmRol\SeleccionFuncionalidadForm.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.cs">
+    <Compile Include="AbmRol\AbmRolMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.Designer.cs">
+    <Compile Include="AbmRol\AbmRolMenuForm.Designer.cs">
+      <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\ComprarOferta\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ComprarOferta\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Connection\ConnectionQuery.cs" />
@@ -130,8 +136,11 @@
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
-    <EmbeddedResource Include="AbmRol\AbmRolMenuFrom.resx">
-      <DependentUpon>AbmRolMenuFrom.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\SeleccionFuncionalidadForm.resx">
+      <DependentUpon>SeleccionFuncionalidadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\AbmRolMenuForm.resx">
+      <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

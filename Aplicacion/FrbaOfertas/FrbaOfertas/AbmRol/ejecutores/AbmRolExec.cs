@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 
 namespace FrbaOfertas.AbmRol
 {
     public class AbmRolExec : BotonFuncionalidadAEjecutar
     {
-        public AbmRolExec(string nombreParaMostrar)
+        public AbmRolExec(string nombreParaMostrar, Form pantallaACerrar)
         {
+            this.pantallaACerrar = pantallaACerrar;
             this.nombreParaMostrar = nombreParaMostrar;
         }
 
         public override void execute(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+           pantallaACerrar.Hide();
+           Form abmRol = new AbmRolMenuForm();
+           abmRol.Show();
         }
     }
 }

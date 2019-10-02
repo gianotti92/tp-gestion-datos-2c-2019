@@ -30,9 +30,9 @@ namespace FrbaOfertas.Service
             rolService.Update(rol);
         }
 
-        public List<Rol> searchRoles(string usuario)
+        public List<Rol> searchRoles()
         {
-            return rolService.searchRoles(usuario);
+            return rolService.searchRoles();
         }
 
         public Funcionalidad GetFuncionalidadById(int id)

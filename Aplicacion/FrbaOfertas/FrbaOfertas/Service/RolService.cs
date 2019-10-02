@@ -28,9 +28,9 @@ namespace FrbaOfertas.Service
             rolRepository.Update(rol);
         }
 
-        public List<Rol> searchRoles(string usuario)
+        public List<Rol> searchRoles()
         {
-            return rolRepository.searchRoles(usuario);
+            return rolRepository.searchRoles();
         }
     }
 }

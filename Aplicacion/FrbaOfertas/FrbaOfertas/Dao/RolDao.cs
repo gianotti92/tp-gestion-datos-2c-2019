@@ -23,7 +23,7 @@ using System;
             {
                 rol.id = Convert.ToInt32(r_rol["id"]);
                 rol.nombre = r_rol["nombre"].ToString();
-                rol.estado = (EstadoRol)r_rol["estado"];
+                rol.activo = Convert.ToBoolean(r_rol["estado"]);
 
                 SqlCommand cmd_funcionalidad = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.FUNCIONALIDAD f " +
                                                               "JOIN GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD rf " +
@@ -82,7 +82,7 @@ using System;
 
             cmdRol.Parameters.Add(new SqlParameter("@id", rol.id));
             cmdRol.Parameters.Add(new SqlParameter("@nombre", rol.nombre));
-            cmdRol.Parameters.Add(new SqlParameter("@estado", rol.estado));
+            cmdRol.Parameters.Add(new SqlParameter("@estado", rol.activo));
 
             cmdRol.ExecuteNonQuery();
 
@@ -107,9 +107,25 @@ using System;
             ConnectionQuery.cerrarConexion();
         }
 
-        public List<Rol> searchRoles(string usuario)
+        public List<Rol> searchRoles()
         {
-            throw new System.NotImplementedException();
+            SqlCommand cmd_rol = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.ROL" , ConnectionQuery.Instance());
+            
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_rol.ExecuteReader();
+            List<Rol> roles = new List<Rol>();
+
+            while (r_rol.Read())
+            {
+                Rol rol = new Rol();
+                rol.id = Convert.ToInt32(r_rol["id"]);
+                rol.nombre = r_rol["nombre"].ToString();
+                rol.activo = Convert.ToBoolean(r_rol["estado"]);
+                roles.Add(rol);
+            }
+            ConnectionQuery.cerrarConexion();
+            r_rol.Close();
+            return roles;
         }
     }
 }

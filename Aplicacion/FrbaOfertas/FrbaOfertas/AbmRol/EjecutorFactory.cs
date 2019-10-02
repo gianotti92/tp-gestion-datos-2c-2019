@@ -1,11 +1,12 @@
-﻿using FrbaOfertas.AbmRol.ejecutores;
+﻿using System.Windows.Forms;
+using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.AbmRol
 {
     public class EjecutorFactory
     {
-        public static BotonFuncionalidadAEjecutar create(Funcionalidad funcionalidad)
+        public static BotonFuncionalidadAEjecutar create(Funcionalidad funcionalidad, Form pantallaACerrar)
         {
             if (funcionalidad.id == 1)
             {
@@ -13,7 +14,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 2)
             {
-                return new AbmRolExec(funcionalidad.nombre);
+                return new AbmRolExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 3)
             {
