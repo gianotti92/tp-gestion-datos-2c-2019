@@ -131,14 +131,14 @@ AS
 		
 
 		CREATE TABLE GESTION_BDD_2C_2019.RUBRO(
-		ID INT NOT NULL PRIMARY KEY,
+		ID INT NOT NULL IDENTITY PRIMARY KEY,
 		DESCRIPCION NVARCHAR(255), 
 		)
 
 
 	CREATE TABLE GESTION_BDD_2C_2019.PROVEEDOR (
 		ID NUMERIC(18,0) IDENTITY NOT NULL PRIMARY KEY, 
-		CUIT NUMERIC(11,0) UNIQUE NOT NULL,
+		CUIT NVARCHAR(20) UNIQUE NOT NULL,
 		RAZON_SOCIAL NVARCHAR(255) UNIQUE,
 		MAIL NVARCHAR(255),
 		TELEFONO NUMERIC(18),
@@ -218,12 +218,18 @@ GO
 	AS
 	BEGIN
 
-
-
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
-	(username,tipo,pass,estado,intentos)
+	(username,tipo,pass,habilitado,intentos)
 	SELECT DISTINCT M.Cli_Dni,1,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,9
 	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Cli_Dni IS NOT NULL
+	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	(username,tipo,pass,habilitado,intentos)
+	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,9
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Provee_CUIT IS NOT NULL
 	ORDER BY 1
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CIUDAD
@@ -237,26 +243,60 @@ GO
 	where Provee_Ciudad is not null
 	ORDER BY 1
 
-	----INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CODIGO_POSTAL
-	----(ID,DESCRIPCION)
-	----SELECT DISTINCT M.P
-	----FROM GD2C2019.gd_esquema.Maestra M 
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CODIGO_POSTAL
+	(DESCRIPCION)
+	values ('No Informado')
+		
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	select distinct left(m.Cli_Direccion, len(m.Cli_Direccion )-4), dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)),NULL,NULL,
+	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Cli_Ciudad = c.CIUDAD_NOMBRE),1
+	from GD2C2019.gd_esquema.Maestra M 
+	WHERE M.Cli_Direccion IS NOT NULL
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	select distinct left(m.Provee_Dom, len(m.Provee_Dom )-4), dbo.udf_GetNumeric(RIGHT(m.Provee_Dom,5)),NULL,NULL,
+	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Provee_Ciudad = c.CIUDAD_NOMBRE),1
+	from GD2C2019.gd_esquema.Maestra M
+	where m.Provee_CUIT is not null 
 
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CLIENTE
 	(DNI,NOMBRE,APELLIDO,MAIL,TELEFONO,DIRECCION,FNANCIAMIENTO,USUARIO,SALDO)
-	SELECT DISTINCT M.Cli_Dni,M.Cli_Nombre,M.Cli_Apellido,M.Cli_Mail,M.Cli_Telefono,1,
+	SELECT DISTINCT M.Cli_Dni,M.Cli_Nombre,M.Cli_Apellido,M.Cli_Mail,M.Cli_Telefono,
+	( Select d.id from GD2C2019.GESTION_BDD_2C_2019.DIRECCION D 
+	where d.CALLE = left(m.Cli_Direccion, len(m.Cli_Direccion )-4)
+	and d.NUMERO = dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)) ),
 	M.Cli_Fecha_Nac,U.username,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	JOIN GD2C2019.GESTION_BDD_2C_2019.USUARIO U ON U.username = CAST(M.Cli_DnI AS VARCHAR)
 	ORDER BY 1
 
-	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
-	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL)
-	select m.Cli_Direccion, dbo.udf_GetNumeric(m.Cli_Direccion)
-	from GD2C2019.gd_esquema.Maestra M 
-	
 
+	insert into GD2C2019.GESTION_BDD_2C_2019.RUBRO
+	(DESCRIPCION)
+	SELECT DISTINCT M.Provee_Rubro
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Provee_Rubro IS NOT NULL
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR
+	(CUIT,RAZON_SOCIAL,MAIL,TELEFONO,DIRECCION,RUBRO,CONTACTO,USUARIO)
+	SELECT DISTINCT M.Provee_CUIT, Provee_RS, NULL, Provee_Telefono,
+	( Select d.id from GD2C2019.GESTION_BDD_2C_2019.DIRECCION D 
+	where d.CALLE = left(m.Provee_Dom, len(m.Provee_Dom )-4)
+	and d.NUMERO = dbo.udf_GetNumeric(RIGHT(m.Provee_Dom,5)) ) ,
+	(SELECT R.ID FROM GD2C2019.GESTION_BDD_2C_2019.RUBRO R WHERE R.DESCRIPCION = M.Provee_Rubro) , NULL,
+	M.Provee_CUIT
+	FROM GD2C2019.gd_esquema.Maestra M
+	Where m.Provee_CUIT is not null
+
+	--INSERT INTO GD2C2019.GESTION_BDD_2C_2019.OFERTA
+	--(ID,PRECIO,PRECIO_LISTO,STOCK_DISPONIBLE,DESCRIPCION,FECHA_PUBLIC,FECHA_VENC,MAX_X_COMPRA)
+	--SELECT M.Oferta_Codigo,M.Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantida,
+	--Oferta_Descripcion,OFERT
+	--FROM GD2C2019.gd_esquema.Maestra M
 
 
 	
