@@ -44,5 +44,10 @@ namespace FrbaOfertas.Service
         {   
             return funcionalidadService.searchFuncionalidad(usuario);
         }
+
+        public List<Funcionalidad> searchFuncionalidades(long rolId)
+        {
+            return funcionalidadService.searchFuncionalidad(rolId);
+        }
     }
 }

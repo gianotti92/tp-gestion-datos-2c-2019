@@ -148,7 +148,7 @@
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
-    <Compile Include="Util\BotonesMenu.cs" />
+    <Compile Include="Utils\FuncionalidadUtil.cs" />
     <EmbeddedResource Include="AbmRol\AltaRolViewForm.resx">
       <DependentUpon>AltaRolViewForm.cs</DependentUpon>
     </EmbeddedResource>

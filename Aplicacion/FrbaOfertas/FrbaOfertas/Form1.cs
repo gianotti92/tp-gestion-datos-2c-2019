@@ -11,6 +11,7 @@ using System.Windows.Forms;
  using FrbaOfertas.Entities;
  using FrbaOfertas.Repository;
  using FrbaOfertas.Service;
+ using FrbaOfertas.Utils;
 
  namespace FrbaOfertas
 {
@@ -46,6 +47,7 @@ using System.Windows.Forms;
 
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
         {
+            FuncionalidadUtil.Funcionalidades = funcionalidades;
             Form botonesPorRoles = new AbmRol.Form1(funcionalidades);
             botonesPorRoles.Show();
             this.Hide();

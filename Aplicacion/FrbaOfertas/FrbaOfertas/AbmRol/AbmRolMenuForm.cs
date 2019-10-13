@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaOfertas.Dao;
 using FrbaOfertas.Entities;
-using FrbaOfertas.Repository;
 using FrbaOfertas.Service;
-using FrbaOfertas.Util;
+using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.AbmRol
 {
@@ -71,7 +64,7 @@ namespace FrbaOfertas.AbmRol
         private void VolverBtn_Click(object sender, EventArgs e)
         {
            this.Hide();
-           Form1 seleccionFuncionalidad = new Form1(BotonesMenu.botonesMenu());
+           Form1 seleccionFuncionalidad = new Form1(FuncionalidadUtil.Funcionalidades);
            seleccionFuncionalidad.Show();
         }
     }
