@@ -10,5 +10,6 @@ namespace FrbaOfertas.Repository
         void Create(Rol rol);
         void Update(Rol rol);
         List<Rol> searchRoles();
+        void eliminar(Rol rolAEliminar);
     }
 }

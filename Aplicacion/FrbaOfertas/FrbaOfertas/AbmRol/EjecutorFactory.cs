@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
 

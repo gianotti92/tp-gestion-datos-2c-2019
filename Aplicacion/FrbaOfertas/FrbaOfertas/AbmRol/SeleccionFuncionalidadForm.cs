@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
+using FrbaOfertas.Util;
 
 namespace FrbaOfertas.AbmRol
 {
@@ -31,6 +32,8 @@ namespace FrbaOfertas.AbmRol
 
         private List<BotonFuncionalidadAEjecutar> generarBotonesCorrespondientes(List<Funcionalidad> funcionalidades)
         {
+            BotonesMenu.agregarBotones(funcionalidades);
+           
             List<BotonFuncionalidadAEjecutar> listaBotonesFuncionalidadAEjecutar =
                 new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)

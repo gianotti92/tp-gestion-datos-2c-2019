@@ -127,5 +127,17 @@ using System;
             r_rol.Close();
             return roles;
         }
+
+        public void eliminar(Rol rolAEliminar)
+        {
+            
+            SqlCommand cmdFuncionalidad = new SqlCommand("dbo.SP_DELETE_ROL", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmdFuncionalidad.CommandType = CommandType.StoredProcedure;
+
+            cmdFuncionalidad.Parameters.Add("@rol_id", rolAEliminar.id);
+            cmdFuncionalidad.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
     }
 }
