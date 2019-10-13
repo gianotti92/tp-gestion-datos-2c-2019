@@ -37,6 +37,28 @@ using System;
             return funcionalidades;
         }
 
+        public List<Funcionalidad> searchFuncionalidad()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.FUNCIONALIDAD", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            SqlDataReader r_funcionalidad = cmd.ExecuteReader();
+
+            
+            List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
+            while (r_funcionalidad.Read())
+            {
+                Funcionalidad funcionalidad = new Funcionalidad();
+                funcionalidad.id = Convert.ToInt32(r_funcionalidad["id"]);
+                funcionalidad.nombre = r_funcionalidad["nombre"].ToString();
+                funcionalidades.Add(funcionalidad);
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return funcionalidades;
+        }
+        
         public Funcionalidad GetById(int id)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.FUNCIONALIDAD WHERE id = " + id, ConnectionQuery.Instance());

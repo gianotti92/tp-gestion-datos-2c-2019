@@ -30,5 +30,14 @@ namespace FrbaOfertas.AbmRol
             List<Rol> roles = funcionalidadPorRolService.searchRoles();
             this.dataGridView1.DataSource = new BindingSource(roles,null);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FuncionalidadService funcionalidadService =
+                new FuncionalidadService(new FuncionalidadDao());
+            AltaRolViewForm form = new AltaRolViewForm(funcionalidadService, new RolService(new RolDao()));
+            form.Show();
+            this.Hide();
+        }
     }
 }

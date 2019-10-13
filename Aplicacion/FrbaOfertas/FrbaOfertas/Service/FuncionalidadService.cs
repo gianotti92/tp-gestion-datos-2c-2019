@@ -22,5 +22,10 @@ namespace FrbaOfertas.Service
         {
             return funcionalidadRepository.GetById(id);
         }
+
+        public List<Funcionalidad> searchFuncionalidades()
+        {
+            return funcionalidadRepository.searchFuncionalidad();
+        }
     }
 }

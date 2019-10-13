@@ -57,6 +57,12 @@
     <Compile Include="AbmProveedor\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\AltaRolViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\AltaRolViewForm.Designer.cs">
+      <DependentUpon>AltaRolViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\ejecutores\AbmClienteExec.cs" />
     <Compile Include="AbmRol\ejecutores\AbmProovedorExec.cs" />
     <Compile Include="AbmRol\ejecutores\AbmRolExec.cs" />
@@ -136,6 +142,9 @@
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
+    <EmbeddedResource Include="AbmRol\AltaRolViewForm.resx">
+      <DependentUpon>AltaRolViewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\SeleccionFuncionalidadForm.resx">
       <DependentUpon>SeleccionFuncionalidadForm.cs</DependentUpon>
     </EmbeddedResource>
