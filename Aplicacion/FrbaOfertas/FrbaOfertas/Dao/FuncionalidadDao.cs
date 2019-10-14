@@ -58,7 +58,33 @@ using System;
 
             return funcionalidades;
         }
-        
+
+        public List<Funcionalidad> searchFuncionalidad(long rolId)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_GET_FUNCIONALIDAD_BY_ROL_ID", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@rol_id", rolId));
+
+            SqlDataReader consulta = cmd.ExecuteReader();
+
+            List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
+
+            while(consulta.Read())
+            {
+                Funcionalidad funcionalidad = new Funcionalidad();
+                funcionalidad.id = consulta.GetInt32(0);
+                funcionalidad.nombre = consulta.GetString(1);
+
+                funcionalidades.Add(funcionalidad);
+
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return funcionalidades;
+        }
+
         public Funcionalidad GetById(int id)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.FUNCIONALIDAD WHERE id = " + id, ConnectionQuery.Instance());

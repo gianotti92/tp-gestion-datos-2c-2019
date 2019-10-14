@@ -8,5 +8,6 @@ namespace FrbaOfertas.Repository
         Funcionalidad GetById(int id);
         List<Funcionalidad> searchFuncionalidad(Usuario usuario);
         List<Funcionalidad> searchFuncionalidad();
+        List<Funcionalidad> searchFuncionalidad(long rolId);
     }
 }

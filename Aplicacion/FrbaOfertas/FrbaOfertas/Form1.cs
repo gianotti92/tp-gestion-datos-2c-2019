@@ -11,6 +11,7 @@ using System.Windows.Forms;
  using FrbaOfertas.Entities;
  using FrbaOfertas.Repository;
  using FrbaOfertas.Service;
+ using FrbaOfertas.Utils;
 
  namespace FrbaOfertas
 {
@@ -29,23 +30,34 @@ using System.Windows.Forms;
         {
             string nombreUsuario = nameTxt.Text;
             string contrasena = contrasenaTxt.Text;
-
-            if (usuarioLoginService.esUsuarioValido(nombreUsuario, contrasena))
+            Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
+            if (!usuario.habilitado)
+            {
+                MessageBox.Show("Usuario inhabilitado"); 
+            }
+            else if (usuarioLoginService.esUsuarioValido(nombreUsuario, contrasena))
             {
                 usuarioLoginService.limpiarReintentos(nombreUsuario);
-                Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
                 List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
                 abrirPantallaBotonesPorRoles(funcionalidades);
+                
             }
-            else
+            else 
             {
                 usuarioLoginService.agregarReintento(nombreUsuario);
-                //MOSTRAR POP UP DICIENDO QUE NO SE PUDO INICIALIZAR
+                usuario = usuarioLoginService.searchUsuario(nombreUsuario);
+                if (usuario.intento == 3)
+                {
+                    usuario.habilitado = false;
+                    usuarioLoginService.saveUsuarioInhabilitado(usuario);
+                }
+                MessageBox.Show("Usuario o Contraseña Invalidos.");
             }
         }
 
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
         {
+            FuncionalidadUtil.Funcionalidades = funcionalidades;
             Form botonesPorRoles = new AbmRol.Form1(funcionalidades);
             botonesPorRoles.Show();
             this.Hide();

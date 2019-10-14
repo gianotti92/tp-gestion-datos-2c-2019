@@ -317,11 +317,33 @@ GO
 		BEGIN
 		UPDATE GESTION_BDD_2C_2019.ROL 
 		SET
-		nombre = @nombre,
-		estado = @estado
+			nombre = @nombre,
+			estado = @estado
 		WHERE id = @id; 
 		END
 
+		GO
+
+		/******SP delete rol ***********/
+		CREATE PROCEDURE SP_DELETE_ROL	
+		(@rol_id INT)
+		AS
+		BEGIN
+			delete from GESTION_BDD_2C_2019.ROL_USUARIO where rol_id = @rol_id;
+			delete from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD where rol_id = @rol_id
+			delete from GESTION_BDD_2C_2019.ROL where id = @rol_id
+		END
+		GO
+
+		/****SP funcionalidad por rol id******/
+		create procedure SP_GET_FUNCIONALIDAD_BY_ROL_ID
+		(@rol_id INT)
+		AS
+		BEGIN
+			select f.id, f.nombre from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD rf
+			join GESTION_BDD_2C_2019.FUNCIONALIDAD f ON f.id = rf.funcionalidad_id
+			where rf.rol_id like @rol_id
+		END
 		GO
 
 		/**Cracion de datos***/
@@ -367,4 +389,6 @@ GO
 		VALUES	(1, 'test'),
 				(2, 'test'),
 				(3, 'test');
+
+
 

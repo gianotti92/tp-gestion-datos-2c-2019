@@ -32,5 +32,10 @@ namespace FrbaOfertas.Service
         {
             return rolRepository.searchRoles();
         }
+
+        public void eliminar(Rol rolAEliminar)
+        {
+            rolRepository.eliminar(rolAEliminar);
+        }
     }
 }

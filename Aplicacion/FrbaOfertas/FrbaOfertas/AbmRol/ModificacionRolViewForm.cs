@@ -8,21 +8,26 @@ using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol
 {
-    public partial class AltaRolViewForm : Form
+    public partial class ModificacionRolViewForm : Form
     {
+       
         private FuncionalidadService funcionalidadService;
         private RolService rolService;
         private List<Funcionalidad> funcionalidades;
         private List<Funcionalidad> funcionalidadesSeleccionadas;
-        public AltaRolViewForm(FuncionalidadService funcionalidadService, RolService rolService)
+        private Rol rolAEditar;
+        public ModificacionRolViewForm(Rol rolAEditar, FuncionalidadService funcionalidadService, RolService rolService)
         {
             this.funcionalidadService = funcionalidadService;
             this.rolService = rolService;
+            this.rolAEditar = rolAEditar;
             InitializeComponent();
             cargarFuncionalidades();
             cargarHabilitar();
-            funcionalidadesSeleccionadas = new List<Funcionalidad>();
+            cargarRolAModificar();
         }
+
+        
 
         private void cargarFuncionalidades()
         {
@@ -37,10 +42,21 @@ namespace FrbaOfertas.AbmRol
         {
             this.habilitadoComboBox.Items.Add("True");
             this.habilitadoComboBox.Items.Add("False");
-            this.habilitadoComboBox.SelectedItem = "True";
+            this.habilitadoComboBox.SelectedItem = rolAEditar.activo.ToString();
         }
+        
+        private void cargarRolAModificar()
+        {    
+            funcionalidadesSeleccionadas = new List<Funcionalidad>();
+            foreach (var funcionalidad in rolAEditar.funcionalidades)
+            {
+                this.rolesListBox.Items.Add(funcionalidad.nombre);
+            }
 
-        private void button1_Click(object sender, EventArgs e)
+            this.nombreTxt.Text = rolAEditar.nombre;
+        }
+        
+        private void AgregarFuncBtn_Click(object sender, EventArgs e)
         {
             int index = this.funcionalidadComboBox.SelectedIndex;
             Funcionalidad f = funcionalidades[index];
@@ -48,27 +64,26 @@ namespace FrbaOfertas.AbmRol
             funcionalidadesSeleccionadas.Add(f);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void EliminarBtn_Click(object sender, EventArgs e)
         {
             int index = rolesListBox.SelectedIndex;
           
             if (funcionalidades.Count > 0 && index != -1)
             {
+                
                 Funcionalidad f = funcionalidadesSeleccionadas[index];
                 funcionalidadesSeleccionadas.Remove(f);
                 rolesListBox.Items.RemoveAt(index);
             }
-
-            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Rol rolAGuardar = new Rol();
-            rolAGuardar.activo = Boolean.Parse(habilitadoComboBox.Text);
-            rolAGuardar.funcionalidades = funcionalidadesSeleccionadas;
-            rolAGuardar.nombre = nombreTxt.Text; 
-            rolService.Create(rolAGuardar);
+            Rol rolAUpdatear = new Rol();
+            rolAUpdatear.activo = Boolean.Parse(habilitadoComboBox.Text);
+            rolAUpdatear.funcionalidades = funcionalidadesSeleccionadas;
+            rolAUpdatear.nombre = nombreTxt.Text; 
+            rolService.Update(rolAUpdatear);
             this.Hide();
             
             RolRepository rolRepository = new RolDao();
@@ -77,10 +92,11 @@ namespace FrbaOfertas.AbmRol
             form.Show();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Cancelarbtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AbmRolMenuForm form = new AbmRolMenuForm(rolService, new FuncionalidadPorRolService(rolService,funcionalidadService));
+            AbmRolMenuForm form = new AbmRolMenuForm(rolService,new FuncionalidadPorRolService(rolService,funcionalidadService));
+            this.Hide();
             form.Show();
         }
     }
