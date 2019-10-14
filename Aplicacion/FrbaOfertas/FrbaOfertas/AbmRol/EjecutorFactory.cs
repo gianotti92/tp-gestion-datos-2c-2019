@@ -39,7 +39,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 8)
             {
-                return new ConfeccionYPublicacionOfertasExec(funcionalidad.nombre);
+                return new ConfeccionYPublicacionOfertasExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 9)
             {

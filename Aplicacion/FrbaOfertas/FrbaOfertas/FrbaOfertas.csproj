@@ -106,11 +106,17 @@
     <Compile Include="CragaCredito\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="CrearOferta\Form1.cs">
+    <Compile Include="CrearOferta\AbmOfertasForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CrearOferta\AltaOfertaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrearOferta\AltaOfertaForm.Designer.cs">
+      <DependentUpon>AltaOfertaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrearOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dao\FuncionalidadDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
@@ -160,6 +166,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AbmRolMenuForm.resx">
       <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrearOferta\AbmOfertasForm.resx">
+      <DependentUpon>AbmOfertasForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrearOferta\AltaOfertaForm.resx">
+      <DependentUpon>AltaOfertaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
