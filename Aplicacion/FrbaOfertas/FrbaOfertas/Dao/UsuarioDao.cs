@@ -2,6 +2,7 @@
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -50,6 +51,32 @@ namespace FrbaOfertas.Dao
 
             cmd.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
+        }
+
+        public System.Collections.Generic.List<Usuario> GetAll()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.USUARIO");
+            ConnectionQuery.abrirConexion();
+
+            SqlDataReader r_usuario = cmd.ExecuteReader();
+
+            List<Usuario> usuarios = new List<Usuario>();
+
+            while (r_usuario.Read())
+            {
+                Usuario usuario = new Usuario();
+                usuario.userName = r_usuario["username"].ToString();
+                usuario.contrasena = r_usuario["pass"].ToString();
+                usuario.tipoUsuario = (TipoUsuario)Convert.ToInt32(r_usuario["tipo"]);
+                usuario.habilitado = Convert.ToBoolean(r_usuario["habilitado"]);
+                usuario.intento = Convert.ToInt32(r_usuario["intentos"]);
+                //usuario.roles = 
+                usuarios.Add(usuario);
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return usuarios;
         }
     }
 }

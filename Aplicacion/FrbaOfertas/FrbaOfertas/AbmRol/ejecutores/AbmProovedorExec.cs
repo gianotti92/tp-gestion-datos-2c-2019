@@ -4,7 +4,6 @@
 {
     public class AbmProovedorExec : BotonFuncionalidadAEjecutar
     {
-        string nombreParaMostrar { get; set; }
 
         public AbmProovedorExec(string nombreParaMostrar)
         {

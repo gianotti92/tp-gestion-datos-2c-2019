@@ -6,18 +6,17 @@ namespace FrbaOfertas.AbmRol
 {
     public class AbmRolExec : BotonFuncionalidadAEjecutar
     {
-        string nombreParaMostrar { get; set; }
-
-        public AbmRolExec(string nombreParaMostrar, Form formToClose)
+        public AbmRolExec(string nombreParaMostrar, Form pantallaACerrar)
         {
             this.nombreParaMostrar = nombreParaMostrar;
-            this.formToClose = formToClose;
+            this.pantallaACerrar = pantallaACerrar;
         }
 
         public override void execute(object sender, EventArgs e)
-        {    this.formToClose.Hide();
-            MenuRolForm rolMenu = new MenuRolForm();
-            rolMenu.Show();
+        {
+           pantallaACerrar.Hide();
+           Form abmRol = new AbmRolMenuForm();
+           abmRol.Show();
         }
     }
 }

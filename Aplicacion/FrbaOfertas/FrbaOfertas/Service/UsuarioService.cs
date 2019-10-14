@@ -1,5 +1,6 @@
 ﻿﻿using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using System.Collections.Generic;
 
 namespace FrbaOfertas.Service
 {
@@ -20,6 +21,11 @@ namespace FrbaOfertas.Service
         public void saveUsuario(Usuario usuario)
         {
             usuarioRepository.saveUsuario(usuario);
+        }
+
+        public List<Usuario> GetAll()
+        {
+            return usuarioRepository.GetAll();
         }
     }
 }

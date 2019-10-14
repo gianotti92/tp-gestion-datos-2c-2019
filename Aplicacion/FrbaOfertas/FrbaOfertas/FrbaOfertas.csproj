@@ -57,6 +57,12 @@
     <Compile Include="AbmProveedor\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\AltaRolViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\AltaRolViewForm.Designer.cs">
+      <DependentUpon>AltaRolViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\ejecutores\AbmClienteExec.cs" />
     <Compile Include="AbmRol\ejecutores\AbmProovedorExec.cs" />
     <Compile Include="AbmRol\ejecutores\AbmRolExec.cs" />
@@ -69,23 +75,29 @@
     <Compile Include="AbmRol\ejecutores\LoginYSeguridadExec.cs" />
     <Compile Include="AbmRol\ejecutores\RegistoDeUsuarioExec.cs" />
     <Compile Include="AbmRol\EjecutorFactory.cs" />
-    <Compile Include="AbmRol\MenuRolForm.cs">
+    <Compile Include="AbmRol\SeleccionFuncionalidadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\MenuRolForm.Designer.cs">
-      <DependentUpon>MenuRolForm.cs</DependentUpon>
+    <Compile Include="AbmRol\SeleccionFuncionalidadForm.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\SeleccionarFuncionalidadForm.cs">
+    <Compile Include="AbmRol\AbmRolMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\SeleccionarFuncionalidadForm.Designer.cs">
-      <DependentUpon>SeleccionarFuncionalidadForm.cs</DependentUpon>
+    <Compile Include="AbmRol\AbmRolMenuForm.Designer.cs">
+      <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.cs">
+    <Compile Include="AbmRol\ComprarOferta\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.Designer.cs">
+    <Compile Include="AbmRol\ComprarOferta\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioForm.Designer.cs">
+      <DependentUpon>ABMUsuarioForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Connection\ConnectionQuery.cs" />
     <Compile Include="CragaCredito\Form1.cs">
@@ -134,13 +146,21 @@
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
     <Compile Include="Service\RolService.cs" />
+    <Compile Include="Service\ServiceDependencies.cs" />
+    <Compile Include="Service\UsuarioDAO.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
-    <EmbeddedResource Include="AbmRol\MenuRolForm.resx">
-      <DependentUpon>MenuRolForm.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\AltaRolViewForm.resx">
+      <DependentUpon>AltaRolViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\SeleccionarFuncionalidadForm.resx">
-      <DependentUpon>SeleccionarFuncionalidadForm.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\SeleccionFuncionalidadForm.resx">
+      <DependentUpon>SeleccionFuncionalidadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\AbmRolMenuForm.resx">
+      <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\ABMUsuarioForm.resx">
+      <DependentUpon>ABMUsuarioForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -166,7 +186,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

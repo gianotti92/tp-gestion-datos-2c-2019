@@ -5,15 +5,15 @@ namespace FrbaOfertas.AbmRol.ejecutores
 {
     public class AbmClienteExec : BotonFuncionalidadAEjecutar
     {
-        public AbmClienteExec(string nombreParaMostrar, Form formToClose)
+        public AbmClienteExec(string nombreParaMostrar, Form pantallaACerrar)
         {
             base.nombreParaMostrar = nombreParaMostrar;
-            base.formToClose = formToClose;
+            base.pantallaACerrar = pantallaACerrar;
         }
 
         public override void execute(object sender, EventArgs e)
         {
-            formToClose.Hide();
+            pantallaACerrar.Hide();
             AbmCliente.Form1 abmClientes = new AbmCliente.Form1();
             abmClientes.Show();
             

@@ -6,7 +6,7 @@ namespace FrbaOfertas.AbmRol
 {
     public class EjecutorFactory
     {
-        public static BotonFuncionalidadAEjecutar create(Funcionalidad funcionalidad, Form formToClose)
+        public static BotonFuncionalidadAEjecutar create(Funcionalidad funcionalidad, Form pantallaACerrar)
         {
             if (funcionalidad.id == 1)
             {
@@ -14,15 +14,15 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 2)
             {
-                return new AbmRolExec(funcionalidad.nombre, formToClose);
+                return new AbmRolExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 3)
             {
-                return new RegistoDeUsuarioExec(funcionalidad.nombre);
+                return new RegistoDeUsuarioExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 4)
             {
-                return new AbmClienteExec(funcionalidad.nombre, formToClose);
+                return new AbmClienteExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 5)
             {

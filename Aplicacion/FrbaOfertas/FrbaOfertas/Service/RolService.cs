@@ -13,9 +13,24 @@ namespace FrbaOfertas.Service
             this.rolRepository = rolRepository;
         }
 
-        public List<Rol> searchRoles(string usuario)
+        public Rol GetById(int id)
         {
-            return rolRepository.searchRoles(usuario);
+            return rolRepository.GetById(id);
+        }
+
+        public void Create(Rol rol)
+        {
+            rolRepository.Create(rol);
+        }
+
+        public void Update(Rol rol)
+        {
+            rolRepository.Update(rol);
+        }
+
+        public List<Rol> searchRoles()
+        {
+            return rolRepository.searchRoles();
         }
     }
 }
