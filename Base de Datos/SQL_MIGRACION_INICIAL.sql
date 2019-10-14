@@ -346,6 +346,26 @@ GO
 		END
 		GO
 
+		/****SP save oferta y proovedor asociado ******/
+		create procedure SP_SAVE_OFERTA
+		(@Id INT,
+		@proovedor_id INT,
+		@precio decimal,
+		@precioLista decimal,
+		@stockDisponible numeric,
+		@fechaPublicacion datetime,
+		@fechaVencimiento datetime,
+		@cantidadMaximaPorCompra numeric
+		)
+		AS
+		BEGIN
+			insert into GESTION_BDD_2C_2019.OFERTA 
+			(ID,PRECIO,PROV_ID, PRECIO_LISTO, STOCK_DISPONIBLE, FECHA_PUBLIC, FECHA_VENC, MAX_X_COMPRA)
+			values
+			(@Id, @precio, @proovedor_id,@precioLista,@stockDisponible,@fechaPublicacion,@fechaVencimiento,@cantidadMaximaPorCompra)
+		END
+		GO
+
 		/**Cracion de datos***/
 
 		/* DATOS FUNCIONALIDAD */

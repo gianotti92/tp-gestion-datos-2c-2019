@@ -64,7 +64,7 @@ namespace FrbaOfertas.AbmRol
         private void VolverBtn_Click(object sender, EventArgs e)
         {
            this.Hide();
-           Form1 seleccionFuncionalidad = new Form1(FuncionalidadUtil.Funcionalidades);
+           SeleccionarFuncionalidadForm1 seleccionFuncionalidad = new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
            seleccionFuncionalidad.Show();
         }
     }

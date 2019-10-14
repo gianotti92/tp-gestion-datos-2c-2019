@@ -38,13 +38,19 @@ namespace FrbaOfertas.CrearOferta
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.DescripcionTxt = new System.Windows.Forms.TextBox();
+            this.PrecioListaTxt = new System.Windows.Forms.TextBox();
+            this.PrecioTxt = new System.Windows.Forms.TextBox();
+            this.CantidadDisponibleTxt = new System.Windows.Forms.TextBox();
+            this.ProovedorCmb = new System.Windows.Forms.ComboBox();
+            this.CancelarBtn = new System.Windows.Forms.Button();
+            this.CrearBtn = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.MaxPorClienteTxt = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.stockTxt = new System.Windows.Forms.TextBox();
+            this.fechaVencPicker = new System.Windows.Forms.DateTimePicker();
+            this.fechaPublicPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +63,7 @@ namespace FrbaOfertas.CrearOferta
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(47, 226);
+            this.label2.Location = new System.Drawing.Point(47, 263);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 16);
             this.label2.TabIndex = 1;
@@ -103,67 +109,125 @@ namespace FrbaOfertas.CrearOferta
             this.label7.TabIndex = 6;
             this.label7.Text = "Cantidad Disponible";
             // 
-            // textBox1
+            // DescripcionTxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(47, 245);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(391, 23);
-            this.textBox1.TabIndex = 7;
+            this.DescripcionTxt.Location = new System.Drawing.Point(47, 282);
+            this.DescripcionTxt.Name = "DescripcionTxt";
+            this.DescripcionTxt.Size = new System.Drawing.Size(391, 23);
+            this.DescripcionTxt.TabIndex = 7;
             // 
-            // textBox2
+            // PrecioListaTxt
             // 
-            this.textBox2.Location = new System.Drawing.Point(203, 140);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(235, 23);
-            this.textBox2.TabIndex = 8;
+            this.PrecioListaTxt.Location = new System.Drawing.Point(203, 111);
+            this.PrecioListaTxt.Name = "PrecioListaTxt";
+            this.PrecioListaTxt.Size = new System.Drawing.Size(235, 23);
+            this.PrecioListaTxt.TabIndex = 9;
             // 
-            // textBox3
+            // PrecioTxt
             // 
-            this.textBox3.Location = new System.Drawing.Point(203, 111);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(235, 23);
-            this.textBox3.TabIndex = 9;
+            this.PrecioTxt.Location = new System.Drawing.Point(203, 81);
+            this.PrecioTxt.Name = "PrecioTxt";
+            this.PrecioTxt.Size = new System.Drawing.Size(235, 23);
+            this.PrecioTxt.TabIndex = 10;
             // 
-            // textBox4
+            // CantidadDisponibleTxt
             // 
-            this.textBox4.Location = new System.Drawing.Point(203, 81);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(235, 23);
-            this.textBox4.TabIndex = 10;
+            this.CantidadDisponibleTxt.Location = new System.Drawing.Point(203, 168);
+            this.CantidadDisponibleTxt.Name = "CantidadDisponibleTxt";
+            this.CantidadDisponibleTxt.Size = new System.Drawing.Size(235, 23);
+            this.CantidadDisponibleTxt.TabIndex = 13;
             // 
-            // textBox5
+            // ProovedorCmb
             // 
-            this.textBox5.Location = new System.Drawing.Point(203, 52);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(235, 23);
-            this.textBox5.TabIndex = 11;
+            this.ProovedorCmb.FormattingEnabled = true;
+            this.ProovedorCmb.Location = new System.Drawing.Point(203, 140);
+            this.ProovedorCmb.Name = "ProovedorCmb";
+            this.ProovedorCmb.Size = new System.Drawing.Size(235, 23);
+            this.ProovedorCmb.TabIndex = 14;
             // 
-            // textBox6
+            // CancelarBtn
             // 
-            this.textBox6.Location = new System.Drawing.Point(203, 20);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(235, 23);
-            this.textBox6.TabIndex = 12;
+            this.CancelarBtn.Location = new System.Drawing.Point(47, 330);
+            this.CancelarBtn.Name = "CancelarBtn";
+            this.CancelarBtn.Size = new System.Drawing.Size(142, 35);
+            this.CancelarBtn.TabIndex = 15;
+            this.CancelarBtn.Text = "Cancelar";
+            this.CancelarBtn.UseVisualStyleBackColor = true;
+            this.CancelarBtn.Click += new System.EventHandler(this.CancelarBtn_Click);
             // 
-            // textBox7
+            // CrearBtn
             // 
-            this.textBox7.Location = new System.Drawing.Point(203, 169);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(235, 23);
-            this.textBox7.TabIndex = 13;
+            this.CrearBtn.Location = new System.Drawing.Point(296, 330);
+            this.CrearBtn.Name = "CrearBtn";
+            this.CrearBtn.Size = new System.Drawing.Size(142, 35);
+            this.CrearBtn.TabIndex = 16;
+            this.CrearBtn.Text = "Crear";
+            this.CrearBtn.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(79, 200);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(118, 16);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Max por cliente";
+            // 
+            // MaxPorClienteTxt
+            // 
+            this.MaxPorClienteTxt.Location = new System.Drawing.Point(203, 197);
+            this.MaxPorClienteTxt.Name = "MaxPorClienteTxt";
+            this.MaxPorClienteTxt.Size = new System.Drawing.Size(235, 23);
+            this.MaxPorClienteTxt.TabIndex = 18;
+            // 
+            // label9
+            // 
+            this.label9.Location = new System.Drawing.Point(79, 232);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(118, 16);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Stock Disponible";
+            // 
+            // stockTxt
+            // 
+            this.stockTxt.Location = new System.Drawing.Point(203, 228);
+            this.stockTxt.Name = "stockTxt";
+            this.stockTxt.Size = new System.Drawing.Size(235, 23);
+            this.stockTxt.TabIndex = 20;
+            // 
+            // fechaVencPicker
+            // 
+            this.fechaVencPicker.CustomFormat = "dd/MM/yyyy";
+            this.fechaVencPicker.Location = new System.Drawing.Point(204, 51);
+            this.fechaVencPicker.Name = "fechaVencPicker";
+            this.fechaVencPicker.Size = new System.Drawing.Size(233, 23);
+            this.fechaVencPicker.TabIndex = 21;
+            // 
+            // fechaPublicPicker
+            // 
+            this.fechaPublicPicker.CustomFormat = "dd/MM/yyyy fe    d  asd";
+            this.fechaPublicPicker.Location = new System.Drawing.Point(203, 17);
+            this.fechaPublicPicker.Name = "fechaPublicPicker";
+            this.fechaPublicPicker.Size = new System.Drawing.Size(233, 23);
+            this.fechaPublicPicker.TabIndex = 22;
             // 
             // AltaOfertaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 324);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(470, 403);
+            this.Controls.Add(this.fechaPublicPicker);
+            this.Controls.Add(this.fechaVencPicker);
+            this.Controls.Add(this.stockTxt);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.MaxPorClienteTxt);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.CrearBtn);
+            this.Controls.Add(this.CancelarBtn);
+            this.Controls.Add(this.ProovedorCmb);
+            this.Controls.Add(this.CantidadDisponibleTxt);
+            this.Controls.Add(this.PrecioTxt);
+            this.Controls.Add(this.PrecioListaTxt);
+            this.Controls.Add(this.DescripcionTxt);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -185,13 +249,19 @@ namespace FrbaOfertas.CrearOferta
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button CrearBtn;
+        private System.Windows.Forms.Button CancelarBtn;
+        private System.Windows.Forms.ComboBox ProovedorCmb;
+        private System.Windows.Forms.TextBox CantidadDisponibleTxt;
+        private System.Windows.Forms.TextBox PrecioTxt;
+        private System.Windows.Forms.TextBox PrecioListaTxt;
+        private System.Windows.Forms.TextBox DescripcionTxt;
+        private System.Windows.Forms.TextBox MaxPorClienteTxt;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox stockTxt;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DateTimePicker fechaPublicPicker;
+        private System.Windows.Forms.DateTimePicker fechaVencPicker;
     }
 }

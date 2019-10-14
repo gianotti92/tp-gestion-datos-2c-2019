@@ -6,9 +6,9 @@ using FrbaOfertas.Entities;
 
 namespace FrbaOfertas.AbmRol
 {
-    public partial class Form1 : Form
+    public partial class SeleccionarFuncionalidadForm1 : Form
     {
-        public Form1(List<Funcionalidad> funcionalidades)
+        public SeleccionarFuncionalidadForm1(List<Funcionalidad> funcionalidades)
         {
             InitializeComponent();
             //TODO:pensar un nombre a ejecutar x dios jajaja

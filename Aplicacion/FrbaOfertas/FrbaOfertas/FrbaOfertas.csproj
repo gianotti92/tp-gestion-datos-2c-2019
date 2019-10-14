@@ -119,10 +119,14 @@
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dao\FuncionalidadDao.cs" />
+    <Compile Include="Dao\OfertaDao.cs" />
+    <Compile Include="Dao\ProovedorDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
+    <Compile Include="Entities\Oferta.cs" />
+    <Compile Include="Entities\Proovedor.cs" />
     <Compile Include="Entities\Rol.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
     <Compile Include="Entities\Usuario.cs" />
@@ -147,10 +151,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
+    <Compile Include="Repository\OfertaRepository.cs" />
+    <Compile Include="Repository\ProovedorRepository.cs" />
     <Compile Include="Repository\RolRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
+    <Compile Include="Service\OfertaService.cs" />
+    <Compile Include="Service\ProovedorService.cs" />
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
