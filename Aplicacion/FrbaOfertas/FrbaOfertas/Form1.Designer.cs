@@ -56,6 +56,7 @@
             // 
             this.contrasenaTxt.Location = new System.Drawing.Point(76, 135);
             this.contrasenaTxt.Name = "contrasenaTxt";
+            this.contrasenaTxt.PasswordChar = '*';
             this.contrasenaTxt.Size = new System.Drawing.Size(203, 23);
             this.contrasenaTxt.TabIndex = 2;
             // 
@@ -63,7 +64,7 @@
             // 
             this.label1.Location = new System.Drawing.Point(134, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 25);
+            this.label1.Size = new System.Drawing.Size(80, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Usuario";
             // 

@@ -47,5 +47,10 @@ namespace FrbaOfertas.Service
         {
             return usuarioService.searchUsuario(name);
         }
+
+        public void saveUsuarioInhabilitado(Usuario usuario)
+        {
+            usuarioService.saveUsuario(usuario);
+        }
     }
 }
