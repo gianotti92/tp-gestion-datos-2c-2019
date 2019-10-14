@@ -81,6 +81,7 @@ namespace FrbaOfertas.AbmRol
         {
             this.Hide();
             AbmRolMenuForm form = new AbmRolMenuForm(rolService, new FuncionalidadPorRolService(rolService,funcionalidadService));
+            form.Show();
         }
     }
 }
