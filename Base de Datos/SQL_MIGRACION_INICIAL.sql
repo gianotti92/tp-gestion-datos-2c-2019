@@ -37,8 +37,9 @@ IF(OBJECT_ID('SP_SAVE_ROL_USUARIO') IS NOT NULL)
 IF(OBJECT_ID('SP_DELETE_USER') IS NOT NULL)
 	DROP PROCEDURE SP_DELETE_USER
 IF(OBJECT_ID('SP_DELETE_ROL_USUARIO') IS NOT NULL)
-	DROP PROCEDURE SP_DELETE_ROL_USUARIO	
-	
+	DROP PROCEDURE SP_DELETE_ROL_USUARIO
+IF(OBJECT_ID('SP_SAVE_OFERTA') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_OFERTA
 GO
 CREATE PROCEDURE SP_CREAR_TABLAS
 AS
@@ -350,6 +351,26 @@ GO
 			select f.id, f.nombre from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD rf
 			join GESTION_BDD_2C_2019.FUNCIONALIDAD f ON f.id = rf.funcionalidad_id
 			where rf.rol_id like @rol_id
+		END
+		GO
+
+		/****SP save oferta y proovedor asociado ******/
+		create procedure SP_SAVE_OFERTA
+		(@Id INT,
+		@proovedor_id INT,
+		@precio decimal,
+		@precioLista decimal,
+		@stockDisponible numeric,
+		@fechaPublicacion datetime,
+		@fechaVencimiento datetime,
+		@cantidadMaximaPorCompra numeric
+		)
+		AS
+		BEGIN
+			insert into GESTION_BDD_2C_2019.OFERTA 
+			(ID,PRECIO,PROV_ID, PRECIO_LISTO, STOCK_DISPONIBLE, FECHA_PUBLIC, FECHA_VENC, MAX_X_COMPRA)
+			values
+			(@Id, @precio, @proovedor_id,@precioLista,@stockDisponible,@fechaPublicacion,@fechaVencimiento,@cantidadMaximaPorCompra)
 		END
 		GO
 

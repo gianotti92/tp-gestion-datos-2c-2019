@@ -1,6 +1,6 @@
 ﻿﻿namespace FrbaOfertas.AbmRol
 {
-    partial class Form1
+    partial class SeleccionarFuncionalidadForm1
     {
         /// <summary>
         /// Required designer variable.

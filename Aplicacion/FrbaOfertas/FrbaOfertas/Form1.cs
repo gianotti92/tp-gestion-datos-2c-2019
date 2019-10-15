@@ -58,7 +58,7 @@ using System.Windows.Forms;
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
         {
             FuncionalidadUtil.Funcionalidades = funcionalidades;
-            Form botonesPorRoles = new AbmRol.Form1(funcionalidades);
+            Form botonesPorRoles = new AbmRol.SeleccionarFuncionalidadForm1(funcionalidades);
             botonesPorRoles.Show();
             this.Hide();
         }

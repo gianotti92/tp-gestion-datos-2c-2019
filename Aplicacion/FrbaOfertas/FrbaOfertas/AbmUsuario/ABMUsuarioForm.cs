@@ -3,13 +3,8 @@ using FrbaOfertas.Service;
 using FrbaOfertas.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.AbmRol;
 
 namespace FrbaOfertas.AbmUsuario
 {
@@ -39,7 +34,7 @@ namespace FrbaOfertas.AbmUsuario
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FrbaOfertas.AbmRol.Form1 seleccionFuncionalidad = new FrbaOfertas.AbmRol.Form1(FuncionalidadUtil.Funcionalidades);
+            SeleccionarFuncionalidadForm1 seleccionFuncionalidad = new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
             seleccionFuncionalidad.Show();
         }
 
