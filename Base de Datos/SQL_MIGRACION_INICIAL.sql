@@ -28,7 +28,17 @@ IF(OBJECT_ID('SP_DELETE_ROL_FUNCIONALIDAD') IS NOT NULL)
 	DROP PROCEDURE SP_DELETE_ROL_FUNCIONALIDAD
 IF(OBJECT_ID('SP_UPDATE_ROL') IS NOT NULL)
 	DROP PROCEDURE SP_UPDATE_ROL
-
+IF(OBJECT_ID('SP_DELETE_ROL') IS NOT NULL)
+	DROP PROCEDURE SP_DELETE_ROL
+IF(OBJECT_ID('SP_GET_FUNCIONALIDAD_BY_ROL_ID') IS NOT NULL)
+	DROP PROCEDURE SP_GET_FUNCIONALIDAD_BY_ROL_ID
+IF(OBJECT_ID('SP_SAVE_ROL_USUARIO') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_ROL_USUARIO
+IF(OBJECT_ID('SP_DELETE_USER') IS NOT NULL)
+	DROP PROCEDURE SP_DELETE_USER
+IF(OBJECT_ID('SP_DELETE_ROL_USUARIO') IS NOT NULL)
+	DROP PROCEDURE SP_DELETE_ROL_USUARIO	
+	
 GO
 CREATE PROCEDURE SP_CREAR_TABLAS
 AS
@@ -261,14 +271,12 @@ GO
 		CREATE PROCEDURE SP_SAVE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
-		 @habilitado BIT,
-		 @tipo INT,
-		 @intentos INT
+		 @tipo INT
 		)
 		AS
 		BEGIN
-		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, habilitado, tipo, intentos) 
-		values (@username, @pass, @habilitado, @tipo, @intentos);
+		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
+		values (@username, @pass, @tipo);
 		END
 
 
@@ -285,7 +293,6 @@ GO
 		BEGIN
 		UPDATE GESTION_BDD_2C_2019.USUARIO 
 		SET
-		username = @username,
 		pass = @pass,
 		habilitado = @habilitado,
 		tipo = @tipo,
@@ -344,6 +351,42 @@ GO
 			join GESTION_BDD_2C_2019.FUNCIONALIDAD f ON f.id = rf.funcionalidad_id
 			where rf.rol_id like @rol_id
 		END
+		GO
+
+		/******SP save rol_usuario ***********/
+		CREATE PROCEDURE SP_SAVE_ROL_USUARIO
+		(
+			@rol_id INT,
+			@username VARCHAR(40)
+		)
+		AS
+		BEGIN
+		insert into GESTION_BDD_2C_2019.ROL_USUARIO(rol_id, username) 
+		values (@rol_id, @username);
+		END
+
+		GO
+
+		/******SP delete usuario ***********/
+		CREATE PROCEDURE SP_DELETE_USER
+		(@username VARCHAR(40))
+		AS
+		BEGIN
+			UPDATE GESTION_BDD_2C_2019.USUARIO
+			SET habilitado = 0
+			WHERE username = @username
+		END
+		GO
+
+		/******SP delete rol usuario ***********/
+		CREATE PROCEDURE SP_DELETE_ROL_USUARIO
+		(@username VARCHAR(40))
+		AS
+		BEGIN
+			DELETE FROM GESTION_BDD_2C_2019.ROL_USUARIO
+			WHERE username = @username
+		END
+
 		GO
 
 		/**Cracion de datos***/

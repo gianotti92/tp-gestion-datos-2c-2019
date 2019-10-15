@@ -18,9 +18,19 @@ namespace FrbaOfertas.Service
             return usuarioRepository.getUsuario(nombreUsuario);
         }
 
-        public void saveUsuario(Usuario usuario)
+        public void CreateUsuario(Usuario usuario)
         {
-            usuarioRepository.saveUsuario(usuario);
+            usuarioRepository.Create(usuario);
+        }
+
+        public void UpdateUsuario(Usuario usuario)
+        {
+            usuarioRepository.Update(usuario);
+        }
+
+        public void DeleteUsuario(Usuario usuario)
+        {
+            usuarioRepository.Delete(usuario);
         }
 
         public List<Usuario> GetAll()

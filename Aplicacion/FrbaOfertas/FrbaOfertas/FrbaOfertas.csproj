@@ -99,6 +99,18 @@
     <Compile Include="AbmRol\ComprarOferta\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioAltaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioAltaForm.Designer.cs">
+      <DependentUpon>ABMUsuarioAltaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioEditarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\ABMUsuarioEditarForm.Designer.cs">
+      <DependentUpon>ABMUsuarioEditarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmUsuario\ABMUsuarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,7 +165,6 @@
     <Compile Include="Service\FuncionalidadService.cs" />
     <Compile Include="Service\RolService.cs" />
     <Compile Include="Service\ServiceDependencies.cs" />
-    <Compile Include="Service\UsuarioDAO.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
     <Compile Include="Utils\FuncionalidadUtil.cs" />
@@ -168,6 +179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AbmRolMenuForm.resx">
       <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\ABMUsuarioAltaForm.resx">
+      <DependentUpon>ABMUsuarioAltaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\ABMUsuarioEditarForm.resx">
+      <DependentUpon>ABMUsuarioEditarForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuario\ABMUsuarioForm.resx">
       <DependentUpon>ABMUsuarioForm.cs</DependentUpon>

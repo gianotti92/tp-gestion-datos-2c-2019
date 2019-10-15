@@ -10,15 +10,45 @@ namespace FrbaOfertas.Service
 {
     public static class ServiceDependencies
     {
-        private static UsuarioRepository UsuarioDAO {get; set;}
+        private static RolDao RolDao { get; set; }
+        private static RolService RolService { get; set; }
+        private static UsuarioDao UsuarioDao {get; set;}
         private static UsuarioService UsuarioService {get; set;}
+
+        public static RolDao GetRolDao()
+        {
+            if (RolDao == null)
+            {
+                RolDao = new RolDao();
+            }
+            return RolDao;
+        }
+
+        public static RolService GetRolService() 
+        {
+            if (RolService == null)
+            {
+                RolDao = GetRolDao();
+                RolService = new RolService(RolDao);
+            }
+            return RolService;
+        }
+
+        public static UsuarioDao GetUsuarioDao() 
+        {
+            if (UsuarioDao == null)
+            {
+                UsuarioDao = new UsuarioDao();
+            }
+            return UsuarioDao;
+        }
 
         public static UsuarioService GetUsuarioService()
         {
             if (UsuarioService == null)
             {
-                UsuarioDAO = new UsuarioDao();
-                UsuarioService = new UsuarioService(UsuarioDAO);
+                UsuarioDao = GetUsuarioDao();
+                UsuarioService = new UsuarioService(UsuarioDao);
             }
             return UsuarioService;
         }

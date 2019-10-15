@@ -33,14 +33,14 @@ namespace FrbaOfertas.Service
         {
             Usuario usuario = usuarioService.searchUsuario(userName);
             usuario.intento++;
-            usuarioService.saveUsuario(usuario);
+            usuarioService.UpdateUsuario(usuario);
         }
 
         public void limpiarReintentos(string userName)
         {
             Usuario usuario = usuarioService.searchUsuario(userName);
             usuario.intento = 0;
-            usuarioService.saveUsuario(usuario);
+            usuarioService.UpdateUsuario(usuario);
         }
 
         public Usuario searchUsuario(string name)
@@ -50,7 +50,7 @@ namespace FrbaOfertas.Service
 
         public void saveUsuarioInhabilitado(Usuario usuario)
         {
-            usuarioService.saveUsuario(usuario);
+            usuarioService.UpdateUsuario(usuario);
         }
     }
 }

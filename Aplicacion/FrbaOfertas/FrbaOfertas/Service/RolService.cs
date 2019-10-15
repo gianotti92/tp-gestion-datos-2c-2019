@@ -37,5 +37,10 @@ namespace FrbaOfertas.Service
         {
             rolRepository.eliminar(rolAEliminar);
         }
+
+        public List<Rol> GetAll()
+        {
+            return rolRepository.GetAll();
+        }
     }
 }

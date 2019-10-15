@@ -12,5 +12,12 @@ namespace FrbaOfertas.Entities
         public int intento { get; set; }
 
         public List<Rol> roles { get; set; }
+
+        public Usuario()
+        {
+            habilitado = true;
+            intento = 0;
+            roles = new List<Rol>();
+        }
     }
 }

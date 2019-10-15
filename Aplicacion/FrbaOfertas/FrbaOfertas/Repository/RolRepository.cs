@@ -11,5 +11,7 @@ namespace FrbaOfertas.Repository
         void Update(Rol rol);
         List<Rol> searchRoles();
         void eliminar(Rol rolAEliminar);
+        List<Rol> GetByUsername(string username);
+        List<Rol> GetAll();
     }
 }

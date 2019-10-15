@@ -1,6 +1,7 @@
 ﻿using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using FrbaOfertas.Service;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +13,8 @@ namespace FrbaOfertas.Dao
 {
     public class UsuarioDao : UsuarioRepository
     {
+        public RolDao RolDao { get { return ServiceDependencies.GetRolDao(); } }
+
         public Usuario getUsuario(string userName)
         {
             SqlCommand cmd = new SqlCommand("dbo.SP_GET_USER", ConnectionQuery.Instance());
@@ -34,10 +37,41 @@ namespace FrbaOfertas.Dao
             usuario.intento = consulta.GetInt32(4);
 
             ConnectionQuery.cerrarConexion();
+
+            usuario.roles = RolDao.GetByUsername(usuario.userName);
             return usuario;
         }
 
-        public void saveUsuario(Usuario usuario)
+        public void Create(Usuario usuario)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_SAVE_USER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter("@username", usuario.userName));
+            cmd.Parameters.Add(new SqlParameter("@pass", usuario.contrasena));
+            cmd.Parameters.Add(new SqlParameter("@tipo", usuario.tipoUsuario));
+
+            cmd.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+
+            usuario.roles.ForEach(x => CreateRolUsuario(usuario.userName, x));
+        }
+
+        private void CreateRolUsuario(string username, Rol rol)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_SAVE_ROL_USUARIO", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter("@rol_id", rol.id));
+            cmd.Parameters.Add(new SqlParameter("@username", username));
+
+            cmd.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
+        public void Update(Usuario usuario)
         {
             SqlCommand cmd = new SqlCommand("dbo.SP_UPDATE_USER", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
@@ -51,11 +85,39 @@ namespace FrbaOfertas.Dao
 
             cmd.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
+
+            UpdateRolUsuario(usuario.userName, usuario.roles);
+        }
+
+        private void UpdateRolUsuario(string username, List<Rol> roles)
+        {
+            SqlCommand cmdDeleteRF = new SqlCommand("dbo.SP_DELETE_ROL_USUARIO", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmdDeleteRF.CommandType = CommandType.StoredProcedure;
+
+            cmdDeleteRF.Parameters.Add(new SqlParameter("@username", username));
+
+            cmdDeleteRF.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+
+            roles.ForEach(x => CreateRolUsuario(username, x));
+        }
+
+        public void Delete(Usuario usuario)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_DELETE_USER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter("@username", usuario.userName));
+
+            cmd.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
         }
 
         public System.Collections.Generic.List<Usuario> GetAll()
         {
-            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.USUARIO");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.USUARIO WHERE habilitado = 1", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
 
             SqlDataReader r_usuario = cmd.ExecuteReader();
@@ -70,11 +132,15 @@ namespace FrbaOfertas.Dao
                 usuario.tipoUsuario = (TipoUsuario)Convert.ToInt32(r_usuario["tipo"]);
                 usuario.habilitado = Convert.ToBoolean(r_usuario["habilitado"]);
                 usuario.intento = Convert.ToInt32(r_usuario["intentos"]);
-                //usuario.roles = 
                 usuarios.Add(usuario);
             }
 
             ConnectionQuery.cerrarConexion();
+
+            foreach (Usuario usuario in usuarios) 
+            {
+                usuario.roles = RolDao.GetByUsername(usuario.userName);
+            }
 
             return usuarios;
         }

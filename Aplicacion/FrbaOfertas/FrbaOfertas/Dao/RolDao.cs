@@ -139,5 +139,61 @@ using System;
             cmdFuncionalidad.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+
+
+        public List<Rol> GetByUsername(string username)
+        {
+            SqlCommand cmd_rol_usuario = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.ROL_USUARIO WHERE username = @username", ConnectionQuery.Instance());
+
+            ConnectionQuery.abrirConexion();
+
+            cmd_rol_usuario.Parameters.Add("@username", SqlDbType.VarChar);
+            cmd_rol_usuario.Parameters["@username"].Value = username;
+
+            SqlDataReader r_rol_usuario = cmd_rol_usuario.ExecuteReader();
+            List<int> idRoles = new List<int>();
+
+            while (r_rol_usuario.Read())
+            {
+                idRoles.Add(Convert.ToInt32(r_rol_usuario["rol_id"]));
+            }
+            ConnectionQuery.cerrarConexion();
+            r_rol_usuario.Close();
+
+            List<Rol> roles = new List<Rol>();
+
+            foreach (int idRol in idRoles)
+            {
+                roles.Add(GetById(idRol));
+            }
+
+            return roles;
+        }
+
+        public List<Rol> GetAll()
+        {
+            SqlCommand cmd_rol = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.ROL WHERE estado = 1", ConnectionQuery.Instance());
+
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_rol.ExecuteReader();
+
+            List<int> idRoles = new List<int>();
+
+            while (r_rol.Read())
+            {
+                idRoles.Add(Convert.ToInt32(r_rol["id"]));
+            }
+            ConnectionQuery.cerrarConexion();
+            r_rol.Close();
+
+            List<Rol> roles = new List<Rol>();
+
+            foreach (int idRol in idRoles)
+            {
+                roles.Add(GetById(idRol));
+            }
+
+            return roles;
+        }
     }
 }

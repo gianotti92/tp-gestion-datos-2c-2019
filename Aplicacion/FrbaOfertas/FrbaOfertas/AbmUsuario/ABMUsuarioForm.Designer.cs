@@ -31,11 +31,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnAgregar = new System.Windows.Forms.Button();
-            this.clUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clRolAsignado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTipoUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clEditar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.clEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.clEditar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,9 +51,6 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clUserName,
-            this.clRolAsignado,
-            this.clTipoUsuario,
             this.clEditar,
             this.clEliminar});
             this.dataGridView1.Location = new System.Drawing.Point(59, 77);
@@ -63,30 +58,32 @@
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(543, 170);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(59, 283);
+            this.btnAgregar.Location = new System.Drawing.Point(510, 283);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(92, 40);
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
-            // clUserName
+            // btnVolver
             // 
-            this.clUserName.HeaderText = "UserName";
-            this.clUserName.Name = "clUserName";
+            this.btnVolver.Location = new System.Drawing.Point(59, 283);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 40);
+            this.btnVolver.TabIndex = 3;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // clRolAsignado
+            // clEliminar
             // 
-            this.clRolAsignado.HeaderText = "RolAsignado";
-            this.clRolAsignado.Name = "clRolAsignado";
-            // 
-            // clTipoUsuario
-            // 
-            this.clTipoUsuario.HeaderText = "TipoUsuario";
-            this.clTipoUsuario.Name = "clTipoUsuario";
+            this.clEliminar.HeaderText = "Eliminar";
+            this.clEliminar.Name = "clEliminar";
             // 
             // clEditar
             // 
@@ -95,16 +92,12 @@
             this.clEditar.Name = "clEditar";
             this.clEditar.Text = "";
             // 
-            // clEliminar
-            // 
-            this.clEliminar.HeaderText = "Eliminar";
-            this.clEliminar.Name = "clEliminar";
-            // 
             // ABMUsuarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 335);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
@@ -121,9 +114,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clUserName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clRolAsignado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clTipoUsuario;
+        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.DataGridViewButtonColumn clEditar;
         private System.Windows.Forms.DataGridViewButtonColumn clEliminar;
     }
