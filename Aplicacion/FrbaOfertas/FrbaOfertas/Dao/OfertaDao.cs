@@ -31,7 +31,7 @@ namespace FrbaOfertas.Dao
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
                 ofertas.Add(oferta);
             }
-            ConnectionQuery.sad
+            ConnectionQuery.cerrarConexion();
             return ofertas;
         }
 
