@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+ using FrbaOfertas.AbmUsuario;
  using FrbaOfertas.Dao;
  using FrbaOfertas.Entities;
  using FrbaOfertas.Repository;
@@ -31,30 +32,37 @@ using System.Windows.Forms;
             string nombreUsuario = nameTxt.Text;
             string contrasena = contrasenaTxt.Text;
             Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
-            if (!usuario.habilitado)
+            if (usuario != null)
             {
-                MessageBox.Show("Usuario inhabilitado"); 
-            }
-            else if (usuarioLoginService.esUsuarioValido(nombreUsuario, contrasena))
-            {
-                usuarioLoginService.limpiarReintentos(nombreUsuario);
-                List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
-                abrirPantallaBotonesPorRoles(funcionalidades);
-                
-            }
-            else 
-            {
-                usuarioLoginService.agregarReintento(nombreUsuario);
-                usuario = usuarioLoginService.searchUsuario(nombreUsuario);
                 if (usuario.intento == 3)
                 {
-                    usuario.habilitado = false;
-                    usuarioLoginService.saveUsuarioInhabilitado(usuario);
+                    MessageBox.Show("Usuario inhabilitado"); 
                 }
-                MessageBox.Show("Usuario o Contraseña Invalidos.");
+                else if (usuario.contrasena.Equals(contrasena))
+                {
+                    usuarioLoginService.limpiarReintentos(nombreUsuario);
+                    List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
+                    abrirPantallaBotonesPorRoles(funcionalidades);
+                }
+                else
+                {
+                    usuarioLoginService.agregarReintento(nombreUsuario);
+                    usuario = usuarioLoginService.searchUsuario(nombreUsuario);
+                    if (usuario.intento == 3)
+                    {
+                        usuario.habilitado = false;
+                        usuarioLoginService.saveUsuarioInhabilitado(usuario);
+                    }
+                    MessageBox.Show("Usuario o Contraseña Invalidos.");
+                }
+            }
+            else
+            {
+               ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+               this.Hide();
+               altaUsuario.Show();
             }
         }
-
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
         {
             FuncionalidadUtil.Funcionalidades = funcionalidades;

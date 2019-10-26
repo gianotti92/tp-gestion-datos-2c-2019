@@ -41,6 +41,10 @@ IF(OBJECT_ID('SP_DELETE_ROL_USUARIO') IS NOT NULL)
 IF(OBJECT_ID('SP_SAVE_OFERTA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_OFERTA
 GO
+IF(OBJECT_ID('SP_SAVE_CLIENT') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_CLIENT
+GO
+
 CREATE PROCEDURE SP_CREAR_TABLAS
 AS
 
@@ -119,6 +123,7 @@ AS
 		NUMERO NUMERIC (10),
 		DPTO NUMERIC (4),
 		LOCALIDAD NVARCHAR(255),
+		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
 		CODIGO_POSTAL INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID), --FK CODIGO_POSTAL
 		)
@@ -272,12 +277,15 @@ GO
 		CREATE PROCEDURE SP_SAVE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
-		 @tipo INT
+		 @tipo INT,
+		 @rol_id INT
 		)
 		AS
 		BEGIN
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
 		values (@username, @pass, @tipo);
+		insert into GESTION_BDD_2C_2019.ROL_USUARIO (username, rol_id)
+		values (@username, @rol_id)
 		END
 
 
@@ -329,6 +337,41 @@ GO
 			estado = @estado
 		WHERE id = @id; 
 		END
+
+		GO
+
+		CREATE PROCEDURE SP_SAVE_CLIENT
+		(@id INT,
+		 @nombre VARCHAR(40),
+		 @apellido VARCHAR(40),
+		 @dni INT,
+		 @mail INT,
+		 @telefono VARCHAR(40),
+		 @fechaNac datetime,
+		 @direccion_id int,
+		 @calle VARCHAR(40),
+		 @nro VARCHAR(40),
+		 @piso VARCHAR(40),
+		 @depto VARCHAR(40),
+		 @localidad VARCHAR(40),
+		 @codigoPostal VARCHAR(40),
+		 @id_cod_postal INT
+		 )
+		AS
+		BEGIN
+
+		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL(ID, DESCRIPCION)
+		values
+		(@id_cod_postal, @codigoPostal)
+
+		insert into GESTION_BDD_2C_2019.DIRECCION (id, NUMERO, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+		values (@direccion_id, @calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
+
+		insert into GESTION_BDD_2C_2019.CLIENTE (ID, APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION) 
+		values (@id, @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id);
+		
+		END
+
 
 		GO
 

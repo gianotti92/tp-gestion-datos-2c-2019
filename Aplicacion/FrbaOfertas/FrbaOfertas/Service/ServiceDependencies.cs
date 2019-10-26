@@ -15,6 +15,10 @@ namespace FrbaOfertas.Service
         private static UsuarioDao UsuarioDao {get; set;}
         private static UsuarioService UsuarioService {get; set;}
 
+        private static ClienteDao clienteDao { get; set; }
+        
+        private static ClienteService clienteService { get; set; }
+
         public static RolDao GetRolDao()
         {
             if (RolDao == null)
@@ -51,6 +55,12 @@ namespace FrbaOfertas.Service
                 UsuarioService = new UsuarioService(UsuarioDao);
             }
             return UsuarioService;
+        }
+
+        public static ClienteService getClienteService()
+        {
+            clienteDao = new ClienteDao();
+            return new ClienteService(clienteDao);
         }
     }
 }

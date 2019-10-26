@@ -17,7 +17,7 @@ namespace FrbaOfertas.AbmUsuario
         private RolService RolService { get { return ServiceDependencies.GetRolService(); } }
         private UsuarioService UsuarioService { get { return ServiceDependencies.GetUsuarioService(); } }
         private List<Rol> roles;
-        private List<Rol> rolesSeleccionados;
+
 
         public ABMUsuarioAltaForm()
         {
@@ -27,9 +27,7 @@ namespace FrbaOfertas.AbmUsuario
 
         private void CargarDatos() 
         {
-            rolesSeleccionados = new List<Rol>();
             CargarTiposUsuario();
-            CargarRoles();
         }
 
         private void CargarTiposUsuario()
@@ -40,22 +38,12 @@ namespace FrbaOfertas.AbmUsuario
             cbTipoUsuario.SelectedItem = "Seleccionar";
         }
 
-        private void CargarRoles()
-        {
-            roles = RolService.GetAll();
-            cbRol.Items.Add("Seleccionar");
-            roles.ForEach(x => cbRol.Items.Add(x.nombre));
-            cbRol.SelectedItem = "Seleccionar";
-        }
 
         private void btnLimpiarCampos_Click(object sender, EventArgs e)
         {
             txtUsername.Text = "";
             txtPassword.Text = "";
             cbTipoUsuario.SelectedItem = "Seleccionar";
-            cbRol.SelectedItem = "Seleccionar";
-            rolesSeleccionados.ForEach(x => lbRoles.Items.Remove(x.nombre));
-            rolesSeleccionados.Clear();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -69,48 +57,36 @@ namespace FrbaOfertas.AbmUsuario
             ABMUsuarioForm abmUsuarioForm = new ABMUsuarioForm();
             abmUsuarioForm.Show();
         }
-
-        private void btnAgregarRol_Click(object sender, EventArgs e)
-        {
-            int i = cbRol.SelectedIndex;
-
-            if (rolesSeleccionados.Count == 0)
-            {
-                if (i > 0)
-                {
-                    Rol rol = roles[i - 1];
-                    lbRoles.Items.Add(rol.nombre);
-                    rolesSeleccionados.Add(rol);
-                }
-            }
-        }
-
-        private void btnEliminarRol_Click(object sender, EventArgs e)
-        {
-            int i = lbRoles.SelectedIndex;
-
-            if (rolesSeleccionados.Count > 0 && i != -1)
-            {
-                string rolName = lbRoles.Items[i].ToString();
-                Rol rol = roles.Find(x => x.nombre == rolName);
-                lbRoles.Items.RemoveAt(i);
-                rolesSeleccionados.Remove(rol);
-            }
-        }
+        
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
             if (EsUsuarioValido())
             {
-                Usuario usuario = new Usuario();
+                Usuario usuario = new Usuario(true, 0, new List<Rol>());
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
                 usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex-1));
-                usuario.roles = rolesSeleccionados;
 
                 UsuarioService.CreateUsuario(usuario);
 
-                Volver();
+                if (cbTipoUsuario.SelectedIndex == 0)
+                {
+                    AltaClienteForm clienteForm = new AltaClienteForm(usuario);
+                    clienteForm.Show();
+                    this.Dispose();
+                }
+                else if (cbTipoUsuario.SelectedIndex == 1)
+                {
+                    AltaProovedorForm altaProovedorForm = new AltaProovedorForm(usuario);
+                    altaProovedorForm.Show();
+                    this.Dispose();
+                }
+                else
+                {
+                    throw new Exception("Mal seleccion de tipo usuario");
+                }
+
             }
         }
 
@@ -134,11 +110,7 @@ namespace FrbaOfertas.AbmUsuario
                 MessageBox.Show("Seleccione un tipo de usuario");
                 esValido = false;
             }
-            else if (rolesSeleccionados.Count == 0)
-            {
-                MessageBox.Show("Seleccione un rol");
-                esValido = false;
-            }
+            
 
             return esValido;
         }

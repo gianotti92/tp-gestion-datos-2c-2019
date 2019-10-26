@@ -18,17 +18,6 @@ namespace FrbaOfertas.Service
             this.rolService = rolService;
             this.usuarioService = usuarioService;
         }
-        
-        public Boolean esUsuarioValido(string nombreUsuario, string contrasena)
-        {
-            Usuario usuario = usuarioService.searchUsuario(nombreUsuario);
-            if (usuario == null)
-            {
-                return false;
-            }
-            return usuario.contrasena.Equals(contrasena);
-        }
-
         public void agregarReintento(string userName)
         {
             Usuario usuario = usuarioService.searchUsuario(userName);

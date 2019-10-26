@@ -13,11 +13,11 @@ namespace FrbaOfertas.Entities
 
         public List<Rol> roles { get; set; }
 
-        public Usuario()
+        public Usuario(bool habilitado, int intento, List<Rol> roles)
         {
-            habilitado = true;
-            intento = 0;
-            roles = new List<Rol>();
+            this.habilitado = habilitado;
+            this.intento = intento;
+            this.roles = roles;
         }
     }
 }

@@ -117,6 +117,18 @@
     <Compile Include="AbmUsuario\ABMUsuarioForm.Designer.cs">
       <DependentUpon>ABMUsuarioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmUsuario\AltaClienteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\AltaClienteForm.Designer.cs">
+      <DependentUpon>AltaClienteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\AltaProovedorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\AltaProovedorForm.Designer.cs">
+      <DependentUpon>AltaProovedorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Connection\ConnectionQuery.cs" />
     <Compile Include="CragaCredito\Form1.cs">
       <SubType>Form</SubType>
@@ -136,11 +148,14 @@
     <Compile Include="CrearOferta\Form1.Designer.cs">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dao\ClienteDao.cs" />
     <Compile Include="Dao\FuncionalidadDao.cs" />
     <Compile Include="Dao\OfertaDao.cs" />
     <Compile Include="Dao\ProovedorDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
+    <Compile Include="Entities\Cliente.cs" />
+    <Compile Include="Entities\Direccion.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
     <Compile Include="Entities\Oferta.cs" />
@@ -168,11 +183,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ClienteRepository.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
     <Compile Include="Repository\OfertaRepository.cs" />
     <Compile Include="Repository\ProovedorRepository.cs" />
     <Compile Include="Repository\RolRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
+    <Compile Include="Service\ClienteService.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
     <Compile Include="Service\OfertaService.cs" />
@@ -193,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AbmRolMenuForm.resx">
       <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\AltaClienteForm.resx">
+      <DependentUpon>AltaClienteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\AltaProovedorForm.resx">
+      <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\AbmOfertasForm.resx">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
