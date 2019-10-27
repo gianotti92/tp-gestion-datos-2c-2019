@@ -51,6 +51,7 @@ namespace FrbaOfertas.Dao
             cmd.Parameters.Add(new SqlParameter("@username", usuario.userName));
             cmd.Parameters.Add(new SqlParameter("@pass", usuario.contrasena));
             cmd.Parameters.Add(new SqlParameter("@tipo", usuario.tipoUsuario));
+            cmd.Parameters.Add(new SqlParameter("@rol_id", usuario.roles[0].id));
 
             cmd.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();

@@ -40,7 +40,10 @@ IF(OBJECT_ID('SP_DELETE_ROL_USUARIO') IS NOT NULL)
 	DROP PROCEDURE SP_DELETE_ROL_USUARIO
 IF(OBJECT_ID('SP_SAVE_OFERTA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_OFERTA
-GO
+IF(OBJECT_ID('SP_SAVE_POSTAL_CODE') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_POSTAL_CODE
+IF (OBJECT_ID('SP_SAVE_DIRECCION') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_DIRECCION
 IF(OBJECT_ID('SP_SAVE_CLIENT') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_CLIENT
 GO
@@ -337,7 +340,33 @@ GO
 			estado = @estado
 		WHERE id = @id; 
 		END
+		GO
 
+		CREATE PROCEDURE SP_SAVE_POSTAL_CODE
+		(@id INT,
+		@descripcion varchar(40))
+		AS
+		BEGIN
+		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL (ID, DESCRIPCION)
+		values
+		(@id, @descripcion)
+		END
+		GO
+
+		CREATE PROCEDURE SP_SAVE_DIRECCION
+		(@direccion_id int,
+		 @calle VARCHAR(40),
+		 @nro VARCHAR(40),
+		 @piso VARCHAR(40),
+		 @depto VARCHAR(40),
+		 @localidad VARCHAR(40),
+		 @id_cod_postal INT)
+		 AS
+		 BEGIN
+
+		insert into GESTION_BDD_2C_2019.DIRECCION (id, NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+		values (@direccion_id, @calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
+		END
 		GO
 
 		CREATE PROCEDURE SP_SAVE_CLIENT
@@ -348,31 +377,14 @@ GO
 		 @mail INT,
 		 @telefono VARCHAR(40),
 		 @fechaNac datetime,
-		 @direccion_id int,
-		 @calle VARCHAR(40),
-		 @nro VARCHAR(40),
-		 @piso VARCHAR(40),
-		 @depto VARCHAR(40),
-		 @localidad VARCHAR(40),
-		 @codigoPostal VARCHAR(40),
-		 @id_cod_postal INT
-		 )
+		 @direccion_id INT)
+		
 		AS
 		BEGIN
 
-		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL(ID, DESCRIPCION)
-		values
-		(@id_cod_postal, @codigoPostal)
-
-		insert into GESTION_BDD_2C_2019.DIRECCION (id, NUMERO, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-		values (@direccion_id, @calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
-
 		insert into GESTION_BDD_2C_2019.CLIENTE (ID, APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION) 
 		values (@id, @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id);
-		
 		END
-
-
 		GO
 
 		/******SP delete rol ***********/
