@@ -371,7 +371,7 @@ GO
 		 @telefono NUMERIC(18),
 		 @fechaNac datetime,
 		 @direccion_id INT,
-		 @usuario_id varchar)
+		 @usuario_id VARCHAR(40))
 	
 		AS
 		BEGIN
