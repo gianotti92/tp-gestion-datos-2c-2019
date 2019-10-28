@@ -61,7 +61,7 @@
             // cbTipoUsuario
             // 
             this.cbTipoUsuario.FormattingEnabled = true;
-            this.cbTipoUsuario.Location = new System.Drawing.Point(108, 108);
+            this.cbTipoUsuario.Location = new System.Drawing.Point(108, 118);
             this.cbTipoUsuario.Margin = new System.Windows.Forms.Padding(2);
             this.cbTipoUsuario.Name = "cbTipoUsuario";
             this.cbTipoUsuario.Size = new System.Drawing.Size(205, 23);
@@ -115,10 +115,10 @@
             // 
             // siguienteBtn
             // 
-            this.siguienteBtn.Location = new System.Drawing.Point(298, 262);
+            this.siguienteBtn.Location = new System.Drawing.Point(311, 254);
             this.siguienteBtn.Margin = new System.Windows.Forms.Padding(2);
             this.siguienteBtn.Name = "siguienteBtn";
-            this.siguienteBtn.Size = new System.Drawing.Size(83, 23);
+            this.siguienteBtn.Size = new System.Drawing.Size(83, 31);
             this.siguienteBtn.TabIndex = 1;
             this.siguienteBtn.Text = "Siguiente";
             this.siguienteBtn.UseVisualStyleBackColor = true;
@@ -126,10 +126,10 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(36, 263);
+            this.btnCancelar.Location = new System.Drawing.Point(66, 253);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 22);
+            this.btnCancelar.Size = new System.Drawing.Size(75, 31);
             this.btnCancelar.TabIndex = 2;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -137,10 +137,10 @@
             // 
             // btnLimpiarCampos
             // 
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(144, 263);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(166, 253);
             this.btnLimpiarCampos.Margin = new System.Windows.Forms.Padding(2);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
-            this.btnLimpiarCampos.Size = new System.Drawing.Size(118, 23);
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(118, 32);
             this.btnLimpiarCampos.TabIndex = 3;
             this.btnLimpiarCampos.Text = "Limpiar Campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;

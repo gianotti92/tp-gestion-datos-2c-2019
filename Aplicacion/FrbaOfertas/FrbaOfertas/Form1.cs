@@ -58,6 +58,7 @@ using System.Windows.Forms;
             }
             else
             {
+                //TODO: probablemente aca deberia ir un mensaje en vez de esto..
                ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
                this.Hide();
                altaUsuario.Show();
@@ -69,6 +70,13 @@ using System.Windows.Forms;
             Form botonesPorRoles = new AbmRol.SeleccionarFuncionalidadForm1(funcionalidades);
             botonesPorRoles.Show();
             this.Hide();
+        }
+
+        private void createUserBtn_Click(object sender, EventArgs e)
+        {
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            this.Hide();
+            altaUsuario.Show();
         }
     }
 }

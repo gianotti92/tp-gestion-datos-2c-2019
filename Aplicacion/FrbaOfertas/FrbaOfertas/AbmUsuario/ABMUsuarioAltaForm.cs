@@ -14,7 +14,7 @@ namespace FrbaOfertas.AbmUsuario
 {
     public partial class ABMUsuarioAltaForm : Form
     {
-        private RolService RolService { get { return ServiceDependencies.GetRolService(); } }
+        private RolService rolService { get { return ServiceDependencies.GetRolService(); } }
         private UsuarioService UsuarioService { get { return ServiceDependencies.GetUsuarioService(); } }
         private List<Rol> roles;
 
@@ -63,21 +63,22 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (EsUsuarioValido())
             {
+                roles = rolService.searchRoles();
                 Usuario usuario = new Usuario(true, 0, new List<Rol>());
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
                 usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex-1));
 
-                UsuarioService.CreateUsuario(usuario);
-
-                if (cbTipoUsuario.SelectedIndex == 0)
+                if (usuario.tipoUsuario == TipoUsuario.CLIENTE)
                 {
+                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Cliente")));
                     AltaClienteForm clienteForm = new AltaClienteForm(usuario);
                     clienteForm.Show();
                     this.Dispose();
                 }
-                else if (cbTipoUsuario.SelectedIndex == 1)
+                else if (usuario.tipoUsuario == TipoUsuario.PROVEEDOR)
                 {
+                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Proveedor")));
                     AltaProovedorForm altaProovedorForm = new AltaProovedorForm(usuario);
                     altaProovedorForm.Show();
                     this.Dispose();
@@ -92,12 +93,20 @@ namespace FrbaOfertas.AbmUsuario
 
         private bool EsUsuarioValido()
         {
+            
             bool esValido = true;
             int tipoUsuario = Convert.ToInt32(cbTipoUsuario.SelectedIndex);
-
+            
             if (txtUsername.Text == "")
             {
                 MessageBox.Show("Ingrese un username");
+                esValido = false;
+            }
+            
+            Usuario usuario = UsuarioService.searchUsuario(txtUsername.Text);
+            if (usuario != null)
+            {
+                MessageBox.Show("El usuario ingresado ya existe");
                 esValido = false;
             }
             else if (txtPassword.Text == "")

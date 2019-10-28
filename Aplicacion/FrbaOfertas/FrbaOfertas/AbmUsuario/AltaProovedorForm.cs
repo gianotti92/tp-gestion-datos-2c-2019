@@ -72,9 +72,9 @@ namespace FrbaOfertas.AbmUsuario
             
             cliente.nombre = nombreTxt.Text;
             cliente.apellido = apellidotxt.Text;
-            cliente.dni = dniTxt.Text;
+            cliente.dni =Convert.ToInt32(dniTxt.Text);
             cliente.mail = mailTxt.Text;
-            cliente.telefono = telefonoTxt.Text;
+            cliente.telefono = Convert.ToInt32(telefonoTxt.Text);
             cliente.fechaNac = fechaNacPicker1.Text;
 
             Direccion direccion = new Direccion();
@@ -83,7 +83,7 @@ namespace FrbaOfertas.AbmUsuario
             direccion.nro = nroTxt.Text;
             direccion.piso = pisoTxt.Text;
             direccion.depto = dptotxt.Text;
-            direccion.codigoPostal = codigoPostaltxt.Text;
+           // direccion.codigoPostal = codigoPostaltxt.Text;
             direccion.localidad = localidadTxt.Text;
             
             cliente.direccion = direccion;

@@ -33,13 +33,14 @@
             this.contrasenaTxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.createUserBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ingresarBtn
             // 
-            this.ingresarBtn.Location = new System.Drawing.Point(103, 164);
+            this.ingresarBtn.Location = new System.Drawing.Point(65, 182);
             this.ingresarBtn.Name = "ingresarBtn";
-            this.ingresarBtn.Size = new System.Drawing.Size(128, 46);
+            this.ingresarBtn.Size = new System.Drawing.Size(104, 30);
             this.ingresarBtn.TabIndex = 0;
             this.ingresarBtn.Text = "Ingresar";
             this.ingresarBtn.UseVisualStyleBackColor = true;
@@ -76,11 +77,22 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Contraseña";
             // 
+            // createUserBtn
+            // 
+            this.createUserBtn.Location = new System.Drawing.Point(189, 182);
+            this.createUserBtn.Name = "createUserBtn";
+            this.createUserBtn.Size = new System.Drawing.Size(104, 30);
+            this.createUserBtn.TabIndex = 5;
+            this.createUserBtn.Text = "Crear Usuario";
+            this.createUserBtn.UseVisualStyleBackColor = true;
+            this.createUserBtn.Click += new System.EventHandler(this.createUserBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 301);
+            this.Controls.Add(this.createUserBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.contrasenaTxt);
@@ -99,6 +111,7 @@
         private System.Windows.Forms.TextBox contrasenaTxt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button createUserBtn;
     }
 }
 

@@ -123,8 +123,8 @@ AS
 	CREATE TABLE GESTION_BDD_2C_2019.DIRECCION (
 		id INT IDENTITY NOT NULL PRIMARY KEY,
 		CALLE NVARCHAR(255),
-		NUMERO NUMERIC (10),
-		DPTO NUMERIC (4),
+		NUMERO varchar (10),
+		DPTO varchar (4),
 		LOCALIDAD NVARCHAR(255),
 		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
@@ -287,11 +287,7 @@ GO
 		BEGIN
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
 		values (@username, @pass, @tipo);
-		insert into GESTION_BDD_2C_2019.ROL_USUARIO (username, rol_id)
-		values (@username, @rol_id)
 		END
-
-
 		GO
 
 		CREATE PROCEDURE SP_UPDATE_USER
@@ -343,47 +339,45 @@ GO
 		GO
 
 		CREATE PROCEDURE SP_SAVE_POSTAL_CODE
-		(@id INT,
-		@descripcion varchar(40))
+		(@descripcion varchar(40))
 		AS
 		BEGIN
-		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL (ID, DESCRIPCION)
+		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL (DESCRIPCION)
 		values
-		(@id, @descripcion)
+		(@descripcion)
 		END
 		GO
 
 		CREATE PROCEDURE SP_SAVE_DIRECCION
-		(@direccion_id int,
-		 @calle VARCHAR(40),
-		 @nro VARCHAR(40),
-		 @piso VARCHAR(40),
-		 @depto VARCHAR(40),
+		(@calle VARCHAR(40),
+		 @nro varchar(4),
+		 @piso varchar(40),
+		 @depto varchar(10),
 		 @localidad VARCHAR(40),
 		 @id_cod_postal INT)
 		 AS
 		 BEGIN
 
-		insert into GESTION_BDD_2C_2019.DIRECCION (id, NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-		values (@direccion_id, @calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
+		insert into GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+		values (@calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
 		END
 		GO
 
 		CREATE PROCEDURE SP_SAVE_CLIENT
-		(@id INT,
-		 @nombre VARCHAR(40),
+		(@nombre VARCHAR(40),
 		 @apellido VARCHAR(40),
 		 @dni INT,
-		 @mail INT,
-		 @telefono VARCHAR(40),
+		 @mail varchar,
+		 @telefono NUMERIC(18),
 		 @fechaNac datetime,
-		 @direccion_id INT)
-		
+		 @direccion_id INT,
+		 @usuario_id varchar)
+	
 		AS
 		BEGIN
 
-		insert into GESTION_BDD_2C_2019.CLIENTE (ID, APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION) 
-		values (@id, @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id);
+		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO) 
+		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id);
 		END
 		GO
 

@@ -15,6 +15,10 @@ namespace FrbaOfertas.Service
         private static UsuarioDao UsuarioDao {get; set;}
         private static UsuarioService UsuarioService {get; set;}
 
+        private static DireccionService direccionService { get; set; }
+
+        private static DireccionDao direccionDao { get; set; }
+
         private static ClienteDao clienteDao { get; set; }
         
         private static ClienteService clienteService { get; set; }
@@ -61,6 +65,12 @@ namespace FrbaOfertas.Service
         {
             clienteDao = new ClienteDao();
             return new ClienteService(clienteDao);
+        }
+
+        public static DireccionService getDireccionService()
+        {
+            direccionDao = new DireccionDao();
+            return new DireccionService(direccionDao);
         }
     }
 }
