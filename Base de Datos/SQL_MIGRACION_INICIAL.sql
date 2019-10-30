@@ -312,12 +312,34 @@ GO
 	ORDER BY 1
 
 
-	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
-	,M.Oferta_Fecha_Compra,NULL,Oferta_Entregado_Fecha,Factura_Nro
+	SELECT M.Oferta_Codigo,m.Cli_Dni
+	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
+	Into #t_ofer2
 	FROM GD2C2019.gd_esquema.Maestra M
 	where M.Oferta_Codigo is not null
 	ORDER BY Oferta_Codigo
+
+	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
+	,M.Oferta_Fecha_Compra,NULL as cupon,
+	(select top 1 t.Oferta_Entregado_Fecha from #t_ofer2 t 
+	where t.Cli_Dni = m.Cli_Dni and t.Oferta_Codigo = m.Oferta_Codigo and t.Oferta_Fecha_Compra =m.Oferta_Fecha_Compra 
+	and t.Oferta_Entregado_Fecha is not null ) ,
+	(select top 1 t2.Factura_Nro from #t_ofer2 t2 where t2.Cli_Dni = m.Cli_Dni and t2.Oferta_Codigo = m.Oferta_Codigo 
+	and t2.Factura_Nro =m.Factura_Nro and t2.Factura_Nro is not null )
+	FROM GD2C2019.gd_esquema.Maestra M
+	where M.Oferta_Codigo is not null
+	ORDER BY Oferta_Codigo
+
+
+	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
+	from #t_ofer2
+	where Oferta_Entregado_Fecha is not null
+	and Factura_Nro is not null
+	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
+	order by 1,2
 	
+	
+
 --	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
 --	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
 
