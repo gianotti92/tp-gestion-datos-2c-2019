@@ -124,7 +124,7 @@ AS
 		id INT IDENTITY NOT NULL PRIMARY KEY,
 		CALLE NVARCHAR(255),
 		NUMERO varchar (10),
-		DPTO varchar (4),
+		DPTO varchar (10),
 		LOCALIDAD NVARCHAR(255),
 		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
@@ -349,17 +349,17 @@ GO
 		GO
 
 		CREATE PROCEDURE SP_SAVE_DIRECCION
-		(@calle VARCHAR(40),
-		 @nro varchar(4),
-		 @piso varchar(40),
-		 @depto varchar(10),
-		 @localidad VARCHAR(40),
+		(@calle VARCHAR(255),
+		 @nro VARCHAR(10),
+		 @piso NVARCHAR(255),
+		 @depto VARCHAR(10),
+		 @localidad NVARCHAR(255),
 		 @id_cod_postal INT)
 		 AS
 		 BEGIN
 
 		insert into GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-		values (@calle, @nro, @piso, @depto, @localidad, @id_cod_postal);
+		values (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal);
 		END
 		GO
 
@@ -367,7 +367,7 @@ GO
 		(@nombre VARCHAR(40),
 		 @apellido VARCHAR(40),
 		 @dni INT,
-		 @mail varchar,
+		 @mail NVARCHAR(255),
 		 @telefono NUMERIC(18),
 		 @fechaNac datetime,
 		 @direccion_id INT,
