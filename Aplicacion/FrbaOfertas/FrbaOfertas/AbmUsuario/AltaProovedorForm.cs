@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using FrbaOfertas.Dao;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Service;
 
@@ -75,11 +76,25 @@ namespace FrbaOfertas.AbmUsuario
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
-            if (camposValidos())
-            {
-                crearProovedor();
+                if (camposValidos())
+                {
+                    crearProovedor();
+                    MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
+                    this.Dispose();
+                
+                    Form1 f = new Form1(
+                        new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
+                            new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
+                        new FuncionalidadPorRolService(new RolService(new RolDao()),
+                            new FuncionalidadService(new FuncionalidadDao())));
+                
+                    f.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Hay campos incompletos");
+                }
             }
-        }
 
         private bool camposValidos()
         {
@@ -94,7 +109,7 @@ namespace FrbaOfertas.AbmUsuario
         {
             Proovedor proovedor = new Proovedor();
             proovedor.razonSocial = razonSocialTxt.Text;
-            proovedor.cuit = Convert.ToInt32(cuitTxt.Text);
+            proovedor.cuit = cuitTxt.Text;
             proovedor.mail = mailTxt.Text;
             proovedor.mail = mailTxt.Text;
             proovedor.telefono = Convert.ToInt32(telTxt.Text);
@@ -116,6 +131,7 @@ namespace FrbaOfertas.AbmUsuario
             direccion.codigoPostal = postalCodeId;
             direccion.localidad = localidadTxt.Text;
             direccion.ciudad = ciudad.id;
+            
 
             direccionService.CreateDireccion(direccion);
 
@@ -124,5 +140,16 @@ namespace FrbaOfertas.AbmUsuario
             UsuarioService.CreateUsuario(usuario);
             proveedorService.save(proovedor);
         }
+
+        private void volverBtn_Click(object sender, EventArgs e)
+        {
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            this.Dispose();
+            altaUsuario.Show();
+        }
     }
 }
+
+
+
+

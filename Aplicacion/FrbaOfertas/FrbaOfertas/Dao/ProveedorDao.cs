@@ -21,7 +21,7 @@ namespace FrbaOfertas.Dao
             {
                 Proovedor proovedor = new Proovedor();
                 proovedor.id = Convert.ToInt32(r_proovedor["ID"]);
-                proovedor.cuit = Convert.ToInt32(r_proovedor["CUIT"]);
+                proovedor.cuit = Convert.ToString(r_proovedor["CUIT"]);
                 proovedor.razonSocial = Convert.ToString(r_proovedor["RAZON_SOCIAL"]);
                 proovedor.mail = Convert.ToString(r_proovedor["MAIL"]);
                 proovedor.telefono = Convert.ToInt32(r_proovedor["TELEFONO"]);

@@ -131,5 +131,12 @@ namespace FrbaOfertas.AbmUsuario
                 f.Show();
             }
         }
+
+        private void volverBtn_Click(object sender, EventArgs e)
+        {
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            this.Dispose();
+            altaUsuario.Show();
+        }
     }
 }
