@@ -4,11 +4,11 @@ using FrbaOfertas.Repository;
 
 namespace FrbaOfertas.Service
 {
-    public class ProovedorService
+    public class ProveedorService
     {
         private ProovedorRepository proovedorRepository;
 
-        public ProovedorService(ProovedorRepository proovedorRepository)
+        public ProveedorService(ProovedorRepository proovedorRepository)
         {
             this.proovedorRepository = proovedorRepository;
         }
@@ -16,6 +16,11 @@ namespace FrbaOfertas.Service
         public List<Proovedor> searchProovedores()
         {
             return proovedorRepository.searchProovedores();
+        }
+
+        public void save(Proovedor proveedor)
+        {
+            proovedorRepository.save(proveedor);
         }
     }
 }

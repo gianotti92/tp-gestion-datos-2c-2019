@@ -17,11 +17,22 @@ namespace FrbaOfertas.Service
 
         private static DireccionService direccionService { get; set; }
 
+        private static ProveedorService _proveedorService { get; set; }
+
         private static DireccionDao direccionDao { get; set; }
 
         private static ClienteDao clienteDao { get; set; }
         
         private static ClienteService clienteService { get; set; }
+
+        private static CiudadService ciudadService { get; set; }
+
+        private static RubroService rubroService { get; set; }
+
+        private static CiudadDao ciudadDao { get; set; }
+        private static RubroDao _rubroDao { get; set; }
+        
+        private static ProveedorDao _proveedorDao { get; set; }
 
         public static RolDao GetRolDao()
         {
@@ -71,6 +82,24 @@ namespace FrbaOfertas.Service
         {
             direccionDao = new DireccionDao();
             return new DireccionService(direccionDao);
+        }
+
+        public static RubroService getRubroService()
+        {
+            _rubroDao = new RubroDao();
+            return new RubroService(_rubroDao);
+        }
+
+        public static CiudadService GetCiudadService()
+        {
+            ciudadDao = new CiudadDao();
+            return new CiudadService(ciudadDao);
+        }
+        
+        public static ProveedorService getProveedorService()
+        {
+            _proveedorDao = new ProveedorDao();
+            return new ProveedorService(_proveedorDao);
         }
     }
 }

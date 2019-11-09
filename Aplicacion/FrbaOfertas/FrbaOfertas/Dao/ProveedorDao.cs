@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
@@ -7,7 +8,7 @@ using FrbaOfertas.Repository;
 
 namespace FrbaOfertas.Dao
 {
-    public class ProovedorDao : ProovedorRepository
+    public class ProveedorDao : ProovedorRepository
     {
         public List<Proovedor> searchProovedores()
         {
@@ -29,6 +30,24 @@ namespace FrbaOfertas.Dao
                 proovedores.Add(proovedor);
             }
             return proovedores;
+        }
+
+        public void save(Proovedor proveedor)
+        {
+            SqlCommand cmd_proveedor = new SqlCommand("dbo.SP_SAVE_PROVIDER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_proveedor.CommandType = CommandType.StoredProcedure;
+            cmd_proveedor.Parameters.Add(new SqlParameter("@razonSocial", proveedor.razonSocial));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@tel", proveedor.telefono));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@direc", proveedor.direccion.id));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@rubro", proveedor.rubro));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@mail", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@contacto", proveedor.contacto));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@usuario", proveedor.usuario));
+            
+            cmd_proveedor.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
         }
     }
 }

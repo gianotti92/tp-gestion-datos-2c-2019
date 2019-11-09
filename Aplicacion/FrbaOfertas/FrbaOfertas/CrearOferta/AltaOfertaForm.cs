@@ -10,11 +10,11 @@ namespace FrbaOfertas.CrearOferta
     public partial class AltaOfertaForm : Form
     {
         private OfertaService ofertaService;
-        private ProovedorService proovedorService;
+        private ProveedorService proovedorService;
 
         private List<Proovedor> proovedores;
 
-        public AltaOfertaForm(OfertaService ofertaService, ProovedorService proovedorService)
+        public AltaOfertaForm(OfertaService ofertaService, ProveedorService proovedorService)
         {
             this.ofertaService = ofertaService;
             this.proovedorService = proovedorService;

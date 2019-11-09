@@ -27,7 +27,7 @@ namespace FrbaOfertas.CrearOferta
 
         private void crearOfertaBtn_Click(object sender, EventArgs e)
         {
-            AltaOfertaForm altaOfertaForm = new AltaOfertaForm(new OfertaService(new OfertaDao()), new ProovedorService(new ProovedorDao()));
+            AltaOfertaForm altaOfertaForm = new AltaOfertaForm(new OfertaService(new OfertaDao()), new ProveedorService(new ProveedorDao()));
             this.Hide();
             altaOfertaForm.Show();
         }

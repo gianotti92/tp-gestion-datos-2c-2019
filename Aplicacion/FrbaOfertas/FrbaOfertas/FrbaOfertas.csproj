@@ -148,13 +148,16 @@
     <Compile Include="CrearOferta\Form1.Designer.cs">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dao\CiudadDao.cs" />
     <Compile Include="Dao\ClienteDao.cs" />
     <Compile Include="Dao\DireccionDao.cs" />
     <Compile Include="Dao\FuncionalidadDao.cs" />
     <Compile Include="Dao\OfertaDao.cs" />
-    <Compile Include="Dao\ProovedorDao.cs" />
+    <Compile Include="Dao\ProveedorDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
+    <Compile Include="Dao\RubroDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
+    <Compile Include="Entities\Ciudad.cs" />
     <Compile Include="Entities\Cliente.cs" />
     <Compile Include="Entities\Direccion.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Entities\Oferta.cs" />
     <Compile Include="Entities\Proovedor.cs" />
     <Compile Include="Entities\Rol.cs" />
+    <Compile Include="Entities\Rubro.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
     <Compile Include="Entities\Usuario.cs" />
     <Compile Include="Facturar\Form1.cs">
@@ -184,20 +188,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CiudadRepository.cs" />
     <Compile Include="Repository\ClienteRepository.cs" />
     <Compile Include="Repository\DireccionRepository.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
     <Compile Include="Repository\OfertaRepository.cs" />
     <Compile Include="Repository\ProovedorRepository.cs" />
     <Compile Include="Repository\RolRepository.cs" />
+    <Compile Include="Repository\RubroRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
+    <Compile Include="Service\CiudadService.cs" />
     <Compile Include="Service\ClienteService.cs" />
     <Compile Include="Service\DireccionService.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
     <Compile Include="Service\OfertaService.cs" />
-    <Compile Include="Service\ProovedorService.cs" />
+    <Compile Include="Service\ProveedorService.cs" />
     <Compile Include="Service\RolService.cs" />
+    <Compile Include="Service\RubroService.cs" />
     <Compile Include="Service\ServiceDependencies.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
