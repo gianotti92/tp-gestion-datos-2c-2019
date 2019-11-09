@@ -128,7 +128,8 @@ AS
 		LOCALIDAD NVARCHAR(255),
 		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
-		CODIGO_POSTAL INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID), --FK CODIGO_POSTAL
+		CODIGO_POSTAL INT,
+		CODIGO_POSTAL_TEST INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID), --FK CODIGO_POSTAL
 		)
 	
 
@@ -153,14 +154,14 @@ AS
 		
 
 		CREATE TABLE GESTION_BDD_2C_2019.RUBRO(
-		ID INT NOT NULL PRIMARY KEY,
+		ID INT NOT NULL IDENTITY PRIMARY KEY,
 		DESCRIPCION NVARCHAR(255), 
 		)
 
 
 	CREATE TABLE GESTION_BDD_2C_2019.PROVEEDOR (
 		ID NUMERIC(18,0) IDENTITY NOT NULL PRIMARY KEY, 
-		CUIT NUMERIC(11,0) UNIQUE NOT NULL,
+		CUIT NVARCHAR(20) UNIQUE NOT NULL,
 		RAZON_SOCIAL NVARCHAR(255) UNIQUE,
 		MAIL NVARCHAR(255),
 		TELEFONO NUMERIC(18),
@@ -214,6 +215,161 @@ AS
 		) 
 
 		END
+GO
+
+IF(OBJECT_ID('udf_GetNumeric') IS NOT NULL)
+	DROP function udf_GetNumeric
+GO
+CREATE FUNCTION dbo.udf_GetNumeric
+(@strAlphaNumeric VARCHAR(256))
+RETURNS VARCHAR(256)
+AS
+BEGIN
+	DECLARE @intAlpha INT
+	SET @intAlpha = PATINDEX('%[^0-9]%', @strAlphaNumeric)
+	BEGIN
+		WHILE @intAlpha > 0
+			BEGIN
+			SET @strAlphaNumeric = STUFF(@strAlphaNumeric, @intAlpha, 1, '' )
+			SET @intAlpha = PATINDEX('%[^0-9]%', @strAlphaNumeric )
+			END
+	END
+	RETURN ISNULL(@strAlphaNumeric,0)
+END
+GO
+	CREATE PROCEDURE SP_MIGRACION  
+	AS
+	BEGIN
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	(username,tipo,pass,habilitado,intentos)
+	SELECT DISTINCT M.Cli_Dni,1,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,9
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Cli_Dni IS NOT NULL
+	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	(username,tipo,pass,habilitado,intentos)
+	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,9
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Provee_CUIT IS NOT NULL
+	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CIUDAD
+	(CIUDAD_NOMBRE)
+	SELECT DISTINCT Cli_Ciudad
+	FROM GD2C2019.gd_esquema.Maestra
+	where Cli_Ciudad is not null
+	UNION 
+	SELECT DISTINCT Provee_Ciudad
+	FROM GD2C2019.gd_esquema.Maestra
+	where Provee_Ciudad is not null
+	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CODIGO_POSTAL
+	(DESCRIPCION)
+	values ('No Informado')
+		
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	select distinct left(m.Cli_Direccion, len(m.Cli_Direccion )-4), dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)),NULL,NULL,
+	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Cli_Ciudad = c.CIUDAD_NOMBRE),1
+	from GD2C2019.gd_esquema.Maestra M 
+	WHERE M.Cli_Direccion IS NOT NULL
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	select distinct left(m.Provee_Dom, len(m.Provee_Dom )-4), dbo.udf_GetNumeric(RIGHT(m.Provee_Dom,5)),NULL,NULL,
+	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Provee_Ciudad = c.CIUDAD_NOMBRE),1
+	from GD2C2019.gd_esquema.Maestra M
+	where m.Provee_CUIT is not null 
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CLIENTE
+	(DNI,NOMBRE,APELLIDO,MAIL,TELEFONO,DIRECCION,FNANCIAMIENTO,USUARIO,SALDO)
+	SELECT DISTINCT M.Cli_Dni,M.Cli_Nombre,M.Cli_Apellido,M.Cli_Mail,M.Cli_Telefono,
+	( Select d.id from GD2C2019.GESTION_BDD_2C_2019.DIRECCION D 
+	where d.CALLE = left(m.Cli_Direccion, len(m.Cli_Direccion )-4)
+	and d.NUMERO = dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)) ),
+	M.Cli_Fecha_Nac,U.username,0
+	FROM GD2C2019.gd_esquema.Maestra M
+	JOIN GD2C2019.GESTION_BDD_2C_2019.USUARIO U ON U.username = CAST(M.Cli_DnI AS VARCHAR)
+	ORDER BY 1
+
+
+	insert into GD2C2019.GESTION_BDD_2C_2019.RUBRO
+	(DESCRIPCION)
+	SELECT DISTINCT M.Provee_Rubro
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Provee_Rubro IS NOT NULL
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR
+	(CUIT,RAZON_SOCIAL,MAIL,TELEFONO,DIRECCION,RUBRO,CONTACTO,USUARIO)
+	SELECT DISTINCT M.Provee_CUIT, Provee_RS, NULL, Provee_Telefono,
+	( Select d.id from GD2C2019.GESTION_BDD_2C_2019.DIRECCION D 
+	where d.CALLE = left(m.Provee_Dom, len(m.Provee_Dom )-4)
+	and d.NUMERO = dbo.udf_GetNumeric(RIGHT(m.Provee_Dom,5)) ) ,
+	(SELECT R.ID FROM GD2C2019.GESTION_BDD_2C_2019.RUBRO R WHERE R.DESCRIPCION = M.Provee_Rubro) , NULL,
+	M.Provee_CUIT
+	FROM GD2C2019.gd_esquema.Maestra M
+	Where m.Provee_CUIT is not null
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.OFERTA
+	(ID,PROV_ID,PRECIO,PRECIO_LISTO,STOCK_DISPONIBLE,DESCRIPCION,FECHA_PUBLIC,FECHA_VENC,MAX_X_COMPRA)
+	SELECT DISTINCT M.Oferta_Codigo, (SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT)
+	,M.Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Descripcion,
+	Oferta_Fecha,Oferta_Fecha_Venc,0
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE Oferta_Codigo IS NOT NULL
+	ORDER BY Oferta_Codigo
+	
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.FACTURA
+	(ID,FECHA,PROV_ID,PERIODO_INICIO,PERIODO_FIN)
+	SELECT DISTINCT M.Factura_Nro, M.Factura_Fecha, 
+	(SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT),
+	Factura_Fecha,Factura_Fecha
+	FROM GD2C2019.gd_esquema.Maestra M
+	WHERE M.Factura_Nro IS NOT NULL
+	ORDER BY 1
+
+
+	SELECT M.Oferta_Codigo,m.Cli_Dni
+	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
+	Into #t_ofer2
+	FROM GD2C2019.gd_esquema.Maestra M
+	where M.Oferta_Codigo is not null
+	ORDER BY Oferta_Codigo
+
+	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
+	,M.Oferta_Fecha_Compra,NULL as cupon,
+	(select top 1 t.Oferta_Entregado_Fecha from #t_ofer2 t 
+	where t.Cli_Dni = m.Cli_Dni and t.Oferta_Codigo = m.Oferta_Codigo and t.Oferta_Fecha_Compra =m.Oferta_Fecha_Compra 
+	and t.Oferta_Entregado_Fecha is not null ) ,
+	(select top 1 t2.Factura_Nro from #t_ofer2 t2 where t2.Cli_Dni = m.Cli_Dni and t2.Oferta_Codigo = m.Oferta_Codigo 
+	and t2.Factura_Nro =m.Factura_Nro and t2.Factura_Nro is not null )
+	FROM GD2C2019.gd_esquema.Maestra M
+	where M.Oferta_Codigo is not null
+	ORDER BY Oferta_Codigo
+
+
+	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
+	from #t_ofer2
+	where Oferta_Entregado_Fecha is not null
+	and Factura_Nro is not null
+	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
+	order by 1,2
+	
+	
+
+--	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
+--	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
+
+
+
+	END
+
 
 GO
 		EXEC DBO.SP_CREAR_TABLAS
@@ -223,6 +379,7 @@ GO
 
 
 GO
+
 
 		CREATE PROCEDURE SP_CREATE_ROL
 		(@nombre VARCHAR(50))
