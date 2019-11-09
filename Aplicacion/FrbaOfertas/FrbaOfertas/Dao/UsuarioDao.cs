@@ -42,6 +42,27 @@ namespace FrbaOfertas.Dao
             return usuario;
         }
 
+        public bool ValidateUsuario(string userName,string passWord)
+        {
+
+            SqlCommand cmd = new SqlCommand("dbo.SP_VALIDATE_USER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@username", userName));
+            cmd.Parameters.Add(new SqlParameter("@passWord", passWord));
+
+            SqlParameter returnParameter = new SqlParameter("@status", SqlDbType.Bit);
+            returnParameter.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(returnParameter);
+            cmd.ExecuteNonQuery();
+            var result = returnParameter.Value;
+
+           ConnectionQuery.cerrarConexion();
+            return result.Equals(0);
+             
+         
+        }
+
         public void Create(Usuario usuario)
         {
             SqlCommand cmd = new SqlCommand("dbo.SP_SAVE_USER", ConnectionQuery.Instance());
