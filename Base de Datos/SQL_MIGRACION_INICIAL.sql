@@ -271,14 +271,14 @@ GO
 	values ('No Informado')
 		
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
-	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL)
 	select distinct left(m.Cli_Direccion, len(m.Cli_Direccion )-4), dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)),NULL,NULL,
 	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Cli_Ciudad = c.CIUDAD_NOMBRE),1
 	from GD2C2019.gd_esquema.Maestra M 
 	WHERE M.Cli_Direccion IS NOT NULL
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
-	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL_TEST)
+	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL)
 	select distinct left(m.Provee_Dom, len(m.Provee_Dom )-4), dbo.udf_GetNumeric(RIGHT(m.Provee_Dom,5)),NULL,NULL,
 	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Provee_Ciudad = c.CIUDAD_NOMBRE),1
 	from GD2C2019.gd_esquema.Maestra M
