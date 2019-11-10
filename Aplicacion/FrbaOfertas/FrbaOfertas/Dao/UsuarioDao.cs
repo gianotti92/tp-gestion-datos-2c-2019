@@ -52,13 +52,13 @@ namespace FrbaOfertas.Dao
             cmd.Parameters.Add(new SqlParameter("@passWord", passWord));
 
             SqlParameter returnParameter = new SqlParameter("@status", SqlDbType.Bit);
-            returnParameter.Direction = ParameterDirection.ReturnValue;
+            returnParameter.Direction = ParameterDirection.Output;
             cmd.Parameters.Add(returnParameter);
             cmd.ExecuteNonQuery();
-            var result = returnParameter.Value;
+            var result = Convert.ToInt32(cmd.Parameters["@status"].Value);
 
            ConnectionQuery.cerrarConexion();
-            return result.Equals(0);
+            return result.Equals(1);
              
          
         }

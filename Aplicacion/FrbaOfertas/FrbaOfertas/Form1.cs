@@ -64,16 +64,20 @@ namespace FrbaOfertas
                         usuario.habilitado = false;
                         usuarioLoginService.saveUsuarioInhabilitado(usuario);
                     }
-                    MessageBox.Show("Usuario o Contraseña Invalidos.");
+                    MessageBox.Show("Contraseña Invalida");
                 }
             }
             else
             {
-                //TODO: probablemente aca deberia ir un mensaje en vez de esto..
-                ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
-                this.Hide();
-                altaUsuario.Show();
+                LimpiarCampos();
+                MessageBox.Show("No existe un Usuario con el username: " + nombreUsuario); 
             }
+        }
+
+        private void LimpiarCampos()
+        {
+            nameTxt.Text = "";
+            contrasenaTxt.Text = "";
         }
 
 

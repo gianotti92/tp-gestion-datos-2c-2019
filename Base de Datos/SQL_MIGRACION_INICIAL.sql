@@ -60,7 +60,8 @@ IF(OBJECT_ID('SP_UPDATE_CLIENT') IS NOT NULL)
 	DROP PROCEDURE SP_UPDATE_CLIENT
 IF(OBJECT_ID('SP_SAVE_CARGA_SALDO') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_CARGA_SALDO
-	
+IF(OBJECT_ID('SP_UPDATE_CLIENTE') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_CLIENTE
 GO
 
 CREATE PROCEDURE SP_CREAR_TABLAS
@@ -296,7 +297,7 @@ GO
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Cli_Dni,0,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,0
+	SELECT DISTINCT M.Cli_Dni,0,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS varchar(40)) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Cli_Dni IS NOT NULL
 	ORDER BY 1
@@ -309,7 +310,7 @@ GO
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,0
+	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS varchar(40)) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Provee_CUIT IS NOT NULL
 	ORDER BY 1
@@ -478,20 +479,19 @@ GO
 GO
 
 		CREATE PROCEDURE SP_VALIDATE_USER
-	(@username VARCHAR(40),@passWord varchar(255),@status bit=0 OUTPUT )
+	(@username VARCHAR(40),@passWord varchar(255),@status bit OUTPUT )
 	AS
 
 	BEGIN
 		
-		declare @hash as varchar(max) = cast( HASHBYTES('SHA2_256', @passWord ) as varchar)
+		declare @hash as varchar(max) = HASHBYTES('SHA2_256', @passWord )
 
-		SET @status = ISNULL((SELECT
-									CASE									
-									WHEN (@hash = u.pass) THEN 1
-									ELSE 0
-									END
-								FROM GESTION_BDD_2C_2019.USUARIO u
-								WHERE  username like @username ),0)
+		SELECT @status = (CASE									
+							WHEN (@hash = u.pass) THEN 1
+							ELSE 0
+							END)
+		FROM GESTION_BDD_2C_2019.USUARIO u
+		WHERE  username like @username 
 	END
 
 GO
@@ -520,9 +520,7 @@ GO
 		AS
 		BEGIN
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
-
-
-		values (@username,HASHBYTES('SHA2_256',CAST(@pass AS nvarchar) ) , @tipo);
+		values (@username,HASHBYTES('SHA2_256',@pass) , @tipo);
 		END
 		GO
 
@@ -535,14 +533,18 @@ GO
 		)
 		AS
 		BEGIN
-		UPDATE GESTION_BDD_2C_2019.USUARIO 
-		SET
-		pass = HASHBYTES( 'SHA2_256',CAST(@pass AS nvarchar) ),
-		habilitado = @habilitado,
-		tipo = @tipo,
-		intentos = @intentos
+			IF @pass != (SELECT pass FROM GESTION_BDD_2C_2019.USUARIO WHERE username like @username)
+			BEGIN
+				UPDATE GESTION_BDD_2C_2019.USUARIO 
+				SET	pass = HASHBYTES('SHA2_256',@pass)
+				WHERE username like @username
+			END
 
-		where username like @username;
+			UPDATE GESTION_BDD_2C_2019.USUARIO 
+			SET	habilitado = @habilitado,
+				tipo = @tipo,
+				intentos = @intentos
+			WHERE username like @username
 		END
 
 		GO
