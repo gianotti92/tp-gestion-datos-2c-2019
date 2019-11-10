@@ -6,7 +6,7 @@ namespace FrbaOfertas.Entities
     {
         public string usuario { get; set; }
         public int id { get; set; }
-        public int cuit{ get; set; }
+        public string cuit{ get; set; }
         public string razonSocial{ get; set; }
         public string mail{ get; set; }
         public int telefono{ get; set; }

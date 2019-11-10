@@ -21,7 +21,7 @@ namespace FrbaOfertas.Dao
             while (r_rol.Read())
             {
                 Oferta oferta = new Oferta();
-                oferta.id = Convert.ToInt32(r_rol["ID"]);
+                oferta.id = Convert.ToString(r_rol["ID"]);
                 oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
                 oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
                 oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);

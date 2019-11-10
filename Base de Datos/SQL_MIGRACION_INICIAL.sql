@@ -18,6 +18,10 @@ IF(OBJECT_ID('SP_CREATE_ROL_FUNCIONALIDAD') IS NOT NULL)
 	DROP PROCEDURE SP_CREATE_ROL_FUNCIONALIDAD
 IF(OBJECT_ID('SP_GET_USER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_USER
+IF(OBJECT_ID('SP_GET_VENDOR') IS NOT NULL)
+	DROP PROCEDURE SP_GET_VENDOR
+IF(OBJECT_ID('SP_VALIDATE_USER') IS NOT NULL)
+	DROP PROCEDURE SP_VALIDATE_USER
 IF(OBJECT_ID('SP_SAVE_USER') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_USER
 IF(OBJECT_ID('SP_UPDATE_USER') IS NOT NULL)
@@ -251,19 +255,70 @@ GO
 	AS
 	BEGIN
 
+
+
+	
+		/**Cracion de datos***/
+
+		/* DATOS FUNCIONALIDAD */
+		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
+		VALUES	(1, 'Login y seguridad'),
+				(2, 'ABM de Rol'),
+				(3, 'Registro de Usuario'),
+				(4, 'ABM de Cliente'),
+				(5, 'ABM de Proveedor'),
+				(6, 'Cargar Credito'),
+				(7, 'Comprar Oferta'),
+				(8, 'Confeccion y publicacion de Ofertas'),
+				(9, 'Facturacion a Proveedor'),
+				(10, 'Listado Estadistico');
+
+		/* DATOS ROL */
+		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
+		VALUES	('Cliente'),
+				('Proveedor'),
+				('Administrativo');
+				
+
+		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
+		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
+		VALUES	(3, 1),
+				(3, 2),
+				(3, 3),
+				(3, 4),
+				(3, 5),
+				(3, 6),
+				(3, 7),
+				(3, 8),
+				(3, 9),
+				(3, 10),
+				(2,8);
+
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Cli_Dni,1,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,9
+	SELECT DISTINCT M.Cli_Dni,0,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Cli_Dni IS NOT NULL
 	ORDER BY 1
 
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+	SELECT 3,username
+	FROM GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	WHERE tipo = 0
+
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,9
+	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Provee_CUIT IS NOT NULL
 	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+	SELECT 1,username
+	FROM GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	WHERE tipo = 1
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CIUDAD
 	(CIUDAD_NOMBRE)
@@ -345,37 +400,15 @@ GO
 	ORDER BY 1
 
 
-	SELECT M.Oferta_Codigo,m.Cli_Dni
-	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
-	Into #t_ofer2
-	FROM GD2C2019.gd_esquema.Maestra M
-	where M.Oferta_Codigo is not null
-	ORDER BY Oferta_Codigo
-
-	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
-	,M.Oferta_Fecha_Compra,NULL as cupon,
-	(select top 1 t.Oferta_Entregado_Fecha from #t_ofer2 t 
-	where t.Cli_Dni = m.Cli_Dni and t.Oferta_Codigo = m.Oferta_Codigo and t.Oferta_Fecha_Compra =m.Oferta_Fecha_Compra 
-	and t.Oferta_Entregado_Fecha is not null ) ,
-	(select top 1 t2.Factura_Nro from #t_ofer2 t2 where t2.Cli_Dni = m.Cli_Dni and t2.Oferta_Codigo = m.Oferta_Codigo 
-	and t2.Factura_Nro =m.Factura_Nro and t2.Factura_Nro is not null )
-	FROM GD2C2019.gd_esquema.Maestra M
-	where M.Oferta_Codigo is not null
-	ORDER BY Oferta_Codigo
-
-
-	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
-	from #t_ofer2
-	where Oferta_Entregado_Fecha is not null
-	and Factura_Nro is not null
-	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
-	order by 1,2
-	
 	
 
---	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
---	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
-
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.Usuario
+	(username,tipo,pass,habilitado,intentos)
+     VALUES ('admin','3',HASHBYTES('SHA2_256','w23e'),1,0)
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+     VALUES (3, 'admin')
 
 
 	END
@@ -429,6 +462,8 @@ GO
 		select * from GESTION_BDD_2C_2019.ROL_USUARIO;
 		select * from GESTION_BDD_2C_2019.ROL;
 		END
+		
+		
 		GO
 		
 		
@@ -439,8 +474,27 @@ GO
 		select * from GESTION_BDD_2C_2019.USUARIO where username like @username;
 		END
 
-		GO
+		
+GO
 
+		CREATE PROCEDURE SP_VALIDATE_USER
+	(@username VARCHAR(40),@passWord varchar(255),@status bit=0 OUTPUT )
+	AS
+
+	BEGIN
+		
+		declare @hash as varchar(max) = cast( HASHBYTES('SHA2_256', @passWord ) as varchar)
+
+		SET @status = ISNULL((SELECT
+									CASE									
+									WHEN (@hash = u.pass) THEN 1
+									ELSE 0
+									END
+								FROM GESTION_BDD_2C_2019.USUARIO u
+								WHERE  username like @username ),0)
+	END
+
+GO
 		CREATE PROCEDURE SP_SAVE_PROVIDER
 		(@razonSocial NVARCHAR(255),
 		@tel NUMERIC(18),
@@ -466,7 +520,9 @@ GO
 		AS
 		BEGIN
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
-		values (@username, @pass, @tipo);
+
+
+		values (@username,HASHBYTES('SHA2_256',CAST(@pass AS nvarchar) ) , @tipo);
 		END
 		GO
 
@@ -481,7 +537,7 @@ GO
 		BEGIN
 		UPDATE GESTION_BDD_2C_2019.USUARIO 
 		SET
-		pass = @pass,
+		pass = HASHBYTES( 'SHA2_256',CAST(@pass AS nvarchar) ),
 		habilitado = @habilitado,
 		tipo = @tipo,
 		intentos = @intentos
@@ -668,7 +724,6 @@ GO
 		END
 
 		GO
-
 		/*******SP save carga saldo ***********/
 		CREATE PROCEDURE SP_SAVE_CARGA_SALDO
 		(
@@ -690,50 +745,11 @@ GO
 		END
 		GO
 
-		/**Cracion de datos***/
+		CREATE PROCEDURE SP_GET_VENDOR
+				(@idVendor numeric(18))
+				AS
+				BEGIN
+				select * from GESTION_BDD_2C_2019.PROVEEDOR where ID = @idVendor
+		END
 
-		/* DATOS FUNCIONALIDAD */
-		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
-		VALUES	(1, 'Login y seguridad'),
-				(2, 'ABM de Rol'),
-				(3, 'Registro de Usuario'),
-				(4, 'ABM de Cliente'),
-				(5, 'ABM de Proveedor'),
-				(6, 'Cargar Credito'),
-				(7, 'Comprar Oferta'),
-				(8, 'Confeccion y publicacion de Ofertas'),
-				(9, 'Facturacion a Proveedor'),
-				(10, 'Listado Estadistico');
-
-		/* DATOS ROL */
-		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
-		VALUES	('Cliente'),
-				('Proveedor'),
-				('Administrativo');
-				
-
-		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
-		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(3, 1),
-				(3, 2),
-				(3, 3),
-				(3, 4),
-				(3, 5),
-				(3, 6),
-				(3, 7),
-				(3, 8),
-				(3, 9),
-				(3, 10); 
-
-		/* DATOS USUARIO */
-		INSERT INTO GESTION_BDD_2C_2019.USUARIO(username, tipo, pass) 
-		VALUES ('test', 1, 'asd123');
-
-		/* DATOS EJEMPLO ROL_USUARIO*/
-		INSERT INTO GESTION_BDD_2C_2019.ROL_USUARIO(rol_id, username) 
-		VALUES	(1, 'test'),
-				(2, 'test'),
-				(3, 'test');
-
-
-
+		GO

@@ -32,11 +32,13 @@ namespace FrbaOfertas.AbmUsuario
         private void InitializeComponent()
         {
             this.gbDatosUsuario = new System.Windows.Forms.GroupBox();
+            this.rubroCombo = new System.Windows.Forms.ComboBox();
             this.contactotxt = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.telTxt = new System.Windows.Forms.TextBox();
             this.cuitTxt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ciudadCombo = new System.Windows.Forms.ComboBox();
             this.codigoPostaltxt = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -60,8 +62,6 @@ namespace FrbaOfertas.AbmUsuario
             this.lblUsername = new System.Windows.Forms.Label();
             this.volverBtn = new System.Windows.Forms.Button();
             this.creatBtn = new System.Windows.Forms.Button();
-            this.rubroCombo = new System.Windows.Forms.ComboBox();
-            this.ciudadCombo = new System.Windows.Forms.ComboBox();
             this.gbDatosUsuario.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -89,6 +89,14 @@ namespace FrbaOfertas.AbmUsuario
             this.gbDatosUsuario.TabIndex = 5;
             this.gbDatosUsuario.TabStop = false;
             this.gbDatosUsuario.Text = "Datos Proveedor";
+            // 
+            // rubroCombo
+            // 
+            this.rubroCombo.FormattingEnabled = true;
+            this.rubroCombo.Location = new System.Drawing.Point(97, 114);
+            this.rubroCombo.Name = "rubroCombo";
+            this.rubroCombo.Size = new System.Drawing.Size(216, 23);
+            this.rubroCombo.TabIndex = 8;
             // 
             // contactotxt
             // 
@@ -149,6 +157,14 @@ namespace FrbaOfertas.AbmUsuario
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
+            // 
+            // ciudadCombo
+            // 
+            this.ciudadCombo.FormattingEnabled = true;
+            this.ciudadCombo.Location = new System.Drawing.Point(66, 149);
+            this.ciudadCombo.Name = "ciudadCombo";
+            this.ciudadCombo.Size = new System.Drawing.Size(215, 23);
+            this.ciudadCombo.TabIndex = 9;
             // 
             // codigoPostaltxt
             // 
@@ -353,6 +369,7 @@ namespace FrbaOfertas.AbmUsuario
             this.volverBtn.TabIndex = 6;
             this.volverBtn.Text = "Volver";
             this.volverBtn.UseVisualStyleBackColor = true;
+            this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
             // 
             // creatBtn
             // 
@@ -364,22 +381,6 @@ namespace FrbaOfertas.AbmUsuario
             this.creatBtn.Text = "Crear";
             this.creatBtn.UseVisualStyleBackColor = true;
             this.creatBtn.Click += new System.EventHandler(this.creatBtn_Click);
-            // 
-            // rubroCombo
-            // 
-            this.rubroCombo.FormattingEnabled = true;
-            this.rubroCombo.Location = new System.Drawing.Point(97, 114);
-            this.rubroCombo.Name = "rubroCombo";
-            this.rubroCombo.Size = new System.Drawing.Size(216, 23);
-            this.rubroCombo.TabIndex = 8;
-            // 
-            // ciudadCombo
-            // 
-            this.ciudadCombo.FormattingEnabled = true;
-            this.ciudadCombo.Location = new System.Drawing.Point(67, 149);
-            this.ciudadCombo.Name = "ciudadCombo";
-            this.ciudadCombo.Size = new System.Drawing.Size(215, 23);
-            this.ciudadCombo.TabIndex = 9;
             // 
             // AltaProovedorForm
             // 

@@ -13,6 +13,11 @@ namespace FrbaOfertas.Service
             this.proovedorRepository = proovedorRepository;
         }
 
+        public Proovedor getProveedor (int idProveedor)
+        {
+             return proovedorRepository.getProveedor(idProveedor);
+        }
+
         public List<Proovedor> searchProovedores()
         {
             return proovedorRepository.searchProovedores();
