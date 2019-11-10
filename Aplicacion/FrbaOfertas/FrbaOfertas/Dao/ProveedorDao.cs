@@ -12,7 +12,7 @@ namespace FrbaOfertas.Dao
     {
         public List<Proovedor> searchProovedores()
         {
-            SqlCommand cmd_oferta = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.OFERTA" , ConnectionQuery.Instance());
+            SqlCommand cmd_oferta = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.PROVEEDOR" , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             SqlDataReader r_proovedor = cmd_oferta.ExecuteReader();
             List<Proovedor> proovedores = new List<Proovedor>();
@@ -30,6 +30,35 @@ namespace FrbaOfertas.Dao
                 proovedores.Add(proovedor);
             }
             return proovedores;
+        }
+
+        public Proovedor getProveedor(int idVendor)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_GET_VENDOR", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@idVendor", idVendor));
+
+            SqlDataReader consulta = cmd.ExecuteReader();
+            if (!consulta.Read())
+            {
+                ConnectionQuery.cerrarConexion();
+                return null;
+            }
+
+            Proovedor unProveedor = new Proovedor();
+            unProveedor.id = consulta.GetInt32(0);
+            unProveedor.cuit = consulta.GetString(1);
+            unProveedor.razonSocial = consulta.GetString(2);
+            unProveedor.mail = consulta.GetString(3);
+            unProveedor.telefono = consulta.GetInt32(4);
+            unProveedor.rubro = consulta.GetInt32(6);
+            unProveedor.contacto = consulta.GetString(7);
+            unProveedor.usuario = consulta.GetString(8);
+
+            ConnectionQuery.cerrarConexion();
+
+            return unProveedor;
         }
 
         public void save(Proovedor proveedor)
