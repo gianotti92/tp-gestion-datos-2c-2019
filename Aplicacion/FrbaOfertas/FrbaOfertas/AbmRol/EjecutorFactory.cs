@@ -31,7 +31,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 6)
             {
-                return new CargaCreditoExec(funcionalidad.nombre);
+                return new CargaCreditoExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 7)
             {

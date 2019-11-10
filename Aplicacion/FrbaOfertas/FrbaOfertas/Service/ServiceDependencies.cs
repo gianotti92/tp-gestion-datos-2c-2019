@@ -14,23 +14,17 @@ namespace FrbaOfertas.Service
         private static RolService RolService { get; set; }
         private static UsuarioDao UsuarioDao {get; set;}
         private static UsuarioService UsuarioService {get; set;}
-
         private static DireccionService direccionService { get; set; }
-
         private static ProveedorService _proveedorService { get; set; }
-
         private static DireccionDao direccionDao { get; set; }
-
         private static ClienteDao clienteDao { get; set; }
-        
         private static ClienteService clienteService { get; set; }
-
         private static CiudadService ciudadService { get; set; }
-
         private static RubroService rubroService { get; set; }
-
         private static CiudadDao ciudadDao { get; set; }
         private static RubroDao _rubroDao { get; set; }
+        private static CargarSaldoDao CargarSaldoDao { get; set; }
+        private static CargarSalgoService CargarSaldoService { get; set; }
         
         private static ProveedorDao _proveedorDao { get; set; }
 
@@ -78,6 +72,15 @@ namespace FrbaOfertas.Service
             return new ClienteService(clienteDao);
         }
 
+        public static DireccionDao getDireccionDao()
+        {
+            if (direccionDao == null)
+            {
+                direccionDao = new DireccionDao();
+            }
+            return direccionDao;
+        }
+
         public static DireccionService getDireccionService()
         {
             direccionDao = new DireccionDao();
@@ -100,6 +103,25 @@ namespace FrbaOfertas.Service
         {
             _proveedorDao = new ProveedorDao();
             return new ProveedorService(_proveedorDao);
+        }
+
+        public static CargarSaldoDao getCargaSaldoDao()
+        {
+            if (CargarSaldoDao == null)
+            {
+                CargarSaldoDao = new CargarSaldoDao();
+            }
+            return CargarSaldoDao;
+        }
+
+        public static CargarSalgoService getCargarSalgoService()
+        {
+            if (CargarSaldoService == null)
+            {
+                CargarSaldoDao = getCargaSaldoDao();
+                CargarSaldoService = new CargarSalgoService(CargarSaldoDao);
+            }
+            return CargarSaldoService;
         }
     }
 }

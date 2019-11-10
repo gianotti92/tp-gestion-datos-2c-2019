@@ -40,6 +40,7 @@ using System.Windows.Forms;
                 }
                 else if (usuario.contrasena.Equals(contrasena))
                 {
+                    UsuarioUtil.Usuario = usuario;
                     usuarioLoginService.limpiarReintentos(nombreUsuario);
                     List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
                     abrirPantallaBotonesPorRoles(funcionalidades);

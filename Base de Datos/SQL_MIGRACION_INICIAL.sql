@@ -52,6 +52,11 @@ IF(OBJECT_ID('SP_MIGRACION') IS NOT NULL)
 	DROP PROCEDURE SP_MIGRACION
 IF(OBJECT_ID('SP_SAVE_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_PROVIDER
+IF(OBJECT_ID('SP_UPDATE_CLIENT') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_CLIENT
+IF(OBJECT_ID('SP_SAVE_CARGA_SALDO') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_CARGA_SALDO
+	
 GO
 
 CREATE PROCEDURE SP_CREAR_TABLAS
@@ -134,8 +139,7 @@ AS
 		LOCALIDAD NVARCHAR(255),
 		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
-		CODIGO_POSTAL INT,
-		CODIGO_POSTAL_TEST INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID), --FK CODIGO_POSTAL
+		CODIGO_POSTAL INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID) --FK CODIGO_POSTAL,
 		)
 	
 
@@ -155,7 +159,7 @@ AS
 		DIRECCION INT, --FK DIRECCION
 		FNANCIAMIENTO DATETIME, 
 		USUARIO VARCHAR(40) NOT NULL FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.USUARIO(username), --FK USUARIO
-		SALDO DECIMAL(18,2)
+		SALDO DECIMAL(18,2) DEFAULT(0)
 		)
 		
 
@@ -533,10 +537,10 @@ GO
 		 @id_cod_postal INT)
 		 AS
 		 BEGIN
-
-		insert into GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-		values (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal);
-		END
+			INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+			OUTPUT inserted.id
+			VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+		 END
 		GO
 
 		CREATE PROCEDURE SP_SAVE_CLIENT
@@ -555,6 +559,36 @@ GO
 		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO) 
 		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id);
 		END
+		GO
+
+		CREATE PROCEDURE SP_UPDATE_CLIENTE
+		(@id INT,
+	     @nombre VARCHAR(40),
+		 @apellido VARCHAR(40),
+		 @dni INT,
+		 @mail NVARCHAR(255),
+		 @telefono NUMERIC(18),
+		 @fechaNac datetime,
+		 @direccion_id INT,
+		 @usuario_id VARCHAR(40),
+		 @saldo DECIMAL(18,2))
+	
+		AS
+		BEGIN
+
+		UPDATE GESTION_BDD_2C_2019.CLIENTE  
+		SET NOMBRE = @nombre, 
+			APELLIDO = @apellido,
+			DNI = @dni,
+			MAIL = @mail,
+			TELEFONO = @telefono,
+			FNANCIAMIENTO = @fechaNac,
+			DIRECCION = @direccion_id,
+			USUARIO = @usuario_id,
+			SALDO = @saldo
+		WHERE ID = @id 
+		END 
+
 		GO
 
 		/******SP delete rol ***********/
@@ -635,6 +669,27 @@ GO
 
 		GO
 
+		/*******SP save carga saldo ***********/
+		CREATE PROCEDURE SP_SAVE_CARGA_SALDO
+		(
+			@cliente_id INT,
+            @fecha DATETIME,
+            @monto DECIMAL (18,2),
+            @tipo VARCHAR(15),
+            @tarjeta_nro INT,
+            @tarjeta_nombre NVARCHAR (255),
+            @tarjeta_fecha_vencimiento DATETIME,
+            @tarjeta_codigo_seguridad INT
+		)
+		AS
+		BEGIN
+			INSERT INTO GESTION_BDD_2C_2019.CARGA_SALDO 
+				(CLIENTE_ID, FECHA, MONTO, TIPO, TARJETA_NRO, TARJETA_NOMBRE, TARJETA_VENC, TARJETA_COD_SEG)
+			VALUES 
+				(@cliente_id, @fecha, @monto, @tipo, @tarjeta_nro, @tarjeta_nombre, @tarjeta_fecha_vencimiento, @tarjeta_codigo_seguridad)
+		END
+		GO
+
 		/**Cracion de datos***/
 
 		/* DATOS FUNCIONALIDAD */
@@ -652,22 +707,23 @@ GO
 
 		/* DATOS ROL */
 		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
-		VALUES	('Proveedor'),
-				('Administrativo'),
-				('Cliente');
+		VALUES	('Cliente'),
+				('Proveedor'),
+				('Administrativo');
+				
 
 		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
 		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(2, 1),
-				(2, 2),
-				(2, 3),
-				(2, 4),
-				(2, 5),
-				(2, 6),
-				(2, 7),
-				(2, 8),
-				(2, 9),
-				(2, 10); 
+		VALUES	(3, 1),
+				(3, 2),
+				(3, 3),
+				(3, 4),
+				(3, 5),
+				(3, 6),
+				(3, 7),
+				(3, 8),
+				(3, 9),
+				(3, 10); 
 
 		/* DATOS USUARIO */
 		INSERT INTO GESTION_BDD_2C_2019.USUARIO(username, tipo, pass) 

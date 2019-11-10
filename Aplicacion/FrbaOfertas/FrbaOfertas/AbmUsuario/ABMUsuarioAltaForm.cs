@@ -17,6 +17,7 @@ namespace FrbaOfertas.AbmUsuario
         private RolService rolService { get { return ServiceDependencies.GetRolService(); } }
         private UsuarioService UsuarioService { get { return ServiceDependencies.GetUsuarioService(); } }
         private List<Rol> roles;
+        private List<Rol> rolesSeleccionados;
 
 
         public ABMUsuarioAltaForm()
@@ -25,7 +26,7 @@ namespace FrbaOfertas.AbmUsuario
             CargarDatos();
         }
 
-        private void CargarDatos() 
+        private void CargarDatos()
         {
             CargarTiposUsuario();
         }
@@ -64,10 +65,10 @@ namespace FrbaOfertas.AbmUsuario
             if (EsUsuarioValido())
             {
                 roles = rolService.searchRoles();
-                Usuario usuario = new Usuario(true, 0, new List<Rol>());
+                Usuario usuario = new Usuario();
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
-                usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex-1));
+                usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex));
 
                 if (usuario.tipoUsuario == TipoUsuario.CLIENTE)
                 {

@@ -29,7 +29,7 @@ namespace FrbaOfertas.Dao
                 return null;
             }
             
-            Usuario usuario = new Usuario(true, 0, new List<Rol>());
+            Usuario usuario = new Usuario();
             usuario.userName = consulta.GetString(0);
             usuario.tipoUsuario = (TipoUsuario)consulta.GetInt32(1);
             usuario.contrasena = consulta.GetString(2);
@@ -127,7 +127,7 @@ namespace FrbaOfertas.Dao
 
             while (r_usuario.Read())
             {
-                Usuario usuario = new Usuario(true, 0, new List<Rol>());
+                Usuario usuario = new Usuario();
                 usuario.userName = r_usuario["username"].ToString();
                 usuario.contrasena = r_usuario["pass"].ToString();
                 usuario.tipoUsuario = (TipoUsuario)Convert.ToInt32(r_usuario["tipo"]);

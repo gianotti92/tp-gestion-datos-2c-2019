@@ -3,11 +3,42 @@ using System.Data.SqlClient;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using System;
 
 namespace FrbaOfertas.Dao
 {
     public class DireccionDao : DireccionRepository
     {
+        public Direccion GetById(int id)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.DIRECCION WHERE id = @id", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            cmd.Parameters.Add("@id", SqlDbType.VarChar);
+            cmd.Parameters["@id"].Value = id;
+
+            SqlDataReader r_direccion = cmd.ExecuteReader();
+
+            Direccion direccion = new Direccion();
+
+            if (r_direccion.Read())
+            {
+                direccion.id = Convert.ToInt32(r_direccion["id"]);
+                direccion.calle = r_direccion["CALLE"].ToString();
+                direccion.nro = r_direccion["NUMERO"].ToString();
+                direccion.piso = r_direccion["PISO"].ToString();
+                direccion.depto = r_direccion["DPTO"].ToString();
+                direccion.localidad = r_direccion["LOCALIDAD"].ToString();
+                if (!string.IsNullOrEmpty(r_direccion["CIUDAD"].ToString()))
+                    direccion.ciudad = Convert.ToInt32(r_direccion["CIUDAD"]);
+                direccion.codigoPostal = Convert.ToInt32(r_direccion["CODIGO_POSTAL"]);
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return direccion;
+        }
+
         public Direccion createDireccion(Direccion direccion)
         {
             SqlCommand cmd_direccion = new SqlCommand("dbo.SP_SAVE_DIRECCION", ConnectionQuery.Instance());
@@ -21,7 +52,7 @@ namespace FrbaOfertas.Dao
             cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
             cmd_direccion.Parameters.Add("@id_cod_postal", direccion.codigoPostal);
             
-            int id = cmd_direccion.ExecuteNonQuery();
+            int id = Convert.ToInt32(cmd_direccion.ExecuteScalar());
 
             direccion.id = id;
             ConnectionQuery.cerrarConexion();
@@ -40,5 +71,6 @@ namespace FrbaOfertas.Dao
 
             return id_postal_code;
         }
+
     }
 }
