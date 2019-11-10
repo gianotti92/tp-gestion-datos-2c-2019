@@ -249,19 +249,68 @@ GO
 	AS
 	BEGIN
 
+
+
+	
+		/**Cracion de datos***/
+
+		/* DATOS FUNCIONALIDAD */
+		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
+		VALUES	(1, 'Login y seguridad'),
+				(2, 'ABM de Rol'),
+				(3, 'Registro de Usuario'),
+				(4, 'ABM de Cliente'),
+				(5, 'ABM de Proveedor'),
+				(6, 'Cargar Credito'),
+				(7, 'Comprar Oferta'),
+				(8, 'Confeccion y publicacion de Ofertas'),
+				(9, 'Facturacion a Proveedor'),
+				(10, 'Listado Estadistico');
+
+		/* DATOS ROL */
+		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
+		VALUES	('Proveedor'),
+				('Administrativo'),
+				('Cliente');
+
+		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
+		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
+		VALUES	(2, 1),
+				(2, 2),
+				(2, 3),
+				(2, 4),
+				(2, 5),
+				(2, 6),
+				(2, 7),
+				(2, 8),
+				(2, 9),
+				(2, 10); 
+
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Cli_Dni,1,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,0
+	SELECT DISTINCT M.Cli_Dni,0,HASHBYTES('SHA2_256',CAST(M.Cli_Dni AS nvarchar) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Cli_Dni IS NOT NULL
 	ORDER BY 1
 
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+	SELECT 3,username
+	FROM GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	WHERE tipo = 0
+
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
-	SELECT DISTINCT M.Provee_CUIT,2,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,0
+	SELECT DISTINCT M.Provee_CUIT,1,HASHBYTES('SHA2_256',CAST(M.Provee_CUIT AS nvarchar) ),1,0
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Provee_CUIT IS NOT NULL
 	ORDER BY 1
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+	SELECT 1,username
+	FROM GD2C2019.GESTION_BDD_2C_2019.USUARIO
+	WHERE tipo = 1
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CIUDAD
 	(CIUDAD_NOMBRE)
@@ -345,9 +394,13 @@ GO
 
 	
 
---	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
---	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
-
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.Usuario
+	(username,tipo,pass,habilitado,intentos)
+     VALUES ('admin','2',HASHBYTES('SHA2_256','w23e'),1,0)
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+     VALUES (2, 'admin')
 
 
 	END
@@ -632,39 +685,6 @@ GO
 
 		GO
 
-		/**Cracion de datos***/
-
-		/* DATOS FUNCIONALIDAD */
-		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
-		VALUES	(1, 'Login y seguridad'),
-				(2, 'ABM de Rol'),
-				(3, 'Registro de Usuario'),
-				(4, 'ABM de Cliente'),
-				(5, 'ABM de Proveedor'),
-				(6, 'Cargar Credito'),
-				(7, 'Comprar Oferta'),
-				(8, 'Confeccion y publicacion de Ofertas'),
-				(9, 'Facturacion a Proveedor'),
-				(10, 'Listado Estadistico');
-
-		/* DATOS ROL */
-		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
-		VALUES	('Proveedor'),
-				('Administrativo'),
-				('Cliente');
-
-		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
-		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(2, 1),
-				(2, 2),
-				(2, 3),
-				(2, 4),
-				(2, 5),
-				(2, 6),
-				(2, 7),
-				(2, 8),
-				(2, 9),
-				(2, 10); 
 
 		/* DATOS USUARIO */
 		INSERT INTO GESTION_BDD_2C_2019.USUARIO(username, tipo, pass) 
