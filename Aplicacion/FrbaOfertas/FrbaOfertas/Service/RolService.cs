@@ -27,6 +27,11 @@ namespace FrbaOfertas.Service
         {
             rolRepository.Update(rol);
         }
+        
+        public List<Rol> searchRoles(string nombre, int estado)
+        {
+            return rolRepository.searchRoles(nombre, estado);
+        }
 
         public List<Rol> searchRoles()
         {

@@ -34,6 +34,11 @@ namespace FrbaOfertas.Service
         {
             return rolService.searchRoles();
         }
+        
+        public List<Rol> searchRoles(string nombre, int estado)
+        {
+            return rolService.searchRoles(nombre, estado);
+        }
 
         public Funcionalidad GetFuncionalidadById(int id)
         {
