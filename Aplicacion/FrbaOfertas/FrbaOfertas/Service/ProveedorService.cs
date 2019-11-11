@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
 
@@ -26,6 +27,11 @@ namespace FrbaOfertas.Service
         public void save(Proovedor proveedor)
         {
             proovedorRepository.save(proveedor);
+        }
+
+        public Proovedor getProveedorConUsuario(string userName)
+        {
+            return proovedorRepository.getProveedorConUsuario(userName);
         }
     }
 }

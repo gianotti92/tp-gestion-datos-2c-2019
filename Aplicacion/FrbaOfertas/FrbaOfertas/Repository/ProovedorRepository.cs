@@ -8,5 +8,6 @@ namespace FrbaOfertas.Repository
         List<Proovedor> searchProovedores();
         void save(Proovedor proveedor);
         Proovedor getProveedor(int idProveedor);
+        Proovedor getProveedorConUsuario(string userName);
     }
 }

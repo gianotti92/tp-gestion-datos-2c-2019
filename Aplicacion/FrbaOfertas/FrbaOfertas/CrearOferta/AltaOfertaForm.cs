@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using FrbaOfertas.Dao;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Service;
+using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.CrearOferta
 {
@@ -13,6 +14,7 @@ namespace FrbaOfertas.CrearOferta
         private ProveedorService proovedorService;
 
         private List<Proovedor> proovedores;
+        private Proovedor proveedor;
 
         public AltaOfertaForm(OfertaService ofertaService, ProveedorService proovedorService)
         {
@@ -24,10 +26,20 @@ namespace FrbaOfertas.CrearOferta
 
         private void llenarComboProovedor()
         {
-            proovedores = proovedorService.searchProovedores();
-            foreach (var proovedor in proovedores)
+
+            if (UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.PROVEEDOR))
             {
-                ProovedorCmb.Items.Add(proovedor.razonSocial);
+
+                proveedor = proovedorService.getProveedorConUsuario(UsuarioUtil.Usuario.userName);
+                ProovedorCmb.Items.Add( proveedor.razonSocial );
+            }
+            else
+            {
+                proovedores = proovedorService.searchProovedores();
+                foreach (var proovedor in proovedores)
+                {
+                    ProovedorCmb.Items.Add(proovedor.razonSocial);
+                }
             }
         }
 
