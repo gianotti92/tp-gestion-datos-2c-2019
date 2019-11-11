@@ -55,101 +55,101 @@ namespace FrbaOfertas.CrearOferta
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(79, 23);
+            this.label1.Location = new System.Drawing.Point(68, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 16);
+            this.label1.Size = new System.Drawing.Size(101, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Fecha Publicacion";
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(47, 263);
+            this.label2.Location = new System.Drawing.Point(40, 228);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(136, 16);
+            this.label2.Size = new System.Drawing.Size(117, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "Descripcion de la oferta";
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(79, 55);
+            this.label3.Location = new System.Drawing.Point(68, 48);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 16);
+            this.label3.Size = new System.Drawing.Size(101, 14);
             this.label3.TabIndex = 2;
             this.label3.Text = "Fecha Vencimiento";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(79, 84);
+            this.label4.Location = new System.Drawing.Point(68, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(118, 16);
+            this.label4.Size = new System.Drawing.Size(101, 14);
             this.label4.TabIndex = 3;
             this.label4.Text = "Precio Oferta";
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(79, 114);
+            this.label5.Location = new System.Drawing.Point(68, 99);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 16);
+            this.label5.Size = new System.Drawing.Size(101, 14);
             this.label5.TabIndex = 4;
             this.label5.Text = "Precio de Lista";
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(79, 143);
+            this.label6.Location = new System.Drawing.Point(68, 124);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(118, 16);
+            this.label6.Size = new System.Drawing.Size(101, 14);
             this.label6.TabIndex = 5;
             this.label6.Text = "Proovedor";
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(79, 172);
+            this.label7.Location = new System.Drawing.Point(68, 149);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(118, 16);
+            this.label7.Size = new System.Drawing.Size(101, 14);
             this.label7.TabIndex = 6;
             this.label7.Text = "Cantidad Disponible";
             // 
             // DescripcionTxt
             // 
-            this.DescripcionTxt.Location = new System.Drawing.Point(47, 282);
+            this.DescripcionTxt.Location = new System.Drawing.Point(40, 244);
             this.DescripcionTxt.Name = "DescripcionTxt";
-            this.DescripcionTxt.Size = new System.Drawing.Size(391, 23);
+            this.DescripcionTxt.Size = new System.Drawing.Size(336, 20);
             this.DescripcionTxt.TabIndex = 7;
             // 
             // PrecioListaTxt
             // 
-            this.PrecioListaTxt.Location = new System.Drawing.Point(203, 111);
+            this.PrecioListaTxt.Location = new System.Drawing.Point(174, 96);
             this.PrecioListaTxt.Name = "PrecioListaTxt";
-            this.PrecioListaTxt.Size = new System.Drawing.Size(235, 23);
+            this.PrecioListaTxt.Size = new System.Drawing.Size(202, 20);
             this.PrecioListaTxt.TabIndex = 9;
             // 
             // PrecioTxt
             // 
-            this.PrecioTxt.Location = new System.Drawing.Point(203, 81);
+            this.PrecioTxt.Location = new System.Drawing.Point(174, 70);
             this.PrecioTxt.Name = "PrecioTxt";
-            this.PrecioTxt.Size = new System.Drawing.Size(235, 23);
+            this.PrecioTxt.Size = new System.Drawing.Size(202, 20);
             this.PrecioTxt.TabIndex = 10;
             // 
             // CantidadDisponibleTxt
             // 
-            this.CantidadDisponibleTxt.Location = new System.Drawing.Point(203, 168);
+            this.CantidadDisponibleTxt.Location = new System.Drawing.Point(174, 146);
             this.CantidadDisponibleTxt.Name = "CantidadDisponibleTxt";
-            this.CantidadDisponibleTxt.Size = new System.Drawing.Size(235, 23);
+            this.CantidadDisponibleTxt.Size = new System.Drawing.Size(202, 20);
             this.CantidadDisponibleTxt.TabIndex = 13;
             // 
             // ProovedorCmb
             // 
             this.ProovedorCmb.FormattingEnabled = true;
-            this.ProovedorCmb.Location = new System.Drawing.Point(203, 140);
+            this.ProovedorCmb.Location = new System.Drawing.Point(174, 121);
             this.ProovedorCmb.Name = "ProovedorCmb";
-            this.ProovedorCmb.Size = new System.Drawing.Size(235, 23);
+            this.ProovedorCmb.Size = new System.Drawing.Size(202, 21);
             this.ProovedorCmb.TabIndex = 14;
             // 
             // CancelarBtn
             // 
-            this.CancelarBtn.Location = new System.Drawing.Point(47, 330);
+            this.CancelarBtn.Location = new System.Drawing.Point(40, 286);
             this.CancelarBtn.Name = "CancelarBtn";
-            this.CancelarBtn.Size = new System.Drawing.Size(142, 35);
+            this.CancelarBtn.Size = new System.Drawing.Size(122, 30);
             this.CancelarBtn.TabIndex = 15;
             this.CancelarBtn.Text = "Cancelar";
             this.CancelarBtn.UseVisualStyleBackColor = true;
@@ -157,64 +157,65 @@ namespace FrbaOfertas.CrearOferta
             // 
             // CrearBtn
             // 
-            this.CrearBtn.Location = new System.Drawing.Point(296, 330);
+            this.CrearBtn.Location = new System.Drawing.Point(254, 286);
             this.CrearBtn.Name = "CrearBtn";
-            this.CrearBtn.Size = new System.Drawing.Size(142, 35);
+            this.CrearBtn.Size = new System.Drawing.Size(122, 30);
             this.CrearBtn.TabIndex = 16;
             this.CrearBtn.Text = "Crear";
             this.CrearBtn.UseVisualStyleBackColor = true;
+            this.CrearBtn.Click += new System.EventHandler(this.CrearBtn_Click_1);
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(79, 200);
+            this.label8.Location = new System.Drawing.Point(68, 173);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(118, 16);
+            this.label8.Size = new System.Drawing.Size(101, 14);
             this.label8.TabIndex = 17;
             this.label8.Text = "Max por cliente";
             // 
             // MaxPorClienteTxt
             // 
-            this.MaxPorClienteTxt.Location = new System.Drawing.Point(203, 197);
+            this.MaxPorClienteTxt.Location = new System.Drawing.Point(174, 171);
             this.MaxPorClienteTxt.Name = "MaxPorClienteTxt";
-            this.MaxPorClienteTxt.Size = new System.Drawing.Size(235, 23);
+            this.MaxPorClienteTxt.Size = new System.Drawing.Size(202, 20);
             this.MaxPorClienteTxt.TabIndex = 18;
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(79, 232);
+            this.label9.Location = new System.Drawing.Point(68, 201);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(118, 16);
+            this.label9.Size = new System.Drawing.Size(101, 14);
             this.label9.TabIndex = 19;
             this.label9.Text = "Stock Disponible";
             // 
             // stockTxt
             // 
-            this.stockTxt.Location = new System.Drawing.Point(203, 228);
+            this.stockTxt.Location = new System.Drawing.Point(174, 198);
             this.stockTxt.Name = "stockTxt";
-            this.stockTxt.Size = new System.Drawing.Size(235, 23);
+            this.stockTxt.Size = new System.Drawing.Size(202, 20);
             this.stockTxt.TabIndex = 20;
             // 
             // fechaVencPicker
             // 
             this.fechaVencPicker.CustomFormat = "dd/MM/yyyy";
-            this.fechaVencPicker.Location = new System.Drawing.Point(204, 51);
+            this.fechaVencPicker.Location = new System.Drawing.Point(175, 44);
             this.fechaVencPicker.Name = "fechaVencPicker";
-            this.fechaVencPicker.Size = new System.Drawing.Size(233, 23);
+            this.fechaVencPicker.Size = new System.Drawing.Size(200, 20);
             this.fechaVencPicker.TabIndex = 21;
             // 
             // fechaPublicPicker
             // 
             this.fechaPublicPicker.CustomFormat = "dd/MM/yyyy fe    d  asd";
-            this.fechaPublicPicker.Location = new System.Drawing.Point(203, 17);
+            this.fechaPublicPicker.Location = new System.Drawing.Point(174, 15);
             this.fechaPublicPicker.Name = "fechaPublicPicker";
-            this.fechaPublicPicker.Size = new System.Drawing.Size(233, 23);
+            this.fechaPublicPicker.Size = new System.Drawing.Size(200, 20);
             this.fechaPublicPicker.TabIndex = 22;
             // 
             // AltaOfertaForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 403);
+            this.ClientSize = new System.Drawing.Size(403, 349);
             this.Controls.Add(this.fechaPublicPicker);
             this.Controls.Add(this.fechaVencPicker);
             this.Controls.Add(this.stockTxt);
@@ -239,6 +240,7 @@ namespace FrbaOfertas.CrearOferta
             this.Text = "AltaOfertaForm";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

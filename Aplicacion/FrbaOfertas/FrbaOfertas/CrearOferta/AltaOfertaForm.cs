@@ -43,7 +43,14 @@ namespace FrbaOfertas.CrearOferta
             }
         }
 
-        private void CrearBtn_Click(object sender, EventArgs e)
+        private void CancelarBtn_Click(object sender, EventArgs e)
+        {
+            AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()));
+            this.Hide();
+            form.Show();
+        }
+
+        private void CrearBtn_Click_1(object sender, EventArgs e)
         {
             Oferta oferta = new Oferta();
             oferta.descripcion = DescripcionTxt.Text;
@@ -58,13 +65,7 @@ namespace FrbaOfertas.CrearOferta
             oferta.proovedorId = proovedorSeleccionado.id;
 
             ofertaService.saveOferta(oferta);
-        }
 
-        private void CancelarBtn_Click(object sender, EventArgs e)
-        {
-            AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()));
-            this.Hide();
-            form.Show();
         }
     }
 }

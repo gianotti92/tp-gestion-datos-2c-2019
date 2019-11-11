@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas.Dao
 {
@@ -64,34 +65,39 @@ namespace FrbaOfertas.Dao
 
         public Proovedor getProveedorConUsuario(string usuarioProveedor)
         {
-            SqlCommand cmd = new SqlCommand("dbo.SP_GET_VENDORWITHUSER", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.PROVEEDOR  where USUARIO = @username", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new SqlParameter("@userName", usuarioProveedor.ToString()));
 
-            SqlDataReader consulta = cmd.ExecuteReader();
-            if (!consulta.Read())
-            {
-                ConnectionQuery.cerrarConexion();
-                return null;
-            }
+            cmd.Parameters.Add("@username", SqlDbType.VarChar);
+            cmd.Parameters["@username"].Value = usuarioProveedor;
+
+            SqlDataReader r_proveedor = cmd.ExecuteReader();
+
+            int idDireccion = 0;
+
             Proovedor unProveedor = new Proovedor();
 
-            while (consulta.Read())
+            if (r_proveedor.Read())
             {
-              
-                unProveedor.id = (int)consulta.GetSqlInt32(0);
-                unProveedor.cuit = consulta.GetString(1);
-                unProveedor.razonSocial = consulta.GetString(2);
-                unProveedor.mail = consulta.GetString(3);
-                unProveedor.telefono = consulta.GetInt32(4);
-                unProveedor.rubro = consulta.GetInt32(6);
-                unProveedor.contacto = consulta.GetString(7);
-                unProveedor.usuario = consulta.GetString(8);
-
+                unProveedor.id = Convert.ToInt32(r_proveedor["ID"]);
+                unProveedor.cuit = r_proveedor["CUIT"].ToString();
+                unProveedor.razonSocial = r_proveedor["RAZON_SOCIAL"].ToString();
+                unProveedor.mail = r_proveedor["MAIL"].ToString();
+                unProveedor.telefono = Convert.ToInt32(r_proveedor["TELEFONO"]);
+                unProveedor.rubro = Convert.ToInt32( r_proveedor["RUBRO"]);
+                unProveedor.contacto = r_proveedor["CONTACTO"].ToString();
+                unProveedor.usuario = r_proveedor["USUARIO"].ToString();
+                idDireccion = Convert.ToInt32(r_proveedor["DIRECCION"]);
             }
+
             ConnectionQuery.cerrarConexion();
+
+            Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+
+            unProveedor.direccion = direccion;
+
             return unProveedor;
+
 
         }
 
