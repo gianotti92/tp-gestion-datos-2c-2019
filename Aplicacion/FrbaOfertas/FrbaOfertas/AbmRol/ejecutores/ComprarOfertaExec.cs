@@ -15,7 +15,8 @@ namespace FrbaOfertas.AbmRol.ejecutores
 
         public override void execute(object sender, EventArgs e)
         {
-           Form comprarOferta = new ComprarOfertaForm(ServiceDependencies.getOfertaService(), ServiceDependencies.getProveedorService());
+           Form comprarOferta
+               = new ComprarOfertaForm1(ServiceDependencies.getOfertaService(), ServiceDependencies.getProveedorService(), ServiceDependencies.getClienteService());
            pantallaACerrar.Close();
            comprarOferta.Show();
            

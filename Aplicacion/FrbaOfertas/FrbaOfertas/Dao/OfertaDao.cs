@@ -36,9 +36,12 @@ namespace FrbaOfertas.Dao
             return ofertas;
         }
 
-        public List<Oferta> searchOfertas(string descripcion, int provId)
+        public List<Oferta> searchOfertasVigentes(string descripcion, int provId)
         {
-            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE ");
+            string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
+            
+            StringBuilder builder =
+                new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "' AND ");
 
             if (!string.IsNullOrEmpty(descripcion) && provId == 0)
             {
@@ -56,7 +59,35 @@ namespace FrbaOfertas.Dao
             }
 
 
-            SqlCommand cmd_oferta = new SqlCommand("" , ConnectionQuery.Instance());
+            SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_oferta.ExecuteReader();
+            List<Oferta> ofertas = new List<Oferta>();
+
+            while (r_rol.Read())
+            {
+                Oferta oferta = new Oferta();
+                oferta.id = Convert.ToString(r_rol["ID"]);
+                oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_rol["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                ofertas.Add(oferta);
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
+
+        public List<Oferta> searchOfertasVigentes()
+        {
+            string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
+            
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "'");
+            
+            SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             SqlDataReader r_rol = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();

@@ -31,6 +31,7 @@ namespace FrbaOfertas.Dao
 
                 proovedores.Add(proovedor);
             }
+            ConnectionQuery.cerrarConexion();
             return proovedores;
         }
 

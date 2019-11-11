@@ -123,9 +123,11 @@
     <Compile Include="AbmUsuario\AltaProovedorForm.Designer.cs">
       <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOferta\ComprarOfertaForm.cs" />
-    <Compile Include="ComprarOferta\Form1.Designer.cs">
-      <DependentUpon>ComprarOfertaForm.cs</DependentUpon>
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.Designer.cs">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
     </Compile>
     <Compile Include="Connection\ConnectionQuery.cs" />
     <Compile Include="CargaCredito\CargaCreditoForm.cs">
@@ -235,8 +237,8 @@
     <EmbeddedResource Include="CargaCredito\CargaCreditoForm.resx">
       <DependentUpon>CargaCreditoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComprarOferta\ComprarOfertaForm.resx">
-      <DependentUpon>ComprarOfertaForm.cs</DependentUpon>
+    <EmbeddedResource Include="ComprarOferta\ComprarOfertaForm1.resx">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\AbmOfertasForm.resx">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
