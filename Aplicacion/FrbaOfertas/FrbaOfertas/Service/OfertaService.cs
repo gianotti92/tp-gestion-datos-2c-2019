@@ -16,6 +16,11 @@ namespace FrbaOfertas.Service
         {
             return ofertaRepository.searchOfertas();
         }
+        
+        public List<Oferta> searchOfertas(string descripcion, int provId)
+        {
+            return ofertaRepository.searchOfertas(descripcion, provId);
+        }
 
         public void saveOferta(Oferta oferta)
         {

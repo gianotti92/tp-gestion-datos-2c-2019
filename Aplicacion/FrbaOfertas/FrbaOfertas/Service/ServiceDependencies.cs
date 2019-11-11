@@ -13,6 +13,8 @@ namespace FrbaOfertas.Service
         private static RolDao RolDao { get; set; }
         private static RolService RolService { get; set; }
         private static UsuarioDao UsuarioDao {get; set;}
+
+        private static OfertaService ofertaService { get; set; }
         private static UsuarioService UsuarioService {get; set;}
         private static DireccionService direccionService { get; set; }
         private static ProveedorService _proveedorService { get; set; }
@@ -27,7 +29,7 @@ namespace FrbaOfertas.Service
         private static CargarSalgoService CargarSaldoService { get; set; }
         
         private static ProveedorDao _proveedorDao { get; set; }
-
+        private static OfertaDao ofertaDao { get; set; }
         public static RolDao GetRolDao()
         {
             if (RolDao == null)
@@ -122,6 +124,17 @@ namespace FrbaOfertas.Service
                 CargarSaldoService = new CargarSalgoService(CargarSaldoDao);
             }
             return CargarSaldoService;
+        }
+
+        public static OfertaService getOfertaService()
+        {
+            if (ofertaService == null)
+            {
+                ofertaDao = new OfertaDao();
+                ofertaService = new OfertaService(ofertaDao);
+            }
+
+            return ofertaService;
         }
     }
 }
