@@ -39,5 +39,12 @@ namespace FrbaOfertas.AbmRol
 
             return listaBotonesFuncionalidadAEjecutar;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta();
+            entregaCupon.Show();
+        }
     }
 }
