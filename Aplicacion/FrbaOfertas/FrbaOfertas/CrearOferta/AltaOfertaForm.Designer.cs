@@ -31,6 +31,7 @@ namespace FrbaOfertas.CrearOferta
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +52,8 @@ namespace FrbaOfertas.CrearOferta
             this.stockTxt = new System.Windows.Forms.TextBox();
             this.fechaVencPicker = new System.Windows.Forms.DateTimePicker();
             this.fechaPublicPicker = new System.Windows.Forms.DateTimePicker();
+            this.proovedorBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.proovedorBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -211,6 +214,10 @@ namespace FrbaOfertas.CrearOferta
             this.fechaPublicPicker.Size = new System.Drawing.Size(200, 20);
             this.fechaPublicPicker.TabIndex = 22;
             // 
+            // proovedorBindingSource
+            // 
+            this.proovedorBindingSource.DataSource = typeof(FrbaOfertas.Entities.Proovedor);
+            // 
             // AltaOfertaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,6 +245,7 @@ namespace FrbaOfertas.CrearOferta
             this.Controls.Add(this.label1);
             this.Name = "AltaOfertaForm";
             this.Text = "AltaOfertaForm";
+            ((System.ComponentModel.ISupportInitialize)(this.proovedorBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,5 +273,6 @@ namespace FrbaOfertas.CrearOferta
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker fechaPublicPicker;
         private System.Windows.Forms.DateTimePicker fechaVencPicker;
+        private System.Windows.Forms.BindingSource proovedorBindingSource;
     }
 }

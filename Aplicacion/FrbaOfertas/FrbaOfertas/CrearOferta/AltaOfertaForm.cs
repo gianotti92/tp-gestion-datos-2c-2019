@@ -31,7 +31,9 @@ namespace FrbaOfertas.CrearOferta
             {
 
                 proveedor = proovedorService.getProveedorConUsuario(UsuarioUtil.Usuario.userName);
-                ProovedorCmb.Items.Add( proveedor.razonSocial );
+               
+                ProovedorCmb.Items.Add( proveedor );
+       
             }
             else
             {
@@ -60,8 +62,8 @@ namespace FrbaOfertas.CrearOferta
             oferta.fechaPublicacion = fechaPublicPicker.Value;
             oferta.fechaVencimiento = fechaVencPicker.Value;
             oferta.cantidadMaximaPorCompra = int.Parse(MaxPorClienteTxt.Text);
-            int index = ProovedorCmb.SelectedIndex;
-            Proovedor proovedorSeleccionado = proovedores[index];
+            Proovedor proovedorSeleccionado = (Proovedor)ProovedorCmb.SelectedItem;
+           
             oferta.proovedorId = proovedorSeleccionado.id;
 
             ofertaService.saveOferta(oferta);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
@@ -39,8 +40,8 @@ namespace FrbaOfertas.Dao
         {
             SqlCommand cmd_oferta = new SqlCommand("dbo.SP_SAVE_OFERTA", ConnectionQuery.Instance());
             cmd_oferta.CommandType = CommandType.StoredProcedure;
-            
-            int idOferta = Convert.ToInt32(cmd_oferta.ExecuteScalar());
+            ConnectionQuery.abrirConexion();
+            string idOferta = 'aaaa';
             
             cmd_oferta.Parameters.Add("@Id", idOferta);
             cmd_oferta.Parameters.Add("@proovedor_id", oferta.proovedorId);
@@ -53,5 +54,6 @@ namespace FrbaOfertas.Dao
             cmd_oferta.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+
     }
 }

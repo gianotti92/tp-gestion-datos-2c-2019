@@ -675,7 +675,7 @@ GO
 
 		/****SP save oferta y proovedor asociado ******/
 		create procedure SP_SAVE_OFERTA
-		(@Id INT,
+		(@Id nvarchar,
 		@proovedor_id INT,
 		@precio decimal,
 		@precioLista decimal,
@@ -757,13 +757,3 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE SP_GET_VENDORWITHUSER
-(@userName varchar)
-AS
-BEGIN
-	select * from GESTION_BDD_2C_2019.PROVEEDOR p where p.USUARIO like @userName
-END
-
-GO
-
-exec  SP_GET_VENDORWITHUSER '11-22445103-2'
