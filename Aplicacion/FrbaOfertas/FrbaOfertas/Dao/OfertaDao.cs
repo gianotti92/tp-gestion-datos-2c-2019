@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Text;
 using System.Threading;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
@@ -15,6 +15,79 @@ namespace FrbaOfertas.Dao
         public List<Oferta> searchOfertas()
         {
             SqlCommand cmd_oferta = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.OFERTA" , ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_oferta.ExecuteReader();
+            List<Oferta> ofertas = new List<Oferta>();
+
+            while (r_rol.Read())
+            {
+                Oferta oferta = new Oferta();
+                oferta.id = Convert.ToString(r_rol["ID"]);
+                oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_rol["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                ofertas.Add(oferta);
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
+
+        public List<Oferta> searchOfertasVigentes(string descripcion, int provId)
+        {
+            string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
+            
+            StringBuilder builder =
+                new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "' AND ");
+
+            if (!string.IsNullOrEmpty(descripcion) && provId == 0)
+            {
+                builder.Append("DESCRIPCION LIKE '%" + descripcion + "%'");
+            }
+
+            if (string.IsNullOrEmpty(descripcion) && provId > 0)
+            {
+                builder.Append("PROV_ID = " + provId);
+            }
+
+            if (!string.IsNullOrEmpty(descripcion) && provId > 0)
+            {
+                builder.Append("DESCRIPCION LIKE '%" + descripcion + "%' AND PROV_ID = " + provId);
+            }
+
+
+            SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_oferta.ExecuteReader();
+            List<Oferta> ofertas = new List<Oferta>();
+
+            while (r_rol.Read())
+            {
+                Oferta oferta = new Oferta();
+                oferta.id = Convert.ToString(r_rol["ID"]);
+                oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_rol["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                ofertas.Add(oferta);
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
+
+        public List<Oferta> searchOfertasVigentes()
+        {
+            string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
+            
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "'");
+            
+            SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             SqlDataReader r_rol = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();

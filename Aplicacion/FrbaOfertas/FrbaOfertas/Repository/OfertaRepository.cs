@@ -6,6 +6,10 @@ namespace FrbaOfertas.Repository
     public interface OfertaRepository
     {
         List<Oferta> searchOfertas();
+        List<Oferta> searchOfertasVigentes(string descripcion, int provId);
+
+        List<Oferta> searchOfertasVigentes();
+
         void saveOferta(Oferta oferta);
     }
 }

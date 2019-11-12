@@ -35,7 +35,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 7)
             {
-                return new ComprarOfertaExec(funcionalidad.nombre);
+                return new ComprarOfertaExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 8)
             {

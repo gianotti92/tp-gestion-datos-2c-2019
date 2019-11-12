@@ -93,12 +93,6 @@
     <Compile Include="AbmRol\AbmRolMenuForm.Designer.cs">
       <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\ComprarOferta\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\ComprarOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmUsuario\ABMUsuarioAltaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,12 +123,24 @@
     <Compile Include="AbmUsuario\AltaProovedorForm.Designer.cs">
       <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.Designer.cs">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Connection\ConnectionQuery.cs" />
     <Compile Include="CargaCredito\CargaCreditoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CargaCredito\CargaCreditoForm.Designer.cs">
       <DependentUpon>CargaCreditoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConsumoOferta\ConsumoOferta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsumoOferta\ConsumoOferta.Designer.cs">
+      <DependentUpon>ConsumoOferta.cs</DependentUpon>
     </Compile>
     <Compile Include="CrearOferta\AbmOfertasForm.cs">
       <SubType>Form</SubType>
@@ -236,6 +242,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CargaCredito\CargaCreditoForm.resx">
       <DependentUpon>CargaCreditoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOferta\ComprarOfertaForm1.resx">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsumoOferta\ConsumoOferta.resx">
+      <DependentUpon>ConsumoOferta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\AbmOfertasForm.resx">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
