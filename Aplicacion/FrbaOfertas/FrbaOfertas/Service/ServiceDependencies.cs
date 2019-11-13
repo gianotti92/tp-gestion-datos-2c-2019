@@ -11,6 +11,7 @@ namespace FrbaOfertas.Service
     public static class ServiceDependencies
     {
         private static RolDao RolDao { get; set; }
+        private static FacturaDao facturaDao { get; set; }
         private static RolService RolService { get; set; }
         private static UsuarioDao UsuarioDao {get; set;}
 
@@ -23,6 +24,7 @@ namespace FrbaOfertas.Service
         private static ClienteService clienteService { get; set; }
         private static CiudadService ciudadService { get; set; }
         private static RubroService rubroService { get; set; }
+        private static FacturaService facturaService { get; set; }
         private static CiudadDao ciudadDao { get; set; }
         private static RubroDao _rubroDao { get; set; }
         private static CargarSaldoDao CargarSaldoDao { get; set; }
@@ -37,6 +39,16 @@ namespace FrbaOfertas.Service
                 RolDao = new RolDao();
             }
             return RolDao;
+        }
+
+        public static FacturaDao getFacturaDao()
+        {
+            if (facturaDao == null)
+            {
+                facturaDao = new FacturaDao();
+            }
+
+            return facturaDao;
         }
 
         public static RolService GetRolService() 
@@ -135,6 +147,16 @@ namespace FrbaOfertas.Service
             }
 
             return ofertaService;
+        }
+
+        public static FacturaService getFacturaService()
+        {
+            if (facturaService == null)
+            {
+                facturaService = new FacturaService(getFacturaDao());
+            }
+
+            return facturaService;
         }
     }
 }

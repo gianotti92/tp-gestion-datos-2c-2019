@@ -43,7 +43,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 9)
             {
-                return new FacturacionAProveedorExec(funcionalidad.nombre);
+                return new FacturacionAProveedorExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 10)
             {

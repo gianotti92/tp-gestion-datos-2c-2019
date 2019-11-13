@@ -114,9 +114,9 @@ namespace FrbaOfertas.Dao
             SqlCommand cmd_oferta = new SqlCommand("dbo.SP_SAVE_OFERTA", ConnectionQuery.Instance());
             cmd_oferta.CommandType = CommandType.StoredProcedure;
             ConnectionQuery.abrirConexion();
-            string idOferta = 'aaaa';
             
-            cmd_oferta.Parameters.Add("@Id", idOferta);
+            
+            //cmd_oferta.Parameters.Add("@Id", idOferta);
             cmd_oferta.Parameters.Add("@proovedor_id", oferta.proovedorId);
             cmd_oferta.Parameters.Add("@precio", oferta.precio);
             cmd_oferta.Parameters.Add("@precioLista", oferta.precioLista);
@@ -128,5 +128,31 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
         }
 
+        public List<Oferta> searchOfertasByProveedor(int proveedorId)
+        {
+            SqlCommand cmd_oferta = new SqlCommand("dbo.SP_GET_OFERTAS_BY_PROVIDER", ConnectionQuery.Instance());
+            cmd_oferta.CommandType = CommandType.StoredProcedure;
+            ConnectionQuery.abrirConexion();
+            cmd_oferta.Parameters.Add("@id_proveedor",proveedorId);
+            
+            SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
+            List<Oferta> ofertas = new List<Oferta>();
+
+            while (r_oferta.Read())
+            {
+                Oferta oferta = new Oferta();
+                oferta.id = Convert.ToString(r_oferta["ID"]);
+                oferta.proovedorId = Convert.ToInt32(r_oferta["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_oferta["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_oferta["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_oferta["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime) r_oferta["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime) r_oferta["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                ofertas.Add(oferta);
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
     }
 }

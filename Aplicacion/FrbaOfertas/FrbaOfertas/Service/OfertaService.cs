@@ -31,5 +31,10 @@ namespace FrbaOfertas.Service
         {
             ofertaRepository.saveOferta(oferta);
         }
+
+        public List<Oferta> searchOfertasByProveedor(int proveedorId)
+        {
+            return ofertaRepository.searchOfertasByProveedor(proveedorId);
+        }
     }
 }
