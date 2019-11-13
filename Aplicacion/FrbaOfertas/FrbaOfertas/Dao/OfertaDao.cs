@@ -154,5 +154,19 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
             return ofertas;
         }
+
+        public List<int> searchAnios()
+        {
+            SqlCommand cmd_anio = new SqlCommand("select year(FECHA_PUBLIC) as fecha from GESTION_BDD_2C_2019.OFERTA group by year(FECHA_PUBLIC)", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_anio.ExecuteReader();
+            List<int> ofertas = new List<int>();
+            while (r_rol.Read())
+            {
+                ofertas.Add(Convert.ToInt16(r_rol["fecha"]));
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
     }
 }

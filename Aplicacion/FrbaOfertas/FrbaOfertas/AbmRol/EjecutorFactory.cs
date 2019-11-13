@@ -47,7 +47,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 10)
             {
-                return new ListadoEstadisticoExec(funcionalidad.nombre);
+                return new ListadoEstadisticoExec(funcionalidad.nombre, pantallaACerrar);
             }
             else
             {

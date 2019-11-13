@@ -15,7 +15,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
 
         public override void execute(object sender, EventArgs e)
         {
-            FacturarProveedorForm form = new FacturarProveedorForm(ServiceDependencies.getProveedorService(),
+            FacturarProveedorForm1 form = new FacturarProveedorForm1(ServiceDependencies.getProveedorService(),
                 ServiceDependencies.getOfertaService(), ServiceDependencies.getFacturaService());
             pantallaACerrar.Hide();
             form.Show();

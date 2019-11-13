@@ -179,9 +179,11 @@
     <Compile Include="Entities\TipoPago.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
     <Compile Include="Entities\Usuario.cs" />
-    <Compile Include="Facturar\FacturarProveedorForm.cs" />
-    <Compile Include="Facturar\Form1.Designer.cs">
-      <DependentUpon>FacturarProveedorForm.cs</DependentUpon>
+    <Compile Include="Facturar\FacturarProveedorForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturar\FacturarProveedorForm1.Designer.cs">
+      <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -189,11 +191,23 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.Designer.cs">
+      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.Designer.cs">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,11 +280,20 @@
     <EmbeddedResource Include="AbmUsuario\ABMUsuarioForm.resx">
       <DependentUpon>ABMUsuarioForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Facturar\FacturarProveedorForm.resx">
-      <DependentUpon>FacturarProveedorForm.cs</DependentUpon>
+    <EmbeddedResource Include="Facturar\FacturarProveedorForm1.resx">
+      <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\TopCincoMayorDescuentoForm.resx">
+      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\TopCincoRecaudacionForm.resx">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

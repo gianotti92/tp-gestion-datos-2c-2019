@@ -141,7 +141,7 @@
             // 
             // limpiarBtn
             // 
-            this.limpiarBtn.Location = new System.Drawing.Point(0, 107);
+            this.limpiarBtn.Location = new System.Drawing.Point(26, 107);
             this.limpiarBtn.Name = "limpiarBtn";
             this.limpiarBtn.Size = new System.Drawing.Size(120, 25);
             this.limpiarBtn.TabIndex = 2;

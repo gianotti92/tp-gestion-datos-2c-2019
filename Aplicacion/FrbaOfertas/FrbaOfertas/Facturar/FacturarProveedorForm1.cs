@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol;
 using FrbaOfertas.Dao;
@@ -14,8 +9,9 @@ using FrbaOfertas.Service;
 
 namespace FrbaOfertas.Facturar
 {
-    public partial class FacturarProveedorForm : Form
+    public partial class FacturarProveedorForm1 : Form
     {
+        
         private ProveedorService _proveedorService;
         private OfertaService _ofertaService;
         private FacturaService _facturaService;
@@ -23,7 +19,7 @@ namespace FrbaOfertas.Facturar
         private List<Proovedor> proovedores;
         private List<Oferta> ofertas;
 
-        public FacturarProveedorForm(ProveedorService _proveedorService, OfertaService _ofertaService,
+        public FacturarProveedorForm1(ProveedorService _proveedorService, OfertaService _ofertaService,
             FacturaService _facturaService)
         {
             this._proveedorService = _proveedorService;
@@ -32,7 +28,7 @@ namespace FrbaOfertas.Facturar
             InitializeComponent();
             cargarProveedores();
         }
-
+        
         private void cargarProveedores()
         {
             proovedores = _proveedorService.searchProovedores();
@@ -64,7 +60,7 @@ namespace FrbaOfertas.Facturar
                 NroFactTxt.Text = Convert.ToString(numeroFactura);
             }
         }
-
+        
         private bool esEstadoValido()
         {
             return finFactDate.Value > inicioFactDate.Value;

@@ -12,5 +12,6 @@ namespace FrbaOfertas.Repository
 
         void saveOferta(Oferta oferta);
         List<Oferta> searchOfertasByProveedor(int proveedorId);
+        List<int> searchAnios();
     }
 }
