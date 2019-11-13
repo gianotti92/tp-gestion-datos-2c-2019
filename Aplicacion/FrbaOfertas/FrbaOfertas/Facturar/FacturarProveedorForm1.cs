@@ -6,6 +6,7 @@ using FrbaOfertas.AbmRol;
 using FrbaOfertas.Dao;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Service;
+using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.Facturar
 {
@@ -69,9 +70,7 @@ namespace FrbaOfertas.Facturar
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AbmRolMenuForm form = new AbmRolMenuForm(ServiceDependencies.GetRolService(),
-                new FuncionalidadPorRolService(ServiceDependencies.GetRolService(),
-                    new FuncionalidadService(new FuncionalidadDao())));
+            SeleccionarFuncionalidadForm1 form = new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
             form.Show();
         }
     }

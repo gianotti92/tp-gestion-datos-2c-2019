@@ -2,6 +2,6 @@
 {
     public enum TipoUsuario
     {
-        CLIENTE = 1, PROVEEDOR = 2
+        CLIENTE = 1, PROVEEDOR = 2, ADMINISTRACION = 3
     }
 }
