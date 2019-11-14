@@ -32,6 +32,10 @@ namespace FrbaOfertas.Service
         
         private static ProveedorDao _proveedorDao { get; set; }
         private static OfertaDao ofertaDao { get; set; }
+        private static CompraDao compraDao { get; set; }
+        private static CompraService compraService { get; set; }
+
+
         public static RolDao GetRolDao()
         {
             if (RolDao == null)
@@ -157,6 +161,26 @@ namespace FrbaOfertas.Service
             }
 
             return facturaService;
+        }
+
+        public static CompraDao getCompraDao()
+        {
+            if (compraDao == null)
+            {
+                compraDao = new CompraDao();
+            }
+
+            return compraDao;
+        }
+
+        public static CompraService getCompraService()
+        {
+            if (compraService == null)
+            {
+                compraDao = getCompraDao();
+                compraService = new CompraService(compraDao);
+            }
+            return compraService;
         }
     }
 }

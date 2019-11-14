@@ -68,6 +68,9 @@ IF(OBJECT_ID('SP_GET_OFERTAS_BY_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_OFERTAS_BY_PROVIDER
 IF(OBJECT_ID('SP_SAVE_FACTURA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_FACTURA
+IF(OBJECT_ID('SP_SAVE_COMPRA') IS NOT NULL)
+	DROP PROCEDURE SP_SAVE_COMPRA
+	
 GO
 
 CREATE PROCEDURE SP_CREAR_TABLAS
@@ -776,6 +779,26 @@ GO
 		AS
 		BEGIN
 			insert into GESTION_BDD_2C_2019.FACTURA (PROV_ID, PERIODO_INICIO, PERIODO_FIN, FECHA)
+			OUTPUT inserted.ID
 			values (@prov_id, @fecha_inicio, @fecha_fin, @fecha)
+		END
+		GO
+
+		/*******SP save compra ***********/
+		CREATE PROCEDURE SP_SAVE_COMPRA
+		(
+			@idOferta NVARCHAR(50),
+			@idCliente NUMERIC(18,0),
+			@fecha DATETIME,
+			@cupon DECIMAL(18,2),
+			@fechaConsumo DATETIME,
+			@idFactura INT
+		)
+		AS
+		BEGIN
+			INSERT INTO GESTION_BDD_2C_2019.COMPRAS
+			OUTPUT inserted.ID
+			VALUES 
+				(@idOferta, @idCliente, @fecha, @cupon, @fechaConsumo, @idFactura)
 		END
 		GO

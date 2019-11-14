@@ -18,7 +18,7 @@ namespace FrbaOfertas.Dao
             cmd_factura.Parameters.Add("@fecha_fin",factura.fin);
             cmd_factura.Parameters.Add("@fecha", factura.fechaFacturacion);
             cmd_factura.Parameters.Add("@prov_id",factura.proveedorId);
-            int id = cmd_factura.ExecuteNonQuery();
+            int id = Convert.ToInt32(cmd_factura.ExecuteScalar());
             ConnectionQuery.cerrarConexion();
             return id;
         }

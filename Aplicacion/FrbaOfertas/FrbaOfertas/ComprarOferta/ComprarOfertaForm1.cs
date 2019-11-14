@@ -13,6 +13,7 @@ namespace FrbaOfertas.ComprarOferta
         private OfertaService ofertaService;
         private ProveedorService proveedorService;
         private ClienteService clienteService;
+        private CompraService compraService { get { return ServiceDependencies.getCompraService(); } }
 
         private List<Oferta> ofertas;
         
@@ -71,7 +72,6 @@ namespace FrbaOfertas.ComprarOferta
         {
             Cliente cliente = clienteService.GetClienteByUsername(UsuarioUtil.Usuario.userName);
             
-            
             Oferta ofertaSeleccionada = ofertas[e.ColumnIndex];
             string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
             string nombreApellido = cliente.nombre + " " + cliente.apellido;
@@ -79,6 +79,16 @@ namespace FrbaOfertas.ComprarOferta
             if (!isCompraValida(ofertaSeleccionada))
             {
                 MessageBox.Show("No se pudo comprar por falta de stock");
+            }
+            else
+            {
+                //Compra compra = new Compra();
+                //compra.idOferta = ofertaSeleccionada.id;
+                //compra.idCliente = cliente.id;
+                //compra.fecha = Convert.ToDateTime(fechaDia);//que fecha seria? 
+                //compra.fechaConsumo = DateTime.Now; //es la fecha de compra?
+                ////compra.idFactura = //falta setear la factura correspondiente
+                //int idCompra = compraService.SaveCompra(compra);
             }
             MessageBox.Show("Compra finalizada con exito, cod compra : 12323");
         }

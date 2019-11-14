@@ -157,6 +157,7 @@
     <Compile Include="Dao\CargarSaldoDao.cs" />
     <Compile Include="Dao\CiudadDao.cs" />
     <Compile Include="Dao\ClienteDao.cs" />
+    <Compile Include="Dao\CompraDao.cs" />
     <Compile Include="Dao\DireccionDao.cs" />
     <Compile Include="Dao\FacturaDao.cs" />
     <Compile Include="Dao\FuncionalidadDao.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Entities\CargaSaldo.cs" />
     <Compile Include="Entities\Ciudad.cs" />
     <Compile Include="Entities\Cliente.cs" />
+    <Compile Include="Entities\Compra.cs" />
     <Compile Include="Entities\Direccion.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Factura.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Repository\CargarSalgoRepository.cs" />
     <Compile Include="Repository\CiudadRepository.cs" />
     <Compile Include="Repository\ClienteRepository.cs" />
+    <Compile Include="Repository\CompraRepository.cs" />
     <Compile Include="Repository\DireccionRepository.cs" />
     <Compile Include="Repository\FacturaRepository.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Service\CargarSalgoService.cs" />
     <Compile Include="Service\CiudadService.cs" />
     <Compile Include="Service\ClienteService.cs" />
+    <Compile Include="Service\CompraService.cs" />
     <Compile Include="Service\DireccionService.cs" />
     <Compile Include="Service\FacturaService.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
