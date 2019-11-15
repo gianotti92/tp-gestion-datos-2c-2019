@@ -16,7 +16,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
 
         public override void execute(object sender, EventArgs e)
         {
-            AbmOfertasForm abmOfertasForm = new AbmOfertasForm(new OfertaService(new OfertaDao()));
+            AbmOfertasForm abmOfertasForm = new AbmOfertasForm(new OfertaService(new OfertaDao()), new ProveedorService(new ProveedorDao()));
             abmOfertasForm.Show();
             pantallaACerrar.Hide();
         }

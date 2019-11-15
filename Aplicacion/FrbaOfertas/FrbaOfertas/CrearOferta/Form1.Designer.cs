@@ -33,44 +33,66 @@
             this.OfertaDataGridView = new System.Windows.Forms.DataGridView();
             this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Editar = new System.Windows.Forms.DataGridViewButtonColumn();
-            ((System.ComponentModel.ISupportInitialize) (this.OfertaDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OfertaDataGridView)).BeginInit();
             this.SuspendLayout();
-            this.crearOfertaBtn.Location = new System.Drawing.Point(135, 12);
+            // 
+            // crearOfertaBtn
+            // 
+            this.crearOfertaBtn.Location = new System.Drawing.Point(546, 251);
             this.crearOfertaBtn.Name = "crearOfertaBtn";
-            this.crearOfertaBtn.Size = new System.Drawing.Size(136, 40);
+            this.crearOfertaBtn.Size = new System.Drawing.Size(117, 35);
             this.crearOfertaBtn.TabIndex = 0;
             this.crearOfertaBtn.Text = "Crear oferta";
             this.crearOfertaBtn.UseVisualStyleBackColor = true;
             this.crearOfertaBtn.Click += new System.EventHandler(this.crearOfertaBtn_Click);
-            this.VolverBtn.Location = new System.Drawing.Point(12, 290);
+            // 
+            // VolverBtn
+            // 
+            this.VolverBtn.Location = new System.Drawing.Point(406, 251);
             this.VolverBtn.Name = "VolverBtn";
-            this.VolverBtn.Size = new System.Drawing.Size(136, 40);
+            this.VolverBtn.Size = new System.Drawing.Size(117, 35);
             this.VolverBtn.TabIndex = 1;
             this.VolverBtn.Text = "Volver";
             this.VolverBtn.UseVisualStyleBackColor = true;
             this.VolverBtn.Click += new System.EventHandler(this.VolverBtn_Click);
-            this.OfertaDataGridView.ColumnHeadersHeightSizeMode =
-                System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OfertaDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
-                {this.Eliminar, this.Editar});
-            this.OfertaDataGridView.Location = new System.Drawing.Point(22, 70);
+            // 
+            // OfertaDataGridView
+            // 
+            this.OfertaDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.OfertaDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Eliminar,
+            this.Editar});
+            this.OfertaDataGridView.Location = new System.Drawing.Point(2, 12);
             this.OfertaDataGridView.Name = "OfertaDataGridView";
-            this.OfertaDataGridView.Size = new System.Drawing.Size(369, 180);
+            this.OfertaDataGridView.Size = new System.Drawing.Size(661, 233);
             this.OfertaDataGridView.TabIndex = 2;
+            // 
+            // Eliminar
+            // 
             this.Eliminar.HeaderText = "Eliminar";
             this.Eliminar.Name = "Eliminar";
+            this.Eliminar.Width = 49;
+            // 
+            // Editar
+            // 
             this.Editar.HeaderText = "Editar";
             this.Editar.Name = "Editar";
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.Editar.Width = 40;
+            // 
+            // AbmOfertasForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 342);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(686, 308);
             this.Controls.Add(this.OfertaDataGridView);
             this.Controls.Add(this.VolverBtn);
             this.Controls.Add(this.crearOfertaBtn);
             this.Name = "AbmOfertasForm";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize) (this.OfertaDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OfertaDataGridView)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         #endregion

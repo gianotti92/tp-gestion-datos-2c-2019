@@ -47,7 +47,7 @@ namespace FrbaOfertas.CrearOferta
 
         private void CancelarBtn_Click(object sender, EventArgs e)
         {
-            AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()));
+            AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()), new ProveedorService(new ProveedorDao()));
             this.Hide();
             form.Show();
         }
@@ -65,8 +65,12 @@ namespace FrbaOfertas.CrearOferta
             Proovedor proovedorSeleccionado = (Proovedor)ProovedorCmb.SelectedItem;
            
             oferta.proovedorId = proovedorSeleccionado.id;
-
+            
             ofertaService.saveOferta(oferta);
+
+            System.Windows.Forms.MessageBox.Show(Convert.ToString(oferta.id));
+
+
 
         }
     }

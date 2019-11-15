@@ -4,7 +4,8 @@ namespace FrbaOfertas.Entities
 {
     public class Oferta
     {
-        public string id { get; set; }
+        public int id { get; set; }
+        public string idold { get; set; }
         public int proovedorId{ get; set; }
         public long precio{ get; set; }
         public long precioLista{ get; set; }

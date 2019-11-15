@@ -12,17 +12,36 @@ namespace FrbaOfertas.CrearOferta
     public partial class AbmOfertasForm : Form
     {
         private OfertaService ofertaService;
-        public AbmOfertasForm(OfertaService ofertaService)
+        private ProveedorService proovedorService;
+        private Proovedor proveedor;
+
+        public AbmOfertasForm(OfertaService ofertaService, ProveedorService proovedorService)
         {
             this.ofertaService = ofertaService;
+            this.proovedorService = proovedorService;
             InitializeComponent();
             cargarDataGrid();
         }
 
         private void cargarDataGrid()
         {
-            List<Oferta> ofertas = ofertaService.searchOfertas();
-            OfertaDataGridView.DataSource = new BindingSource(ofertas, null);
+            List<Oferta> ofertas;
+
+            if (UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.PROVEEDOR))
+            {
+                proveedor = proovedorService.getProveedorConUsuario(UsuarioUtil.Usuario.userName);
+
+                ofertas = ofertaService.searchOfertasByProveedor(proveedor.id);
+                OfertaDataGridView.DataSource = new BindingSource(ofertas, null);
+            }
+
+
+    
+            else
+            {
+                ofertas = ofertaService.searchOfertas();
+                OfertaDataGridView.DataSource = new BindingSource(ofertas, null);
+            }
         }
 
         private void crearOfertaBtn_Click(object sender, EventArgs e)
