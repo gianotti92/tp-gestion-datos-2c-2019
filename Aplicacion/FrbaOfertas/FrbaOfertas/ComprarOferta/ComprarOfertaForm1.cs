@@ -76,26 +76,40 @@ namespace FrbaOfertas.ComprarOferta
             string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
             string nombreApellido = cliente.nombre + " " + cliente.apellido;
 
-            if (!isCompraValida(ofertaSeleccionada))
+            if (!hayStock(ofertaSeleccionada))
             {
                 MessageBox.Show("No se pudo comprar por falta de stock");
             }
             else
             {
-                //Compra compra = new Compra();
-                //compra.idOferta = ofertaSeleccionada.id;
-                //compra.idCliente = cliente.id;
-                //compra.fecha = Convert.ToDateTime(fechaDia);//que fecha seria? 
-                //compra.fechaConsumo = DateTime.Now; //es la fecha de compra?
-                ////compra.idFactura = //falta setear la factura correspondiente
-                //int idCompra = compraService.SaveCompra(compra);
+                if (!saldoSuficiente(cliente, ofertaSeleccionada))
+                {
+                    MessageBox.Show("El cliente no tiene suficiente saldo para realizar la compra.");
+                }
+                else
+                {
+                    Compra compra = new Compra();
+                    compra.idOferta = ofertaSeleccionada.id;
+                    compra.idCliente = cliente.id;
+                    compra.fecha = Convert.ToDateTime(fechaDia);
+                    int idCompra = compraService.SaveCompra(compra);
+
+                    cliente.saldo -= ofertaSeleccionada.precio;
+                    clienteService.UpdateCliente(cliente);
+
+                    MessageBox.Show("Compra finalizada con exito, cod compra : " + idCompra);
+                }
             }
-            MessageBox.Show("Compra finalizada con exito, cod compra : 12323");
         }
 
-        private bool isCompraValida(Oferta ofertaSeleccionada)
+        private bool hayStock(Oferta ofertaSeleccionada)
         {
             return ofertaSeleccionada.stockDisponible > 0;
+        }
+
+        private bool saldoSuficiente(Cliente cliente, Oferta oferta)
+        {
+            return cliente.saldo >= oferta.precio;
         }
     }
 }

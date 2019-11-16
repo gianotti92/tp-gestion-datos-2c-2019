@@ -9,16 +9,18 @@ namespace FrbaOfertas.Entities
     public class Compra
     {
         public int id { get; set; }
-        public string idOferta { get; set; }
+        public int idOferta { get; set; }
         public int idCliente { get; set; }
         public DateTime fecha { get; set; }
-        public long cupon { get; set; }
-        public DateTime fechaConsumo { get; set; }
-        public int idFactura { get; set; }
+        public long? cupon { get; set; }
+        public DateTime? fechaConsumo { get; set; }
+        public int? idFactura { get; set; }
 
         public Compra()
         {
-            cupon = 0;
+            cupon = null;
+            fechaConsumo = null;
+            idFactura = null;
         }
     }
 }
