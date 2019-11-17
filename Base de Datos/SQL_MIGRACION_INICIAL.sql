@@ -70,6 +70,8 @@ IF(OBJECT_ID('SP_SAVE_FACTURA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_FACTURA
 IF(OBJECT_ID('SP_SAVE_COMPRA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_COMPRA
+IF(OBJECT_ID('SP_TOP5PROVMAYORFACTURACION') IS NOT NULL)
+	DROP PROCEDURE SP_TOP5PROVMAYORFACTURACION
 	
 GO
 
@@ -801,3 +803,36 @@ GO
 				(@idOferta, @idCliente, @fecha)
 		END
 		GO
+
+CREATE PROCEDURE SP_TOP5PROVMAYORFACTURACION
+ @anio int, @semestre int
+AS
+BEGIN	
+	
+	DECLARE @mes_comienzo_semestre int
+	DECLARE @mes_fin_semestre int
+	DECLARE @fecha_comienzo_semestre datetime
+	DECLARE @fecha_fin_semestre datetime
+	
+		IF @semestre = 1	
+		BEGIN	
+		SET @mes_comienzo_semestre = 1	
+		SET @mes_fin_semestre = 6
+		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+		END
+	
+		IF @semestre = 2	
+		BEGIN	
+		SET @mes_comienzo_semestre = 7	
+		SET @mes_fin_semestre = 12	
+		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+		END
+
+		SELECT TOP 5 f.PROV_ID
+		FROM GD2C2019.GESTION_BDD_2C_2019.FACTURA F
+		WHERE f.PERIODO_INICIO >= @fecha_comienzo_semestre
+		AND f.PERIODO_FIN <= @fecha_fin_semestre
+
+END

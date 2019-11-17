@@ -161,6 +161,7 @@
     <Compile Include="Dao\DireccionDao.cs" />
     <Compile Include="Dao\FacturaDao.cs" />
     <Compile Include="Dao\FuncionalidadDao.cs" />
+    <Compile Include="Dao\ListadosDao.cs" />
     <Compile Include="Dao\OfertaDao.cs" />
     <Compile Include="Dao\ProveedorDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Factura.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
+    <Compile Include="Entities\ListadoTop5VendorFact.cs" />
     <Compile Include="Entities\Oferta.cs" />
     <Compile Include="Entities\Proovedor.cs" />
     <Compile Include="Entities\Rol.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Repository\DireccionRepository.cs" />
     <Compile Include="Repository\FacturaRepository.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
+    <Compile Include="Repository\ListadosRepository.cs" />
     <Compile Include="Repository\OfertaRepository.cs" />
     <Compile Include="Repository\ProovedorRepository.cs" />
     <Compile Include="Repository\RolRepository.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Service\FacturaService.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
+    <Compile Include="Service\ListadoService.cs" />
     <Compile Include="Service\OfertaService.cs" />
     <Compile Include="Service\ProveedorService.cs" />
     <Compile Include="Service\RolService.cs" />

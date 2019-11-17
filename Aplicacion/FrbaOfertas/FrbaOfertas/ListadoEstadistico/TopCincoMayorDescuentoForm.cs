@@ -35,5 +35,10 @@ namespace FrbaOfertas.ListadoEstadistico
             this.Hide();
             listado.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
