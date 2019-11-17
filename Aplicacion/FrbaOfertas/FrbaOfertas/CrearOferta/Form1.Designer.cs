@@ -31,8 +31,6 @@
             this.crearOfertaBtn = new System.Windows.Forms.Button();
             this.VolverBtn = new System.Windows.Forms.Button();
             this.OfertaDataGridView = new System.Windows.Forms.DataGridView();
-            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Editar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.OfertaDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,25 +57,10 @@
             // OfertaDataGridView
             // 
             this.OfertaDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OfertaDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Eliminar,
-            this.Editar});
             this.OfertaDataGridView.Location = new System.Drawing.Point(2, 12);
             this.OfertaDataGridView.Name = "OfertaDataGridView";
             this.OfertaDataGridView.Size = new System.Drawing.Size(661, 233);
             this.OfertaDataGridView.TabIndex = 2;
-            // 
-            // Eliminar
-            // 
-            this.Eliminar.HeaderText = "Eliminar";
-            this.Eliminar.Name = "Eliminar";
-            this.Eliminar.Width = 49;
-            // 
-            // Editar
-            // 
-            this.Editar.HeaderText = "Editar";
-            this.Editar.Name = "Editar";
-            this.Editar.Width = 40;
             // 
             // AbmOfertasForm
             // 
@@ -89,7 +72,8 @@
             this.Controls.Add(this.VolverBtn);
             this.Controls.Add(this.crearOfertaBtn);
             this.Name = "AbmOfertasForm";
-            this.Text = "Form1";
+            this.Text = "Ofertas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AbmOfertasForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.OfertaDataGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -100,7 +84,5 @@
         private System.Windows.Forms.Button crearOfertaBtn;
         private System.Windows.Forms.Button VolverBtn;
         private System.Windows.Forms.DataGridView OfertaDataGridView;
-        private System.Windows.Forms.DataGridViewButtonColumn Editar;
-        private System.Windows.Forms.DataGridViewButtonColumn Eliminar;
     }
 }

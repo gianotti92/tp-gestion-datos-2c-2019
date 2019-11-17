@@ -27,9 +27,9 @@ namespace FrbaOfertas.Service
             return ofertaRepository.searchOfertasVigentes(descripcion, provId);
         }
 
-        public void saveOferta(Oferta oferta)
+        public int saveOferta(Oferta oferta)
         {
-            ofertaRepository.saveOferta(oferta);
+           return ofertaRepository.saveOferta(oferta);
         }
 
         public List<Oferta> searchOfertasByProveedor(int proveedorId)

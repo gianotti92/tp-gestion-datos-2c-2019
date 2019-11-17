@@ -114,5 +114,11 @@ namespace FrbaOfertas
             this.Hide();
             altaUsuario.Show();
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

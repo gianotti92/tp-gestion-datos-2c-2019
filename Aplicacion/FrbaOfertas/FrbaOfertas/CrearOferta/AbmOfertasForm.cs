@@ -58,5 +58,10 @@ namespace FrbaOfertas.CrearOferta
                 new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
             seleccionFuncionalidad.Show();
         }
+
+        private void AbmOfertasForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }

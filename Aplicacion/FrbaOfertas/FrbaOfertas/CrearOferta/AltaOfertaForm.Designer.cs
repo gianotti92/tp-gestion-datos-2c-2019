@@ -44,6 +44,7 @@ namespace FrbaOfertas.CrearOferta
             this.PrecioTxt = new System.Windows.Forms.TextBox();
             this.CantidadDisponibleTxt = new System.Windows.Forms.TextBox();
             this.ProovedorCmb = new System.Windows.Forms.ComboBox();
+            this.proovedorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.CancelarBtn = new System.Windows.Forms.Button();
             this.CrearBtn = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -52,7 +53,6 @@ namespace FrbaOfertas.CrearOferta
             this.stockTxt = new System.Windows.Forms.TextBox();
             this.fechaVencPicker = new System.Windows.Forms.DateTimePicker();
             this.fechaPublicPicker = new System.Windows.Forms.DateTimePicker();
-            this.proovedorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.proovedorBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,6 +125,7 @@ namespace FrbaOfertas.CrearOferta
             this.PrecioListaTxt.Name = "PrecioListaTxt";
             this.PrecioListaTxt.Size = new System.Drawing.Size(202, 20);
             this.PrecioListaTxt.TabIndex = 9;
+            this.PrecioListaTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioTxt_KeyPress);
             // 
             // PrecioTxt
             // 
@@ -132,6 +133,7 @@ namespace FrbaOfertas.CrearOferta
             this.PrecioTxt.Name = "PrecioTxt";
             this.PrecioTxt.Size = new System.Drawing.Size(202, 20);
             this.PrecioTxt.TabIndex = 10;
+            this.PrecioTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioTxt_KeyPress);
             // 
             // CantidadDisponibleTxt
             // 
@@ -139,14 +141,24 @@ namespace FrbaOfertas.CrearOferta
             this.CantidadDisponibleTxt.Name = "CantidadDisponibleTxt";
             this.CantidadDisponibleTxt.Size = new System.Drawing.Size(202, 20);
             this.CantidadDisponibleTxt.TabIndex = 13;
+            this.CantidadDisponibleTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioListaTxt_KeyPress);
             // 
             // ProovedorCmb
             // 
+            this.ProovedorCmb.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.proovedorBindingSource, "razonSocial", true));
+            this.ProovedorCmb.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.proovedorBindingSource, "id", true));
+            this.ProovedorCmb.DataSource = this.proovedorBindingSource;
+            this.ProovedorCmb.DisplayMember = "razonSocial";
             this.ProovedorCmb.FormattingEnabled = true;
             this.ProovedorCmb.Location = new System.Drawing.Point(174, 121);
             this.ProovedorCmb.Name = "ProovedorCmb";
             this.ProovedorCmb.Size = new System.Drawing.Size(202, 21);
             this.ProovedorCmb.TabIndex = 14;
+            this.ProovedorCmb.ValueMember = "id";
+            // 
+            // proovedorBindingSource
+            // 
+            this.proovedorBindingSource.DataSource = typeof(FrbaOfertas.Entities.Proovedor);
             // 
             // CancelarBtn
             // 
@@ -182,6 +194,7 @@ namespace FrbaOfertas.CrearOferta
             this.MaxPorClienteTxt.Name = "MaxPorClienteTxt";
             this.MaxPorClienteTxt.Size = new System.Drawing.Size(202, 20);
             this.MaxPorClienteTxt.TabIndex = 18;
+            this.MaxPorClienteTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioListaTxt_KeyPress);
             // 
             // label9
             // 
@@ -197,6 +210,7 @@ namespace FrbaOfertas.CrearOferta
             this.stockTxt.Name = "stockTxt";
             this.stockTxt.Size = new System.Drawing.Size(202, 20);
             this.stockTxt.TabIndex = 20;
+            this.stockTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioListaTxt_KeyPress);
             // 
             // fechaVencPicker
             // 
@@ -213,10 +227,6 @@ namespace FrbaOfertas.CrearOferta
             this.fechaPublicPicker.Name = "fechaPublicPicker";
             this.fechaPublicPicker.Size = new System.Drawing.Size(200, 20);
             this.fechaPublicPicker.TabIndex = 22;
-            // 
-            // proovedorBindingSource
-            // 
-            this.proovedorBindingSource.DataSource = typeof(FrbaOfertas.Entities.Proovedor);
             // 
             // AltaOfertaForm
             // 
@@ -245,6 +255,7 @@ namespace FrbaOfertas.CrearOferta
             this.Controls.Add(this.label1);
             this.Name = "AltaOfertaForm";
             this.Text = "AltaOfertaForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AltaOfertaForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.proovedorBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -10,7 +10,7 @@ namespace FrbaOfertas.Repository
 
         List<Oferta> searchOfertasVigentes();
 
-        void saveOferta(Oferta oferta);
+        int saveOferta(Oferta oferta);
         List<Oferta> searchOfertasByProveedor(int proveedorId);
         List<int> searchAnios();
     }

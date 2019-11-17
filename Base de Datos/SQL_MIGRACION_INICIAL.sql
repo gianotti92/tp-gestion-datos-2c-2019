@@ -696,6 +696,7 @@ GO
 		BEGIN
 			insert into GESTION_BDD_2C_2019.OFERTA 
 			(PRECIO,PROV_ID, PRECIO_LISTO, STOCK_DISPONIBLE, FECHA_PUBLIC, FECHA_VENC, MAX_X_COMPRA)
+			OUTPUT inserted.ID
 			values
 			( @precio, @proovedor_id,@precioLista,@stockDisponible,@fechaPublicacion,@fechaVencimiento,@cantidadMaximaPorCompra)
 		END
