@@ -174,12 +174,14 @@ namespace FrbaOfertas.Dao
             return ofertas;
         }
 
-        public List<Oferta> searchOfertasAdquiridasByProveedor(int proveedorId)
+        public List<Oferta> searchOfertasAdquiridasByProveedor(int proveedorId, DateTime fechaInicio, DateTime fechaFin)
         {
             SqlCommand cmd_oferta = new SqlCommand("dbo.SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER", ConnectionQuery.Instance());
             cmd_oferta.CommandType = CommandType.StoredProcedure;
             ConnectionQuery.abrirConexion();
             cmd_oferta.Parameters.Add("@id_proveedor", proveedorId);
+            cmd_oferta.Parameters.Add("@fecha_inicio", fechaInicio);
+            cmd_oferta.Parameters.Add("@fecha_fin", fechaFin);
 
             SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();

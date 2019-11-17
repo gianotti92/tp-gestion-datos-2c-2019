@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using System;
 
 namespace FrbaOfertas.Service
 {
@@ -42,9 +43,9 @@ namespace FrbaOfertas.Service
             return ofertaRepository.searchAnios();
         }
 
-        public List<Oferta> searchOfertasAdquiridasByProveedor(int idProveedor)
+        public List<Oferta> searchOfertasAdquiridasByProveedor(int idProveedor, DateTime fechaInicio, DateTime fechaFin)
         {
-            return ofertaRepository.searchOfertasAdquiridasByProveedor(idProveedor);
+            return ofertaRepository.searchOfertasAdquiridasByProveedor(idProveedor, fechaInicio, fechaFin);
         }
     }
 }

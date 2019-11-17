@@ -35,32 +35,6 @@ namespace FrbaOfertas.Facturar
             proovedores = _proveedorService.searchProovedores();
             proovedores.ForEach(p => ProveedorCombo.Items.Add(p.razonSocial));
         }
-
-        private void ProveedorCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (esEstadoValido())
-            //{
-            //    int proveedorId = ProveedorCombo.SelectedIndex;
-            //    ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId);
-            //    listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
-            //    decimal suma = 0;
-            //    totalFacttxt.Text = Convert.ToString(suma);
-            //    if (ofertas.Count > 0)
-            //    {
-            //        suma = ofertas.Select(o => o.precioLista).Sum();
-            //    }
-
-            //    Factura factura = new Factura();
-            //    factura.fechaFacturacion = DateTime.Now;
-            //    factura.inicio = inicioFactDate.Value;
-            //    factura.fin = finFactDate.Value;
-            //    factura.proveedorId = proveedorId;
-            //    int numeroFactura = _facturaService.save(factura);
-
-            //    totalFacttxt.Text = "$ " + Convert.ToString(suma);
-            //    NroFactTxt.Text = Convert.ToString(numeroFactura);
-            //}
-        }
         
         private bool esEstadoValido()
         {
@@ -79,7 +53,7 @@ namespace FrbaOfertas.Facturar
             if (esEstadoValido())
             {
                 int proveedorId = ProveedorCombo.SelectedIndex + 1;
-                ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId);
+                ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId, inicioFactDate.Value, finFactDate.Value);
                 listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
                 decimal suma = 0;
                 totalFacttxt.Text = Convert.ToString(suma);
