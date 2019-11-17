@@ -41,5 +41,10 @@ namespace FrbaOfertas.Service
         {
             return ofertaRepository.searchAnios();
         }
+
+        public List<Oferta> searchOfertasAdquiridasByProveedor(int idProveedor)
+        {
+            return ofertaRepository.searchOfertasAdquiridasByProveedor(idProveedor);
+        }
     }
 }

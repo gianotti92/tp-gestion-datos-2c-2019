@@ -38,10 +38,48 @@ namespace FrbaOfertas.Facturar
 
         private void ProveedorCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //if (esEstadoValido())
+            //{
+            //    int proveedorId = ProveedorCombo.SelectedIndex;
+            //    ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId);
+            //    listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
+            //    decimal suma = 0;
+            //    totalFacttxt.Text = Convert.ToString(suma);
+            //    if (ofertas.Count > 0)
+            //    {
+            //        suma = ofertas.Select(o => o.precioLista).Sum();
+            //    }
+
+            //    Factura factura = new Factura();
+            //    factura.fechaFacturacion = DateTime.Now;
+            //    factura.inicio = inicioFactDate.Value;
+            //    factura.fin = finFactDate.Value;
+            //    factura.proveedorId = proveedorId;
+            //    int numeroFactura = _facturaService.save(factura);
+
+            //    totalFacttxt.Text = "$ " + Convert.ToString(suma);
+            //    NroFactTxt.Text = Convert.ToString(numeroFactura);
+            //}
+        }
+        
+        private bool esEstadoValido()
+        {
+            return finFactDate.Value > inicioFactDate.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            SeleccionarFuncionalidadForm1 form = new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
+            form.Show();
+        }
+
+        private void btnFacturarOfertas_Click(object sender, EventArgs e)
+        {
             if (esEstadoValido())
             {
-                int proveedorId = ProveedorCombo.SelectedIndex;
-                ofertas = _ofertaService.searchOfertasByProveedor(proveedorId);
+                int proveedorId = ProveedorCombo.SelectedIndex + 1;
+                ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId);
                 listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
                 decimal suma = 0;
                 totalFacttxt.Text = Convert.ToString(suma);
@@ -60,18 +98,6 @@ namespace FrbaOfertas.Facturar
                 totalFacttxt.Text = "$ " + Convert.ToString(suma);
                 NroFactTxt.Text = Convert.ToString(numeroFactura);
             }
-        }
-        
-        private bool esEstadoValido()
-        {
-            return finFactDate.Value > inicioFactDate.Value;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            SeleccionarFuncionalidadForm1 form = new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
-            form.Show();
         }
     }
 }

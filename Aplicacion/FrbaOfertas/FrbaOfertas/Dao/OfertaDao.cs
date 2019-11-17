@@ -173,5 +173,33 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
             return ofertas;
         }
+
+        public List<Oferta> searchOfertasAdquiridasByProveedor(int proveedorId)
+        {
+            SqlCommand cmd_oferta = new SqlCommand("dbo.SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER", ConnectionQuery.Instance());
+            cmd_oferta.CommandType = CommandType.StoredProcedure;
+            ConnectionQuery.abrirConexion();
+            cmd_oferta.Parameters.Add("@id_proveedor", proveedorId);
+
+            SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
+            List<Oferta> ofertas = new List<Oferta>();
+
+            while (r_oferta.Read())
+            {
+                Oferta oferta = new Oferta();
+                oferta.id = Convert.ToInt32(r_oferta["ID"]);
+                oferta.idold = Convert.ToString(r_oferta["IDold"]);
+                oferta.proovedorId = Convert.ToInt32(r_oferta["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_oferta["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_oferta["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_oferta["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime)r_oferta["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime)r_oferta["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                ofertas.Add(oferta);
+            }
+            ConnectionQuery.cerrarConexion();
+            return ofertas;
+        }
     }
 }
