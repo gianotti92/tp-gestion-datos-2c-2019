@@ -12,6 +12,8 @@ GO
 
 IF(OBJECT_ID('SP_crear_tablas') IS NOT NULL)
 	DROP PROCEDURE SP_crear_tablas
+IF(OBJECT_ID('SP_MIGRACION') IS NOT NULL)
+	DROP PROCEDURE SP_MIGRACION
 IF(OBJECT_ID('SP_CREATE_ROL') IS NOT NULL)
 	DROP PROCEDURE SP_CREATE_ROL
 IF(OBJECT_ID('SP_CREATE_ROL_FUNCIONALIDAD') IS NOT NULL)
@@ -318,23 +320,64 @@ GO
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.OFERTA
 	(ID,PROV_ID,PRECIO,PRECIO_LISTO,STOCK_DISPONIBLE,DESCRIPCION,FECHA_PUBLIC,FECHA_VENC,MAX_X_COMPRA)
-	SELECT DISTINCT M.Oferta_Codigo, (SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT)
-	,M.Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Descripcion,
-	Oferta_Fecha,Oferta_Fecha_Venc,0
-	FROM GD2C2019.gd_esquema.Maestra M
-	WHERE Oferta_Codigo IS NOT NULL
-	ORDER BY Oferta_Codigo
+SELECT DISTINCT 
+       [Oferta_Codigo]	   
+	  ,(SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT)     
+      ,[Oferta_Precio]
+      ,[Oferta_Precio_Ficticio]
+      ,[Oferta_Cantidad] --Se corresponde al campo de stock disponible. No tendría relación. Revisar.
+	  ,[Oferta_Descripcion]
+      ,[Oferta_Fecha]
+      ,[Oferta_Fecha_Venc]
+	  ,(select Max(oferta_cantidad) FROM [GD2C2019].[gd_esquema].[Maestra] M2 where M2.oferta_codigo = M.oferta_codigo)
+  FROM [GD2C2019].[gd_esquema].[Maestra] M
+  where oferta_codigo is not null
+  order by oferta_codigo
 	
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.FACTURA
 	(ID,FECHA,PROV_ID,PERIODO_INICIO,PERIODO_FIN)
-	SELECT DISTINCT M.Factura_Nro, M.Factura_Fecha, 
+	SELECT DISTINCT 
+	M.Factura_Nro, 
+	M.Factura_Fecha, 
 	(SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT),
-	Factura_Fecha,Factura_Fecha
+	DATEADD(ss,-86399, DATEADD(dd,-(DAY(factura_fecha)-1),factura_fecha)) fechaDesde, --obtengo primer día del mes con hora y minutos 00:00
+	Factura_Fecha 
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Factura_Nro IS NOT NULL
 	ORDER BY 1
 
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.COMPRAS
+	(OFERTA_ID, CLIENTE_ID, FECHA, --CUPON,
+	--FECHA_CONSUMO, se actualiza en un update más adelante.
+	FACTURA_ID)
+	SELECT DISTINCT 
+		M.OFERTA_CODIGO,
+		(select ID from GD2C2019.GESTION_BDD_2C_2019.CLIENTE C where C.DNI = M.cli_dni),
+		M.Oferta_Fecha_Compra,
+		-- CUPON?? VER COMO DEBERIA SER EL CUPON. A PRIORI, PODRÍA NO HACER FALTA.
+		-- FECHA_CONSUMO se carga más adaelante.
+		M.Factura_Nro
+	from GD2C2019.gd_esquema.Maestra M
+	where factura_nro is not null
 
+UPDATE
+    GD2C2019.GESTION_BDD_2C_2019.COMPRAS
+SET
+     COMPRAS.FECHA_CONSUMO = M.oferta_entregado_fecha
+FROM
+     GD2C2019.GESTION_BDD_2C_2019.COMPRAS AS C
+    INNER JOIN GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS CL
+		ON C.CLIENTE_ID = CL.ID
+	INNER JOIN gd_esquema.Maestra AS M
+        ON CL.DNI = M.Cli_DNI
+		and CL.NOMBRE = M.CLI_NOMBRE
+		and CL.APELLIDO = M.CLI_APELLIDO
+		and C.OFERTA_ID = M.OFERTA_CODIGO
+WHERE
+    M.OFERTA_CODIGO is not null
+	AND M.oferta_entregado_fecha IS NOT NULL
+
+/*
 	SELECT M.Oferta_Codigo,m.Cli_Dni
 	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
 	Into #t_ofer2
@@ -353,19 +396,16 @@ GO
 	where M.Oferta_Codigo is not null
 	ORDER BY Oferta_Codigo
 
-
 	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
 	from #t_ofer2
 	where Oferta_Entregado_Fecha is not null
 	and Factura_Nro is not null
 	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
 	order by 1,2
-	
-	
 
 --	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
 --	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
-
+*/
 
 
 	END
@@ -374,7 +414,7 @@ GO
 GO
 		EXEC DBO.SP_CREAR_TABLAS
 
-
+		EXEC DBO.SP_MIGRACION
 
 
 
