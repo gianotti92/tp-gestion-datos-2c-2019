@@ -299,6 +299,7 @@ GO
 	ORDER BY 1
 
 
+
 	insert into GD2C2019.GESTION_BDD_2C_2019.RUBRO
 	(DESCRIPCION)
 	SELECT DISTINCT M.Provee_Rubro
@@ -360,22 +361,49 @@ SELECT DISTINCT
 	from GD2C2019.gd_esquema.Maestra M
 	where factura_nro is not null
 
-UPDATE
-    GD2C2019.GESTION_BDD_2C_2019.COMPRAS
-SET
-     COMPRAS.FECHA_CONSUMO = M.oferta_entregado_fecha
-FROM
-     GD2C2019.GESTION_BDD_2C_2019.COMPRAS AS C
-    INNER JOIN GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS CL
-		ON C.CLIENTE_ID = CL.ID
-	INNER JOIN gd_esquema.Maestra AS M
-        ON CL.DNI = M.Cli_DNI
-		and CL.NOMBRE = M.CLI_NOMBRE
-		and CL.APELLIDO = M.CLI_APELLIDO
-		and C.OFERTA_ID = M.OFERTA_CODIGO
-WHERE
-    M.OFERTA_CODIGO is not null
-	AND M.oferta_entregado_fecha IS NOT NULL
+	UPDATE
+		GD2C2019.GESTION_BDD_2C_2019.COMPRAS
+	SET
+		 COMPRAS.FECHA_CONSUMO = M.oferta_entregado_fecha
+	FROM
+		 GD2C2019.GESTION_BDD_2C_2019.COMPRAS AS C
+		INNER JOIN GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS CL
+			ON C.CLIENTE_ID = CL.ID
+		INNER JOIN gd_esquema.Maestra AS M
+			ON CL.DNI = M.Cli_DNI
+			and CL.NOMBRE = M.CLI_NOMBRE
+			and CL.APELLIDO = M.CLI_APELLIDO
+			and C.OFERTA_ID = M.OFERTA_CODIGO
+	WHERE
+		M.OFERTA_CODIGO is not null
+		AND M.oferta_entregado_fecha IS NOT NULL
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CARGA_SALDO
+	(CLIENTE_ID, FECHA, MONTO, TIPO)
+	SELECT (select ID from GD2C2019.GESTION_BDD_2C_2019.CLIENTE C where C.DNI = M.cli_dni) cliente
+	  ,[Carga_Fecha]      
+      ,[Carga_Credito]
+      ,CASE WHEN [Tipo_Pago_Desc] = 'Crédito' THEN 'CREDITO'
+	        WHEN [Tipo_Pago_Desc] = 'Efectivo' THEN 'DEBITO'
+	   END
+	FROM [GD2C2019].[gd_esquema].[Maestra] M
+	where m.Carga_Credito is not null
+
+
+	SELECT C.CLIENTE_ID id, sum(C.MONTO) total
+	Into #t_cargas_total
+	FROM GD2C2019.GESTION_BDD_2C_2019.CARGA_SALDO C
+	GROUP BY C.Cliente_ID
+
+	UPDATE
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE
+	SET
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE.SALDO = t.total
+	FROM
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS C
+		INNER JOIN #t_cargas_total AS t
+		ON C.ID = t.ID
 
 /*
 	SELECT M.Oferta_Codigo,m.Cli_Dni
