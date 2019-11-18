@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrbaOfertas.Entities;
+using System;
 
 namespace FrbaOfertas.Repository
 {
@@ -12,6 +13,8 @@ namespace FrbaOfertas.Repository
 
         int saveOferta(Oferta oferta);
         List<Oferta> searchOfertasByProveedor(int proveedorId);
+        
         List<int> searchAnios();
+        List<Oferta> searchOfertasAdquiridasByProveedor(int proveedorId, DateTime fechaInicio, DateTime fechaFin);
     }
 }
