@@ -13,6 +13,8 @@ GO
 
 IF(OBJECT_ID('SP_crear_tablas') IS NOT NULL)
 	DROP PROCEDURE SP_crear_tablas
+IF(OBJECT_ID('SP_MIGRACION') IS NOT NULL)
+	DROP PROCEDURE SP_MIGRACION
 IF(OBJECT_ID('SP_CREATE_ROL') IS NOT NULL)
 	DROP PROCEDURE SP_CREATE_ROL
 IF(OBJECT_ID('SP_CREATE_ROL_FUNCIONALIDAD') IS NOT NULL)
@@ -378,6 +380,7 @@ GO
 	ORDER BY 1
 
 
+
 	insert into GD2C2019.GESTION_BDD_2C_2019.RUBRO
 	(DESCRIPCION)
 	SELECT DISTINCT M.Provee_Rubro
@@ -398,25 +401,90 @@ GO
 
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.OFERTA
-	(IDOLD,PROV_ID,PRECIO,PRECIO_LISTO,STOCK_DISPONIBLE,DESCRIPCION,FECHA_PUBLIC,FECHA_VENC,MAX_X_COMPRA)
-	SELECT DISTINCT M.Oferta_Codigo, (SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT)
-	,M.Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Descripcion,
-	Oferta_Fecha,Oferta_Fecha_Venc,0
-	FROM GD2C2019.gd_esquema.Maestra M
-	WHERE Oferta_Codigo IS NOT NULL
-	ORDER BY Oferta_Codigo
+	(ID,PROV_ID,PRECIO,PRECIO_LISTO,STOCK_DISPONIBLE,DESCRIPCION,FECHA_PUBLIC,FECHA_VENC,MAX_X_COMPRA)
+SELECT DISTINCT 
+       [Oferta_Codigo]	   
+	  ,(SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT)     
+      ,[Oferta_Precio]
+      ,[Oferta_Precio_Ficticio]
+      ,[Oferta_Cantidad] --Se corresponde al campo de stock disponible. No tendría relación. Revisar.
+	  ,[Oferta_Descripcion]
+      ,[Oferta_Fecha]
+      ,[Oferta_Fecha_Venc]
+	  ,(select Max(oferta_cantidad) FROM [GD2C2019].[gd_esquema].[Maestra] M2 where M2.oferta_codigo = M.oferta_codigo)
+  FROM [GD2C2019].[gd_esquema].[Maestra] M
+  where oferta_codigo is not null
+  order by oferta_codigo
 	
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.FACTURA
 	(ID,FECHA,PROV_ID,PERIODO_INICIO,PERIODO_FIN)
-	SELECT DISTINCT M.Factura_Nro, M.Factura_Fecha, 
+	SELECT DISTINCT 
+	M.Factura_Nro, 
+	M.Factura_Fecha, 
 	(SELECT P.ID FROM GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P WHERE P.CUIT = M.Provee_CUIT),
-	Factura_Fecha,Factura_Fecha
+	DATEADD(ss,-86399, DATEADD(dd,-(DAY(factura_fecha)-1),factura_fecha)) fechaDesde, --obtengo primer día del mes con hora y minutos 00:00
+	Factura_Fecha 
 	FROM GD2C2019.gd_esquema.Maestra M
 	WHERE M.Factura_Nro IS NOT NULL
 	ORDER BY 1
 
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.COMPRAS
+	(OFERTA_ID, CLIENTE_ID, FECHA, --CUPON,
+	--FECHA_CONSUMO, se actualiza en un update más adelante.
+	FACTURA_ID)
+	SELECT DISTINCT 
+		M.OFERTA_CODIGO,
+		(select ID from GD2C2019.GESTION_BDD_2C_2019.CLIENTE C where C.DNI = M.cli_dni),
+		M.Oferta_Fecha_Compra,
+		-- CUPON?? VER COMO DEBERIA SER EL CUPON. A PRIORI, PODRÍA NO HACER FALTA.
+		-- FECHA_CONSUMO se carga más adaelante.
+		M.Factura_Nro
+	from GD2C2019.gd_esquema.Maestra M
+	where factura_nro is not null
 
-	
+	UPDATE
+		GD2C2019.GESTION_BDD_2C_2019.COMPRAS
+	SET
+		 COMPRAS.FECHA_CONSUMO = M.oferta_entregado_fecha
+	FROM
+		 GD2C2019.GESTION_BDD_2C_2019.COMPRAS AS C
+		INNER JOIN GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS CL
+			ON C.CLIENTE_ID = CL.ID
+		INNER JOIN gd_esquema.Maestra AS M
+			ON CL.DNI = M.Cli_DNI
+			and CL.NOMBRE = M.CLI_NOMBRE
+			and CL.APELLIDO = M.CLI_APELLIDO
+			and C.OFERTA_ID = M.OFERTA_CODIGO
+	WHERE
+		M.OFERTA_CODIGO is not null
+		AND M.oferta_entregado_fecha IS NOT NULL
+
+
+	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CARGA_SALDO
+	(CLIENTE_ID, FECHA, MONTO, TIPO)
+	SELECT (select ID from GD2C2019.GESTION_BDD_2C_2019.CLIENTE C where C.DNI = M.cli_dni) cliente
+	  ,[Carga_Fecha]      
+      ,[Carga_Credito]
+      ,CASE WHEN [Tipo_Pago_Desc] = 'Crédito' THEN 'CREDITO'
+	        WHEN [Tipo_Pago_Desc] = 'Efectivo' THEN 'DEBITO'
+	   END
+	FROM [GD2C2019].[gd_esquema].[Maestra] M
+	where m.Carga_Credito is not null
+
+
+	SELECT C.CLIENTE_ID id, sum(C.MONTO) total
+	Into #t_cargas_total
+	FROM GD2C2019.GESTION_BDD_2C_2019.CARGA_SALDO C
+	GROUP BY C.Cliente_ID
+
+	UPDATE
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE
+	SET
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE.SALDO = t.total
+	FROM
+		GD2C2019.GESTION_BDD_2C_2019.CLIENTE AS C
+		INNER JOIN #t_cargas_total AS t
+		ON C.ID = t.ID
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.Usuario
 	(username,tipo,pass,habilitado,intentos)
@@ -426,12 +494,44 @@ GO
 	(rol_id,username)
      VALUES (3, 'admin')
 
+/*
+	SELECT M.Oferta_Codigo,m.Cli_Dni
+	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
+	Into #t_ofer2
+	FROM GD2C2019.gd_esquema.Maestra M
+	where M.Oferta_Codigo is not null
+	ORDER BY Oferta_Codigo
+
+	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
+	,M.Oferta_Fecha_Compra,NULL as cupon,
+	(select top 1 t.Oferta_Entregado_Fecha from #t_ofer2 t 
+	where t.Cli_Dni = m.Cli_Dni and t.Oferta_Codigo = m.Oferta_Codigo and t.Oferta_Fecha_Compra =m.Oferta_Fecha_Compra 
+	and t.Oferta_Entregado_Fecha is not null ) ,
+	(select top 1 t2.Factura_Nro from #t_ofer2 t2 where t2.Cli_Dni = m.Cli_Dni and t2.Oferta_Codigo = m.Oferta_Codigo 
+	and t2.Factura_Nro =m.Factura_Nro and t2.Factura_Nro is not null )
+	FROM GD2C2019.gd_esquema.Maestra M
+	where M.Oferta_Codigo is not null
+	ORDER BY Oferta_Codigo
+
+	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
+	from #t_ofer2
+	where Oferta_Entregado_Fecha is not null
+	and Factura_Nro is not null
+	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
+	order by 1,2
+
+--	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
+--	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
+*/
+
+
 
 	END
 
 GO
 		EXEC DBO.SP_CREAR_TABLAS
 		EXEC DBO.SP_MIGRACION
+
 
 
 GO
