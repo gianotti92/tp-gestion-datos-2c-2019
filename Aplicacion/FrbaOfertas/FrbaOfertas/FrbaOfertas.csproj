@@ -93,12 +93,6 @@
     <Compile Include="AbmRol\AbmRolMenuForm.Designer.cs">
       <DependentUpon>AbmRolMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\ComprarOferta\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\ComprarOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmUsuario\ABMUsuarioAltaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,12 +123,24 @@
     <Compile Include="AbmUsuario\AltaProovedorForm.Designer.cs">
       <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Connection\ConnectionQuery.cs" />
-    <Compile Include="CragaCredito\Form1.cs">
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CragaCredito\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ComprarOferta\ComprarOfertaForm1.Designer.cs">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Connection\ConnectionQuery.cs" />
+    <Compile Include="CargaCredito\CargaCreditoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CargaCredito\CargaCreditoForm.Designer.cs">
+      <DependentUpon>CargaCreditoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConsumoOferta\ConsumoOferta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsumoOferta\ConsumoOferta.Designer.cs">
+      <DependentUpon>ConsumoOferta.cs</DependentUpon>
     </Compile>
     <Compile Include="CrearOferta\AbmOfertasForm.cs">
       <SubType>Form</SubType>
@@ -148,27 +154,40 @@
     <Compile Include="CrearOferta\Form1.Designer.cs">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dao\CargarSaldoDao.cs" />
+    <Compile Include="Dao\CiudadDao.cs" />
     <Compile Include="Dao\ClienteDao.cs" />
+    <Compile Include="Dao\CompraDao.cs" />
     <Compile Include="Dao\DireccionDao.cs" />
+    <Compile Include="Dao\FacturaDao.cs" />
     <Compile Include="Dao\FuncionalidadDao.cs" />
+    <Compile Include="Dao\ListadosDao.cs" />
     <Compile Include="Dao\OfertaDao.cs" />
-    <Compile Include="Dao\ProovedorDao.cs" />
+    <Compile Include="Dao\ProveedorDao.cs" />
     <Compile Include="Dao\RolDao.cs" />
+    <Compile Include="Dao\RubroDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
+    <Compile Include="Entities\CargaSaldo.cs" />
+    <Compile Include="Entities\Ciudad.cs" />
     <Compile Include="Entities\Cliente.cs" />
+    <Compile Include="Entities\Compra.cs" />
     <Compile Include="Entities\Direccion.cs" />
     <Compile Include="Entities\EstadoRol.cs" />
+    <Compile Include="Entities\Factura.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
+    <Compile Include="Entities\ListadoTop5VendorFact.cs" />
     <Compile Include="Entities\Oferta.cs" />
     <Compile Include="Entities\Proovedor.cs" />
     <Compile Include="Entities\Rol.cs" />
+    <Compile Include="Entities\Rubro.cs" />
+    <Compile Include="Entities\TipoPago.cs" />
     <Compile Include="Entities\TipoUsuario.cs" />
     <Compile Include="Entities\Usuario.cs" />
-    <Compile Include="Facturar\Form1.cs">
+    <Compile Include="Facturar\FacturarProveedorForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Facturar\FacturarProveedorForm1.Designer.cs">
+      <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -176,32 +195,57 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.Designer.cs">
+      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.Designer.cs">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CargarSalgoRepository.cs" />
+    <Compile Include="Repository\CiudadRepository.cs" />
     <Compile Include="Repository\ClienteRepository.cs" />
+    <Compile Include="Repository\CompraRepository.cs" />
     <Compile Include="Repository\DireccionRepository.cs" />
+    <Compile Include="Repository\FacturaRepository.cs" />
     <Compile Include="Repository\FuncionalidadRepository.cs" />
+    <Compile Include="Repository\ListadosRepository.cs" />
     <Compile Include="Repository\OfertaRepository.cs" />
     <Compile Include="Repository\ProovedorRepository.cs" />
     <Compile Include="Repository\RolRepository.cs" />
+    <Compile Include="Repository\RubroRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
+    <Compile Include="Service\CargarSalgoService.cs" />
+    <Compile Include="Service\CiudadService.cs" />
     <Compile Include="Service\ClienteService.cs" />
+    <Compile Include="Service\CompraService.cs" />
     <Compile Include="Service\DireccionService.cs" />
+    <Compile Include="Service\FacturaService.cs" />
     <Compile Include="Service\FuncionalidadPorRolService.cs" />
     <Compile Include="Service\FuncionalidadService.cs" />
+    <Compile Include="Service\ListadoService.cs" />
     <Compile Include="Service\OfertaService.cs" />
-    <Compile Include="Service\ProovedorService.cs" />
+    <Compile Include="Service\ProveedorService.cs" />
     <Compile Include="Service\RolService.cs" />
+    <Compile Include="Service\RubroService.cs" />
     <Compile Include="Service\ServiceDependencies.cs" />
     <Compile Include="Service\UsuarioLoginService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
     <Compile Include="Utils\FuncionalidadUtil.cs" />
+    <Compile Include="Utils\UsuarioUtil.cs" />
     <EmbeddedResource Include="AbmRol\AltaRolViewForm.resx">
       <DependentUpon>AltaRolViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +264,15 @@
     <EmbeddedResource Include="AbmUsuario\AltaProovedorForm.resx">
       <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CargaCredito\CargaCreditoForm.resx">
+      <DependentUpon>CargaCreditoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOferta\ComprarOfertaForm1.resx">
+      <DependentUpon>ComprarOfertaForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsumoOferta\ConsumoOferta.resx">
+      <DependentUpon>ConsumoOferta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\AbmOfertasForm.resx">
       <DependentUpon>AbmOfertasForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,8 +288,20 @@
     <EmbeddedResource Include="AbmUsuario\ABMUsuarioForm.resx">
       <DependentUpon>ABMUsuarioForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Facturar\FacturarProveedorForm1.resx">
+      <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\TopCincoMayorDescuentoForm.resx">
+      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\TopCincoRecaudacionForm.resx">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -247,6 +312,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\FrbaOfertas.Entities.Proovedor.datasource" />
     <None Include="Properties\DataSources\FrbaOfertas.Entities.Rol.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

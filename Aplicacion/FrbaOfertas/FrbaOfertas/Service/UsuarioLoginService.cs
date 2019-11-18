@@ -37,6 +37,11 @@ namespace FrbaOfertas.Service
             return usuarioService.searchUsuario(name);
         }
 
+        public bool ValidateUser(string name, string passWord)
+        {
+            return usuarioService.validateUsuario(name, passWord);
+        }
+
         public void saveUsuarioInhabilitado(Usuario usuario)
         {
             usuarioService.UpdateUsuario(usuario);

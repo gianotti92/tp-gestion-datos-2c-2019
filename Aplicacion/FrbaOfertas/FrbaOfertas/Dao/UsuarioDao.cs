@@ -29,7 +29,7 @@ namespace FrbaOfertas.Dao
                 return null;
             }
             
-            Usuario usuario = new Usuario(true, 0, new List<Rol>());
+            Usuario usuario = new Usuario();
             usuario.userName = consulta.GetString(0);
             usuario.tipoUsuario = (TipoUsuario)consulta.GetInt32(1);
             usuario.contrasena = consulta.GetString(2);
@@ -40,6 +40,27 @@ namespace FrbaOfertas.Dao
 
             usuario.roles = RolDao.GetByUsername(usuario.userName);
             return usuario;
+        }
+
+        public bool ValidateUsuario(string userName,string passWord)
+        {
+
+            SqlCommand cmd = new SqlCommand("dbo.SP_VALIDATE_USER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@username", userName));
+            cmd.Parameters.Add(new SqlParameter("@passWord", passWord));
+
+            SqlParameter returnParameter = new SqlParameter("@status", SqlDbType.Bit);
+            returnParameter.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(returnParameter);
+            cmd.ExecuteNonQuery();
+            var result = Convert.ToInt32(cmd.Parameters["@status"].Value);
+
+           ConnectionQuery.cerrarConexion();
+            return result.Equals(1);
+             
+         
         }
 
         public void Create(Usuario usuario)
@@ -127,7 +148,7 @@ namespace FrbaOfertas.Dao
 
             while (r_usuario.Read())
             {
-                Usuario usuario = new Usuario(true, 0, new List<Rol>());
+                Usuario usuario = new Usuario();
                 usuario.userName = r_usuario["username"].ToString();
                 usuario.contrasena = r_usuario["pass"].ToString();
                 usuario.tipoUsuario = (TipoUsuario)Convert.ToInt32(r_usuario["tipo"]);

@@ -32,12 +32,13 @@ namespace FrbaOfertas.AbmUsuario
         private void InitializeComponent()
         {
             this.gbDatosUsuario = new System.Windows.Forms.GroupBox();
-            this.fechaNacPicker1 = new System.Windows.Forms.DateTimePicker();
+            this.rubroCombo = new System.Windows.Forms.ComboBox();
+            this.contactotxt = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.telefonoTxt = new System.Windows.Forms.TextBox();
-            this.mailTxt = new System.Windows.Forms.TextBox();
-            this.dniTxt = new System.Windows.Forms.TextBox();
+            this.telTxt = new System.Windows.Forms.TextBox();
+            this.cuitTxt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ciudadCombo = new System.Windows.Forms.ComboBox();
             this.codigoPostaltxt = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -55,9 +56,9 @@ namespace FrbaOfertas.AbmUsuario
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.apellidotxt = new System.Windows.Forms.TextBox();
+            this.mailTxt = new System.Windows.Forms.TextBox();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.nombreTxt = new System.Windows.Forms.TextBox();
+            this.razonSocialTxt = new System.Windows.Forms.TextBox();
             this.lblUsername = new System.Windows.Forms.Label();
             this.volverBtn = new System.Windows.Forms.Button();
             this.creatBtn = new System.Windows.Forms.Button();
@@ -67,71 +68,73 @@ namespace FrbaOfertas.AbmUsuario
             // 
             // gbDatosUsuario
             // 
-            this.gbDatosUsuario.Controls.Add(this.fechaNacPicker1);
+            this.gbDatosUsuario.Controls.Add(this.rubroCombo);
+            this.gbDatosUsuario.Controls.Add(this.contactotxt);
             this.gbDatosUsuario.Controls.Add(this.label12);
-            this.gbDatosUsuario.Controls.Add(this.telefonoTxt);
-            this.gbDatosUsuario.Controls.Add(this.mailTxt);
-            this.gbDatosUsuario.Controls.Add(this.dniTxt);
+            this.gbDatosUsuario.Controls.Add(this.telTxt);
+            this.gbDatosUsuario.Controls.Add(this.cuitTxt);
             this.gbDatosUsuario.Controls.Add(this.groupBox1);
             this.gbDatosUsuario.Controls.Add(this.label3);
             this.gbDatosUsuario.Controls.Add(this.label2);
             this.gbDatosUsuario.Controls.Add(this.label1);
-            this.gbDatosUsuario.Controls.Add(this.apellidotxt);
+            this.gbDatosUsuario.Controls.Add(this.mailTxt);
             this.gbDatosUsuario.Controls.Add(this.lblPassword);
-            this.gbDatosUsuario.Controls.Add(this.nombreTxt);
+            this.gbDatosUsuario.Controls.Add(this.razonSocialTxt);
             this.gbDatosUsuario.Controls.Add(this.lblUsername);
             this.gbDatosUsuario.Location = new System.Drawing.Point(10, 12);
             this.gbDatosUsuario.Margin = new System.Windows.Forms.Padding(2);
             this.gbDatosUsuario.Name = "gbDatosUsuario";
             this.gbDatosUsuario.Padding = new System.Windows.Forms.Padding(2);
-            this.gbDatosUsuario.Size = new System.Drawing.Size(360, 397);
+            this.gbDatosUsuario.Size = new System.Drawing.Size(360, 428);
             this.gbDatosUsuario.TabIndex = 5;
             this.gbDatosUsuario.TabStop = false;
-            this.gbDatosUsuario.Text = "Datos Cliente";
+            this.gbDatosUsuario.Text = "Datos Proveedor";
             // 
-            // fechaNacPicker1
+            // rubroCombo
             // 
-            this.fechaNacPicker1.Location = new System.Drawing.Point(96, 170);
-            this.fechaNacPicker1.Name = "fechaNacPicker1";
-            this.fechaNacPicker1.Size = new System.Drawing.Size(217, 23);
-            this.fechaNacPicker1.TabIndex = 13;
+            this.rubroCombo.FormattingEnabled = true;
+            this.rubroCombo.Location = new System.Drawing.Point(97, 114);
+            this.rubroCombo.Name = "rubroCombo";
+            this.rubroCombo.Size = new System.Drawing.Size(216, 23);
+            this.rubroCombo.TabIndex = 8;
+            // 
+            // contactotxt
+            // 
+            this.contactotxt.Location = new System.Drawing.Point(97, 173);
+            this.contactotxt.Margin = new System.Windows.Forms.Padding(2);
+            this.contactotxt.Name = "contactotxt";
+            this.contactotxt.Size = new System.Drawing.Size(215, 23);
+            this.contactotxt.TabIndex = 13;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(30, 177);
+            this.label12.Location = new System.Drawing.Point(17, 173);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(62, 15);
+            this.label12.Size = new System.Drawing.Size(56, 15);
             this.label12.TabIndex = 12;
-            this.label12.Text = "Fecha Nac";
+            this.label12.Text = "Contacto";
             // 
-            // telefonoTxt
+            // telTxt
             // 
-            this.telefonoTxt.Location = new System.Drawing.Point(97, 141);
-            this.telefonoTxt.Margin = new System.Windows.Forms.Padding(2);
-            this.telefonoTxt.Name = "telefonoTxt";
-            this.telefonoTxt.Size = new System.Drawing.Size(216, 23);
-            this.telefonoTxt.TabIndex = 11;
+            this.telTxt.Location = new System.Drawing.Point(97, 141);
+            this.telTxt.Margin = new System.Windows.Forms.Padding(2);
+            this.telTxt.Name = "telTxt";
+            this.telTxt.Size = new System.Drawing.Size(216, 23);
+            this.telTxt.TabIndex = 11;
             // 
-            // mailTxt
+            // cuitTxt
             // 
-            this.mailTxt.Location = new System.Drawing.Point(97, 114);
-            this.mailTxt.Margin = new System.Windows.Forms.Padding(2);
-            this.mailTxt.Name = "mailTxt";
-            this.mailTxt.Size = new System.Drawing.Size(216, 23);
-            this.mailTxt.TabIndex = 10;
-            // 
-            // dniTxt
-            // 
-            this.dniTxt.Location = new System.Drawing.Point(97, 87);
-            this.dniTxt.Margin = new System.Windows.Forms.Padding(2);
-            this.dniTxt.Name = "dniTxt";
-            this.dniTxt.Size = new System.Drawing.Size(216, 23);
-            this.dniTxt.TabIndex = 9;
+            this.cuitTxt.Location = new System.Drawing.Point(97, 87);
+            this.cuitTxt.Margin = new System.Windows.Forms.Padding(2);
+            this.cuitTxt.Name = "cuitTxt";
+            this.cuitTxt.Size = new System.Drawing.Size(216, 23);
+            this.cuitTxt.TabIndex = 9;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ciudadCombo);
             this.groupBox1.Controls.Add(this.codigoPostaltxt);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label10);
@@ -150,10 +153,18 @@ namespace FrbaOfertas.AbmUsuario
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(313, 163);
+            this.groupBox1.Size = new System.Drawing.Size(313, 200);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
+            // 
+            // ciudadCombo
+            // 
+            this.ciudadCombo.FormattingEnabled = true;
+            this.ciudadCombo.Location = new System.Drawing.Point(66, 149);
+            this.ciudadCombo.Name = "ciudadCombo";
+            this.ciudadCombo.Size = new System.Drawing.Size(215, 23);
+            this.ciudadCombo.TabIndex = 9;
             // 
             // codigoPostaltxt
             // 
@@ -258,12 +269,12 @@ namespace FrbaOfertas.AbmUsuario
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 173);
+            this.label5.Location = new System.Drawing.Point(15, 152);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 15);
+            this.label5.Size = new System.Drawing.Size(45, 15);
             this.label5.TabIndex = 7;
-            this.label5.Text = "Username";
+            this.label5.Text = "Ciudad";
             // 
             // calleTxt
             // 
@@ -286,7 +297,7 @@ namespace FrbaOfertas.AbmUsuario
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 144);
+            this.label3.Location = new System.Drawing.Point(17, 144);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 15);
@@ -296,58 +307,58 @@ namespace FrbaOfertas.AbmUsuario
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 117);
+            this.label2.Location = new System.Drawing.Point(17, 117);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 15);
+            this.label2.Size = new System.Drawing.Size(39, 15);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Mail";
+            this.label2.Text = "Rubro";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 90);
+            this.label1.Location = new System.Drawing.Point(17, 90);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 15);
+            this.label1.Size = new System.Drawing.Size(29, 15);
             this.label1.TabIndex = 6;
-            this.label1.Text = "DNI";
+            this.label1.Text = "Cuit";
             // 
-            // apellidotxt
+            // mailTxt
             // 
-            this.apellidotxt.Location = new System.Drawing.Point(97, 60);
-            this.apellidotxt.Margin = new System.Windows.Forms.Padding(2);
-            this.apellidotxt.Name = "apellidotxt";
-            this.apellidotxt.Size = new System.Drawing.Size(216, 23);
-            this.apellidotxt.TabIndex = 5;
+            this.mailTxt.Location = new System.Drawing.Point(97, 60);
+            this.mailTxt.Margin = new System.Windows.Forms.Padding(2);
+            this.mailTxt.Name = "mailTxt";
+            this.mailTxt.Size = new System.Drawing.Size(216, 23);
+            this.mailTxt.TabIndex = 5;
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(30, 63);
+            this.lblPassword.Location = new System.Drawing.Point(17, 63);
             this.lblPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(51, 15);
+            this.lblPassword.Size = new System.Drawing.Size(30, 15);
             this.lblPassword.TabIndex = 4;
-            this.lblPassword.Text = "Apellido";
+            this.lblPassword.Text = "Mail";
             // 
-            // nombreTxt
+            // razonSocialTxt
             // 
-            this.nombreTxt.Location = new System.Drawing.Point(97, 33);
-            this.nombreTxt.Margin = new System.Windows.Forms.Padding(2);
-            this.nombreTxt.Name = "nombreTxt";
-            this.nombreTxt.Size = new System.Drawing.Size(216, 23);
-            this.nombreTxt.TabIndex = 3;
+            this.razonSocialTxt.Location = new System.Drawing.Point(97, 33);
+            this.razonSocialTxt.Margin = new System.Windows.Forms.Padding(2);
+            this.razonSocialTxt.Name = "razonSocialTxt";
+            this.razonSocialTxt.Size = new System.Drawing.Size(216, 23);
+            this.razonSocialTxt.TabIndex = 3;
             // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(30, 36);
+            this.lblUsername.Location = new System.Drawing.Point(17, 36);
             this.lblUsername.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(51, 15);
+            this.lblUsername.Size = new System.Drawing.Size(73, 15);
             this.lblUsername.TabIndex = 2;
-            this.lblUsername.Text = "Nombre";
+            this.lblUsername.Text = "Razon Social";
             // 
             // volverBtn
             // 
@@ -358,6 +369,7 @@ namespace FrbaOfertas.AbmUsuario
             this.volverBtn.TabIndex = 6;
             this.volverBtn.Text = "Volver";
             this.volverBtn.UseVisualStyleBackColor = true;
+            this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
             // 
             // creatBtn
             // 
@@ -408,16 +420,17 @@ namespace FrbaOfertas.AbmUsuario
         private System.Windows.Forms.TextBox calleTxt;
         private System.Windows.Forms.Button creatBtn;
         private System.Windows.Forms.Button volverBtn;
-        private System.Windows.Forms.TextBox apellidotxt;
-        private System.Windows.Forms.DateTimePicker fechaNacPicker1;
         private System.Windows.Forms.TextBox codigoPostaltxt;
         private System.Windows.Forms.TextBox localidadTxt;
         private System.Windows.Forms.TextBox pisoTxt;
         private System.Windows.Forms.TextBox dptotxt;
-        private System.Windows.Forms.TextBox dniTxt;
         private System.Windows.Forms.TextBox mailTxt;
-        private System.Windows.Forms.TextBox telefonoTxt;
-        private System.Windows.Forms.TextBox nombreTxt;
         private System.Windows.Forms.TextBox nroTxt;
+        private System.Windows.Forms.TextBox contactotxt;
+        private System.Windows.Forms.ComboBox ciudadCombo;
+        private System.Windows.Forms.ComboBox rubroCombo;
+        private System.Windows.Forms.TextBox razonSocialTxt;
+        private System.Windows.Forms.TextBox telTxt;
+        private System.Windows.Forms.TextBox cuitTxt;
     }
 }

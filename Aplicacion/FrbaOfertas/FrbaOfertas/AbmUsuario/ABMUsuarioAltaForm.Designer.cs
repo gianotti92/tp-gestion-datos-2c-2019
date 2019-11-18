@@ -49,11 +49,9 @@
             this.gbDatosUsuario.Controls.Add(this.lblPassword);
             this.gbDatosUsuario.Controls.Add(this.txtUsername);
             this.gbDatosUsuario.Controls.Add(this.lblUsername);
-            this.gbDatosUsuario.Location = new System.Drawing.Point(36, 25);
-            this.gbDatosUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.gbDatosUsuario.Location = new System.Drawing.Point(46, 33);
             this.gbDatosUsuario.Name = "gbDatosUsuario";
-            this.gbDatosUsuario.Padding = new System.Windows.Forms.Padding(2);
-            this.gbDatosUsuario.Size = new System.Drawing.Size(374, 167);
+            this.gbDatosUsuario.Size = new System.Drawing.Size(481, 277);
             this.gbDatosUsuario.TabIndex = 0;
             this.gbDatosUsuario.TabStop = false;
             this.gbDatosUsuario.Text = "Datos Usuario";
@@ -61,64 +59,59 @@
             // cbTipoUsuario
             // 
             this.cbTipoUsuario.FormattingEnabled = true;
-            this.cbTipoUsuario.Location = new System.Drawing.Point(108, 118);
-            this.cbTipoUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.cbTipoUsuario.Location = new System.Drawing.Point(139, 157);
             this.cbTipoUsuario.Name = "cbTipoUsuario";
-            this.cbTipoUsuario.Size = new System.Drawing.Size(205, 23);
+            this.cbTipoUsuario.Size = new System.Drawing.Size(262, 28);
             this.cbTipoUsuario.TabIndex = 9;
             // 
             // lblTipoUsuario
             // 
             this.lblTipoUsuario.AutoSize = true;
-            this.lblTipoUsuario.Location = new System.Drawing.Point(30, 121);
-            this.lblTipoUsuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTipoUsuario.Location = new System.Drawing.Point(39, 161);
             this.lblTipoUsuario.Name = "lblTipoUsuario";
-            this.lblTipoUsuario.Size = new System.Drawing.Size(74, 15);
+            this.lblTipoUsuario.Size = new System.Drawing.Size(98, 20);
             this.lblTipoUsuario.TabIndex = 8;
             this.lblTipoUsuario.Text = "Tipo Usuario";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(108, 73);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
+            this.txtPassword.Location = new System.Drawing.Point(139, 97);
             this.txtPassword.Name = "txtPassword";
+
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(205, 23);
             this.txtPassword.TabIndex = 5;
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(30, 81);
-            this.lblPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPassword.Location = new System.Drawing.Point(39, 108);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(57, 15);
+            this.lblPassword.Size = new System.Drawing.Size(78, 20);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password";
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(108, 33);
-            this.txtUsername.Margin = new System.Windows.Forms.Padding(2);
+            this.txtUsername.Location = new System.Drawing.Point(139, 44);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(205, 23);
+            this.txtUsername.Size = new System.Drawing.Size(262, 26);
             this.txtUsername.TabIndex = 3;
             // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(30, 42);
-            this.lblUsername.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblUsername.Location = new System.Drawing.Point(39, 56);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(60, 15);
+            this.lblUsername.Size = new System.Drawing.Size(83, 20);
             this.lblUsername.TabIndex = 2;
             this.lblUsername.Text = "Username";
             // 
             // siguienteBtn
             // 
-            this.siguienteBtn.Location = new System.Drawing.Point(311, 254);
-            this.siguienteBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.siguienteBtn.Location = new System.Drawing.Point(400, 339);
             this.siguienteBtn.Name = "siguienteBtn";
-            this.siguienteBtn.Size = new System.Drawing.Size(83, 31);
+            this.siguienteBtn.Size = new System.Drawing.Size(107, 41);
             this.siguienteBtn.TabIndex = 1;
             this.siguienteBtn.Text = "Siguiente";
             this.siguienteBtn.UseVisualStyleBackColor = true;
@@ -126,10 +119,9 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(66, 253);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancelar.Location = new System.Drawing.Point(85, 337);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 31);
+            this.btnCancelar.Size = new System.Drawing.Size(96, 41);
             this.btnCancelar.TabIndex = 2;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -137,10 +129,9 @@
             // 
             // btnLimpiarCampos
             // 
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(166, 253);
-            this.btnLimpiarCampos.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(213, 337);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
-            this.btnLimpiarCampos.Size = new System.Drawing.Size(118, 32);
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(152, 43);
             this.btnLimpiarCampos.TabIndex = 3;
             this.btnLimpiarCampos.Text = "Limpiar Campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
@@ -148,19 +139,19 @@
             // 
             // ABMUsuarioAltaForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 329);
+            this.ClientSize = new System.Drawing.Size(575, 439);
             this.Controls.Add(this.btnLimpiarCampos);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.siguienteBtn);
             this.Controls.Add(this.gbDatosUsuario);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ABMUsuarioAltaForm";
             this.Text = "ABMUsuarioAltaForm";
             this.gbDatosUsuario.ResumeLayout(false);
             this.gbDatosUsuario.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

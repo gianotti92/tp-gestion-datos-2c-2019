@@ -31,11 +31,11 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 6)
             {
-                return new CargaCreditoExec(funcionalidad.nombre);
+                return new CargaCreditoExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 7)
             {
-                return new ComprarOfertaExec(funcionalidad.nombre);
+                return new ComprarOfertaExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 8)
             {
@@ -43,11 +43,11 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 9)
             {
-                return new FacturacionAProveedorExec(funcionalidad.nombre);
+                return new FacturacionAProveedorExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 10)
             {
-                return new ListadoEstadisticoExec(funcionalidad.nombre);
+                return new ListadoEstadisticoExec(funcionalidad.nombre, pantallaACerrar);
             }
             else
             {

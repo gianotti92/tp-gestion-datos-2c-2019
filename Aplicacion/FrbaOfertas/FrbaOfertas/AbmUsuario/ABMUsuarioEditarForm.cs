@@ -97,7 +97,7 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (EsUsuarioValido())
             {
-                Usuario usuario = new Usuario(true, 0, new List<Rol>());
+                Usuario usuario = new Usuario();
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
                 usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex-1));

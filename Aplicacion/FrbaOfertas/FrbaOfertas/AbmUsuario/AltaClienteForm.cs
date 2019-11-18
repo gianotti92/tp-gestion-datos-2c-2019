@@ -119,7 +119,7 @@ namespace FrbaOfertas.AbmUsuario
             if (camposValidos())
             {
                 crearUsuario();
-                MessageBox.Show("Usuario creado correctamente\n logueate con tu usr y pass");
+                MessageBox.Show("Usuario creado correctamente\n logueate con tu user y pass");
                 this.Dispose();
                 
                 Form1 f = new Form1(
@@ -130,6 +130,13 @@ namespace FrbaOfertas.AbmUsuario
                 
                 f.Show();
             }
+        }
+
+        private void volverBtn_Click(object sender, EventArgs e)
+        {
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            this.Dispose();
+            altaUsuario.Show();
         }
     }
 }

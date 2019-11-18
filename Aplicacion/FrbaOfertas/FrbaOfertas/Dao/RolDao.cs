@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using FrbaOfertas.Connection;
 using System.Data;
 using System;
+ using System.Text;
 
  namespace FrbaOfertas.Dao
 {
@@ -110,6 +111,50 @@ using System;
         public List<Rol> searchRoles()
         {
             SqlCommand cmd_rol = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.ROL" , ConnectionQuery.Instance());
+            
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_rol.ExecuteReader();
+            List<Rol> roles = new List<Rol>();
+
+            while (r_rol.Read())
+            {
+                Rol rol = new Rol();
+                rol.id = Convert.ToInt32(r_rol["id"]);
+                rol.nombre = r_rol["nombre"].ToString();
+                rol.activo = Convert.ToBoolean(r_rol["estado"]);
+                roles.Add(rol);
+            }
+            ConnectionQuery.cerrarConexion();
+            r_rol.Close();
+            return roles;
+        }
+
+        public List<Rol> searchRoles(string nombre, int estado)
+        {    
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.ROL ");
+            
+            /*salen del combo del filtro estado 1 = activo, estado 2 = inactivo se puede mejorar pero ble*/
+            if (!string.IsNullOrEmpty(nombre) || estado == 1 || estado == 2)
+            {
+                builder.Append("WHERE ");
+            }
+
+            if (!string.IsNullOrEmpty(nombre))
+            {
+                builder.Append("NOMBRE LIKE '%" + nombre + "%'");
+            }
+
+            if (estado == 1)
+            {
+                builder.Append("AND ESTADO = 1");
+            }
+
+            if (estado == 2)
+            {
+                builder.Append("AND ESTADO = 2");
+            }
+
+            SqlCommand cmd_rol = new SqlCommand( builder.ToString(), ConnectionQuery.Instance());
             
             ConnectionQuery.abrirConexion();
             SqlDataReader r_rol = cmd_rol.ExecuteReader();

@@ -1,5 +1,6 @@
-﻿﻿using FrbaOfertas.Entities;
+﻿using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
+using System;
 using System.Collections.Generic;
 
 namespace FrbaOfertas.Service
@@ -36,6 +37,11 @@ namespace FrbaOfertas.Service
         public List<Usuario> GetAll()
         {
             return usuarioRepository.GetAll();
+        }
+
+        internal bool validateUsuario(string name, string passWord)
+        {
+           return usuarioRepository.ValidateUsuario(name, passWord);
         }
     }
 }

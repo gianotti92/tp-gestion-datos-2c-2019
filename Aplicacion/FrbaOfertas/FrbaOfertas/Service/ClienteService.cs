@@ -17,5 +17,15 @@ namespace FrbaOfertas.Service
         {
             clienteRepository.guardarCliente(cliente);
         }
+
+        public Cliente GetClienteByUsername(string username)
+        {
+            return clienteRepository.GetByUsername(username);
+        }
+
+        public void UpdateCliente(Cliente cliente)
+        {
+            clienteRepository.Update(cliente);
+        }
     }
 }

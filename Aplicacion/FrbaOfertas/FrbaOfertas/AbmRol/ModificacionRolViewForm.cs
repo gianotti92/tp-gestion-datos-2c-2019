@@ -79,11 +79,10 @@ namespace FrbaOfertas.AbmRol
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Rol rolAUpdatear = new Rol();
-            rolAUpdatear.activo = Boolean.Parse(habilitadoComboBox.Text);
-            rolAUpdatear.funcionalidades = funcionalidadesSeleccionadas;
-            rolAUpdatear.nombre = nombreTxt.Text; 
-            rolService.Update(rolAUpdatear);
+            rolAEditar.activo = Boolean.Parse(habilitadoComboBox.Text);
+            rolAEditar.funcionalidades = funcionalidadesSeleccionadas;
+            rolAEditar.nombre = nombreTxt.Text;
+            rolService.Update(rolAEditar);
             this.Hide();
             
             RolRepository rolRepository = new RolDao();

@@ -13,8 +13,9 @@ using System.Windows.Forms;
  using FrbaOfertas.Repository;
  using FrbaOfertas.Service;
  using FrbaOfertas.Utils;
+ using System.Security.Cryptography;
 
- namespace FrbaOfertas
+namespace FrbaOfertas
 {
     public partial class Form1 : Form
     {
@@ -29,6 +30,15 @@ using System.Windows.Forms;
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (esValido())
+            {
+                login();
+            }
+           
+        }
+
+        private void login()
+        {
             string nombreUsuario = nameTxt.Text;
             string contrasena = contrasenaTxt.Text;
             Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
@@ -36,10 +46,11 @@ using System.Windows.Forms;
             {
                 if (usuario.intento == 3)
                 {
-                    MessageBox.Show("Usuario inhabilitado"); 
+                    MessageBox.Show("Usuario inhabilitado");
                 }
-                else if (usuario.contrasena.Equals(contrasena))
+                else if (usuarioLoginService.ValidateUser(nombreUsuario,contrasena))
                 {
+                    UsuarioUtil.Usuario = usuario;
                     usuarioLoginService.limpiarReintentos(nombreUsuario);
                     List<Funcionalidad> funcionalidades = funcionalidadPorRolService.searchFuncionalidades(usuario);
                     abrirPantallaBotonesPorRoles(funcionalidades);
@@ -53,17 +64,42 @@ using System.Windows.Forms;
                         usuario.habilitado = false;
                         usuarioLoginService.saveUsuarioInhabilitado(usuario);
                     }
-                    MessageBox.Show("Usuario o Contraseña Invalidos.");
+                    MessageBox.Show("Contraseña Invalida");
                 }
             }
             else
             {
-                //TODO: probablemente aca deberia ir un mensaje en vez de esto..
-               ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
-               this.Hide();
-               altaUsuario.Show();
+                LimpiarCampos();
+                MessageBox.Show("No existe un Usuario con el username: " + nombreUsuario); 
             }
         }
+
+        private void LimpiarCampos()
+        {
+            nameTxt.Text = "";
+            contrasenaTxt.Text = "";
+        }
+
+
+        private bool esValido()
+        {
+            bool esValido = true;
+
+            if (nameTxt.Text == "")
+            {
+                MessageBox.Show("Ingrese un username"); 
+                esValido = false;
+            }
+            else if (contrasenaTxt.Text == "")
+            {
+                MessageBox.Show("Ingrese un password");
+                esValido = false;
+            }
+
+            return esValido;
+
+        }
+
         private void abrirPantallaBotonesPorRoles(List<Funcionalidad> funcionalidades)
         {
             FuncionalidadUtil.Funcionalidades = funcionalidades;
@@ -77,6 +113,12 @@ using System.Windows.Forms;
             ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
             this.Hide();
             altaUsuario.Show();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }
