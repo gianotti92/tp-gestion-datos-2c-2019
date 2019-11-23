@@ -35,6 +35,9 @@ namespace FrbaOfertas.Service
         private static CompraDao compraDao { get; set; }
         private static CompraService compraService { get; set; }
 
+        private static ListadosDao listadoDao { get; set; }
+        private static ListadoService listadoService { get; set; }
+
 
         public static RolDao GetRolDao()
         {
@@ -181,6 +184,26 @@ namespace FrbaOfertas.Service
                 compraService = new CompraService(compraDao);
             }
             return compraService;
+        }
+
+        public static ListadosDao getListadoDao()
+        {
+            if (listadoDao == null)
+            {
+                listadoDao = new ListadosDao();
+            }
+
+            return listadoDao;
+        }
+
+        public static ListadoService getListadoService()
+        {
+            if (listadoService == null)
+            {
+                listadoDao = getListadoDao();
+                listadoService = new ListadoService(listadoDao);
+            }
+            return listadoService;
         }
     }
 }

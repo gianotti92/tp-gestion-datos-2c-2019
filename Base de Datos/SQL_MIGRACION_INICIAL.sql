@@ -1004,40 +1004,40 @@ GO
 		END
 		GO
 
-CREATE PROCEDURE SP_TOP5PROVMAYORFACTURACION
- @anio int, @semestre int
-AS
-BEGIN	
-	
-	DECLARE @mes_comienzo_semestre int
-	DECLARE @mes_fin_semestre int
-	DECLARE @fecha_comienzo_semestre datetime
-	DECLARE @fecha_fin_semestre datetime
-	
-		IF @semestre = 1	
+		CREATE PROCEDURE SP_TOP5PROVMAYORFACTURACION
+		 @anio int, @semestre int
+		AS
 		BEGIN	
-		SET @mes_comienzo_semestre = 1	
-		SET @mes_fin_semestre = 6
-		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
-		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
-		END
 	
-		IF @semestre = 2	
-		BEGIN	
-		SET @mes_comienzo_semestre = 7	
-		SET @mes_fin_semestre = 12	
-		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
-		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+			DECLARE @mes_comienzo_semestre int
+			DECLARE @mes_fin_semestre int
+			DECLARE @fecha_comienzo_semestre datetime
+			DECLARE @fecha_fin_semestre datetime
+	
+				IF @semestre = 1	
+				BEGIN	
+				SET @mes_comienzo_semestre = 1	
+				SET @mes_fin_semestre = 6
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+				END
+	
+				IF @semestre = 2	
+				BEGIN	
+				SET @mes_comienzo_semestre = 7	
+				SET @mes_fin_semestre = 12	
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+				END
+
+				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO)
+				FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
+				JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
+				JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
+				WHERE C.FECHA >= @fecha_comienzo_semestre
+				AND C.FECHA <= @fecha_fin_semestre
+				GROUP BY O.PROV_ID, P.RAZON_SOCIAL
+				order by 3 desc
 		END
 
-		SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO)
-		FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
-		JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
-		JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
-		WHERE C.FECHA >= @fecha_comienzo_semestre
-		AND C.FECHA <= @fecha_fin_semestre
-		GROUP BY O.PROV_ID, P.RAZON_SOCIAL
-		order by 3 desc
-
-
-END
+		GO
