@@ -16,7 +16,7 @@ namespace FrbaOfertas.Dao
         public List<ListadoTop5VendorFact> top5Facturacion(Int32 anio, Int32 semestre)
         {
             List<ListadoTop5VendorFact> Proveedores = new List<ListadoTop5VendorFact>();
-            SqlCommand consulta = new SqlCommand("dbo.SP_SAVE_OFERTA", ConnectionQuery.Instance());
+            SqlCommand consulta = new SqlCommand("dbo.SP_TOP5PROVMAYORFACTURACION", ConnectionQuery.Instance());
             consulta.CommandType = CommandType.StoredProcedure;
             ConnectionQuery.abrirConexion();
             consulta.Parameters.AddWithValue("@anio", anio);

@@ -11,7 +11,7 @@ namespace FrbaOfertas.ListadoEstadistico
     {
         Int32 semestre;
         Int32 anio;
-        private ListadoService listadoService;
+        private ListadoService listadoService { get { return ServiceDependencies.getListadoService(); } }
         private List<ListadoTop5VendorFact> top5Proveedores;
 
 
