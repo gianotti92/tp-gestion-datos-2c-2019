@@ -20,8 +20,15 @@ namespace FrbaOfertas.Dao
             SqlDataReader r_proovedor = cmd_oferta.ExecuteReader();
             List<Proovedor> proovedores = new List<Proovedor>();
 
-            while (r_proovedor.Read())
+            int idDIreccion = 0;
+
+            if (r_proovedor.Read())
             {
+                if (ConnectionQuery.conexion == null)
+                {
+                    ConnectionQuery.abrirConexion();
+                }
+
                 Proovedor proovedor = new Proovedor();
                 proovedor.id = Convert.ToInt32(r_proovedor["ID"]);
                 proovedor.cuit = Convert.ToString(r_proovedor["CUIT"]);
@@ -29,10 +36,17 @@ namespace FrbaOfertas.Dao
                 proovedor.mail = Convert.ToString(r_proovedor["MAIL"]);
                 proovedor.telefono = Convert.ToInt32(r_proovedor["TELEFONO"]);
                 proovedor.contacto = Convert.ToString(r_proovedor["CONTACTO"]);
+                idDIreccion = Convert.ToInt32(r_proovedor["DIRECCION"]);
+                ConnectionQuery.cerrarConexion();
+                
+                Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDIreccion);
+
+                proovedor.direccion = direccion;
 
                 proovedores.Add(proovedor);
             }
-            ConnectionQuery.cerrarConexion();
+            
+            
             return proovedores;
         }
 
@@ -188,6 +202,7 @@ namespace FrbaOfertas.Dao
 
         public void update(Proovedor proveedor)
         {
+            
             SqlCommand cmd_proveedor = new SqlCommand("dbo.SP_UPDATE_PROVIDER", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             cmd_proveedor.CommandType = CommandType.StoredProcedure;
@@ -198,7 +213,7 @@ namespace FrbaOfertas.Dao
             cmd_proveedor.Parameters.Add(new SqlParameter("@rubro", proveedor.rubro));
             cmd_proveedor.Parameters.Add(new SqlParameter("@mail", proveedor.mail));
             cmd_proveedor.Parameters.Add(new SqlParameter("@contacto", proveedor.contacto));
-            cmd_proveedor.Parameters.Add(new SqlParameter("@usuario", proveedor.usuario));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@id_prov", proveedor.id));
             
             cmd_proveedor.Parameters.Add(new SqlParameter("@calle", proveedor.direccion.calle));
             cmd_proveedor.Parameters.Add(new SqlParameter("@nro", proveedor.direccion.nro));

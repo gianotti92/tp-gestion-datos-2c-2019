@@ -39,7 +39,7 @@ namespace FrbaOfertas.AbmProveedor
             {
                 Proovedor c = (Proovedor)ProvGrid.CurrentRow.DataBoundItem;
                 AltaProovedorForm formAlta = new AltaProovedorForm(c, ServiceDependencies.GetCiudadService(),
-                    ServiceDependencies.getRubroService());
+                    ServiceDependencies.getRubroService(), ServiceDependencies.getDireccionService(), ServiceDependencies.getProveedorService());
                 this.Hide();
                 formAlta.Show();
             }

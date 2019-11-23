@@ -646,7 +646,6 @@ GO
 			@rubro INT,
 			@mail NVARCHAR(255),
 			@contacto NVARCHAR(255),
-			@usuario VARCHAR(40),
             
 			@calle VARCHAR(255),
 			@nro VARCHAR(10),
@@ -657,13 +656,15 @@ GO
 			@ciudad INT)
 			AS 
 			BEGIN
-				update GESTION_BDD_2C_2019.PROVEEDOR set RAZON_SOCIAL = @razonSocial, TELEFONO = @tel,
-					CUIT = @ciut, RUBRO = @rubro, MAIL = @mail, CONTACTO = @contacto 
-					where ID = @id_prov
-
+				
 				update GESTION_BDD_2C_2019.DIRECCION set CALLE = @calle, DPTO = @dpto, NUMERO = @nro,
-					CODIGO_POSTAL = @cp, CIUDAD = @ciudad, PISO = @piso, LOCALIDAD = @localidad
-					where id = @direc
+				CODIGO_POSTAL = @cp, CIUDAD = @ciudad, PISO = @piso, LOCALIDAD = @localidad
+				where id = @direc
+				
+				update GESTION_BDD_2C_2019.PROVEEDOR set RAZON_SOCIAL = @razonSocial, TELEFONO = @tel,
+				CUIT = @ciut, RUBRO = @rubro, MAIL = @mail, CONTACTO = @contacto, DIRECCION = @direc
+				where ID = @id_prov
+				
 			END
 			GO
 	

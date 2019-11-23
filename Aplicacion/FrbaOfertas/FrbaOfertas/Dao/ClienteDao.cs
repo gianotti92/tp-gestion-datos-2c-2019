@@ -95,7 +95,6 @@ namespace FrbaOfertas.Dao
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
-
             SqlDataReader r_cliente = cmd.ExecuteReader();
 
             int idDireccion = 0;
@@ -120,12 +119,12 @@ namespace FrbaOfertas.Dao
                 cliente.usuario = r_cliente["USUARIO"].ToString();
                 cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
                 idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
-                clientes.Add(cliente);
                 ConnectionQuery.cerrarConexion();
 
                 Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
 
                 cliente.direccion = direccion;
+                clientes.Add(cliente);
             }
 
             return clientes;
