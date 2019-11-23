@@ -77,7 +77,10 @@ IF(OBJECT_ID('SP_TOP5PROVMAYORFACTURACION') IS NOT NULL)
 	DROP PROCEDURE SP_TOP5PROVMAYORFACTURACION
 IF(OBJECT_ID('SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER
-	
+IF(OBJECT_ID('SP_ELIMINAR_CLIENTE') IS NOT NULL)
+	DROP PROCEDURE SP_ELIMINAR_CLIENTE
+IF(OBJECT_ID('SP_ELIMINAR_PROVEEDOR') IS NOT NULL)
+	DROP PROCEDURE SP_ELIMINAR_PROVEEDOR
 GO
 
 CREATE PROCEDURE SP_CREAR_TABLAS
@@ -280,7 +283,7 @@ GO
 
 		/* DATOS FUNCIONALIDAD */
 		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
-		VALUES	(1, 'Login y seguridad'),
+		VALUES	(1, 'Entrega Oferta'),
 				(2, 'ABM de Rol'),
 				(3, 'Registro de Usuario'),
 				(4, 'ABM de Cliente'),
@@ -920,6 +923,30 @@ GO
 			OUTPUT inserted.ID
 			VALUES 
 				(@idOferta, @idCliente, @fecha)
+		END
+		GO
+		
+		CREATE PROCEDURE SP_ELIMINAR_CLIENTE
+		(@id INT)
+		AS
+		BEGIN
+			declare @id_usuario varchar(40)
+
+			set @id_usuario = (select c.USUARIO from GESTION_BDD_2C_2019.CLIENTE c where ID = @id_usuario)
+			
+			update GESTION_BDD_2C_2019.USUARIO set habilitado = 0 where username = @id_usuario
+		END
+		GO
+
+		CREATE PROCEDURE SP_ELIMINAR_PROVEEDOR
+		(@id INT)
+		AS
+		BEGIN
+			declare @id_usuario varchar(40)
+
+			set @id_usuario = (select c.USUARIO from GESTION_BDD_2C_2019.PROVEEDOR c where ID = @id)
+			
+			update GESTION_BDD_2C_2019.USUARIO set habilitado = 0 where username = @id_usuario
 		END
 		GO
 

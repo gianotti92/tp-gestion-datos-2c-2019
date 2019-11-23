@@ -33,5 +33,20 @@ namespace FrbaOfertas.Service
         {
             return proovedorRepository.getProveedorConUsuario(userName);
         }
+
+        public List<Proovedor> searchProovedoresPorFiltro(string razonsocialFiltro, string cuitFiltro, string mailFiltro)
+        {
+            return proovedorRepository.searchProovedoresPorFiltro(razonsocialFiltro, cuitFiltro, mailFiltro);
+        }
+
+        public void Delete(int id)
+        {
+            proovedorRepository.Delete(id);
+        }
+
+        public void update(Proovedor proveedor)
+        {
+            proovedorRepository.update(proveedor);
+        }
     }
 }

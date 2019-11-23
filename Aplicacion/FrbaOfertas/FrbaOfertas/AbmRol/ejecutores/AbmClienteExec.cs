@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol.ejecutores
 {
@@ -14,7 +15,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
         public override void execute(object sender, EventArgs e)
         {
             pantallaACerrar.Hide();
-            AbmCliente.Form1 abmClientes = new AbmCliente.Form1();
+            AbmCliente.Form1 abmClientes = new AbmCliente.Form1(ServiceDependencies.getClienteService());
             abmClientes.Show();
             
         }

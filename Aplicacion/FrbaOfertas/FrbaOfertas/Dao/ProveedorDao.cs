@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
@@ -100,6 +101,94 @@ namespace FrbaOfertas.Dao
             return unProveedor;
 
 
+        }
+
+        public List<Proovedor> searchProovedoresPorFiltro(string razonsocialFiltro, string cuitFiltro, string mailFiltro)
+        {
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.PROVEEDO ");
+            
+            List<Proovedor> proovedors = new List<Proovedor>();
+
+            if (!string.IsNullOrEmpty(razonsocialFiltro)
+                || !string.IsNullOrEmpty(cuitFiltro)
+                || !string.IsNullOrEmpty(mailFiltro))
+            {
+
+                builder.Append("WHERE ");
+
+                if (!string.IsNullOrEmpty(razonsocialFiltro))
+                {
+                    builder.Append("RAZON_SOCIAL = " + razonsocialFiltro + " AND");
+                }
+
+                if (!string.IsNullOrEmpty(cuitFiltro))
+                {
+                    builder.Append("CUIT = " + cuitFiltro + " AND");
+                }
+
+                if (!string.IsNullOrEmpty(mailFiltro))
+                {
+                    builder.Append("MAIL = " + mailFiltro + " AND");
+                }
+
+                //PARA BORRAR LOS AND, el ultimo tambien esta con and por si se da la condicion de que solamente
+                //se haya filtrado por mail
+                String query = builder.ToString().Substring(0, builder.ToString().Length - 3);
+
+
+                SqlCommand cmd = new SqlCommand(builder.ToString(),
+                    ConnectionQuery.Instance());
+                ConnectionQuery.abrirConexion();
+
+                SqlDataReader r_proveedor = cmd.ExecuteReader();
+
+                int idDireccion = 0;
+                
+                if (r_proveedor.Read())
+                {
+                    if (ConnectionQuery.conexion == null)
+                    {
+                        return new List<Proovedor>();
+                    }
+                    else
+                    {
+                        ConnectionQuery.abrirConexion();
+                    }
+                    Proovedor unProveedor = new Proovedor();
+                    unProveedor.id = Convert.ToInt32(r_proveedor["ID"]);
+                    unProveedor.cuit = r_proveedor["CUIT"].ToString();
+                    unProveedor.razonSocial = r_proveedor["RAZON_SOCIAL"].ToString();
+                    unProveedor.mail = r_proveedor["MAIL"].ToString();
+                    unProveedor.telefono = Convert.ToInt32(r_proveedor["TELEFONO"]);
+                    unProveedor.rubro = Convert.ToInt32( r_proveedor["RUBRO"]);
+                    unProveedor.contacto = r_proveedor["CONTACTO"].ToString();
+                    unProveedor.usuario = r_proveedor["USUARIO"].ToString();
+                    idDireccion = Convert.ToInt32(r_proveedor["DIRECCION"]);
+                    ConnectionQuery.cerrarConexion();
+                    
+                    Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+
+                    unProveedor.direccion = direccion;
+                    
+                    proovedors.Add(unProveedor);
+                }
+            }
+            return proovedors;
+        }
+
+        public void Delete(int id)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.SP_ELIMINAR_PROVEEDOR", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@id", id));
+            cmd.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
+        public void update(Proovedor proveedor)
+        {
+            
         }
 
         public void save(Proovedor proveedor)

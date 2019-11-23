@@ -1,4 +1,5 @@
-﻿using System.Security.Policy;
+﻿using System.Collections.Generic;
+using System.Security.Policy;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
 
@@ -26,6 +27,21 @@ namespace FrbaOfertas.Service
         public void UpdateCliente(Cliente cliente)
         {
             clienteRepository.Update(cliente);
+        }
+
+        public List<Cliente> searchClientes()
+        {
+            return clienteRepository.searchClientes();
+        }
+
+        public List<Cliente> searchClientesByFiltro(string nombreFiltro, string apellidoFiltro, string dniFiltro, string mailFIltro)
+        {
+            return clienteRepository.searchClientesxByFiltro(nombreFiltro, apellidoFiltro, dniFiltro, mailFIltro);
+        }
+
+        public void Delete(int id)
+        {
+            clienteRepository.delete(id);
         }
     }
 }

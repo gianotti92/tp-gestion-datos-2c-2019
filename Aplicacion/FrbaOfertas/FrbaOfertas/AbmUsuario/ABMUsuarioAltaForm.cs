@@ -14,14 +14,18 @@ namespace FrbaOfertas.AbmUsuario
 {
     public partial class ABMUsuarioAltaForm : Form
     {
+        private Form proveedorForm;
+        private Form clienteForm;
         private RolService rolService { get { return ServiceDependencies.GetRolService(); } }
         private UsuarioService UsuarioService { get { return ServiceDependencies.GetUsuarioService(); } }
         private List<Rol> roles;
         private List<Rol> rolesSeleccionados;
 
 
-        public ABMUsuarioAltaForm()
+        public ABMUsuarioAltaForm(AbmCliente.Form1 abmClienteForm, AbmProveedor.Form1 abmProveedorForm)
         {
+            this.clienteForm = abmClienteForm;
+            this.proveedorForm = abmProveedorForm;
             InitializeComponent();
             CargarDatos();
         }
@@ -49,7 +53,24 @@ namespace FrbaOfertas.AbmUsuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Volver();
+            if (clienteForm == null && proveedorForm == null)
+            {
+                 Volver();
+            }
+            else if(clienteForm != null)
+            {
+                clienteForm = new AbmCliente.Form1(ServiceDependencies.getClienteService());
+                this.Hide();
+                clienteForm.Show();
+            }
+            else if (proveedorForm != null)
+            {
+                proveedorForm = new AbmProveedor.Form1(ServiceDependencies.getProveedorService());
+                this.Hide();
+                proveedorForm.Show();
+            }
+
+
         }
 
         private void Volver()
