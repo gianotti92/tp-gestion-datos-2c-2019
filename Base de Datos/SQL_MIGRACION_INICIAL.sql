@@ -81,7 +81,12 @@ IF(OBJECT_ID('SP_ELIMINAR_CLIENTE') IS NOT NULL)
 	DROP PROCEDURE SP_ELIMINAR_CLIENTE
 IF(OBJECT_ID('SP_ELIMINAR_PROVEEDOR') IS NOT NULL)
 	DROP PROCEDURE SP_ELIMINAR_PROVEEDOR
+IF(OBJECT_ID('SP_UPDATE_PROVIDER') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_PROVIDER
+IF(OBJECT_ID('SP_UPDATE_DIRECCION') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_DIRECCION
 GO
+
 
 CREATE PROCEDURE SP_CREAR_TABLAS
 AS
@@ -631,6 +636,38 @@ GO
 		END
 		GO
 
+		CREATE PROCEDURE SP_UPDATE_PROVIDER
+			(
+			@id_prov NUMERIC(18,0),
+			@razonSocial NVARCHAR(255),
+			@tel NUMERIC(18),
+			@direc INT,
+			@ciut NVARCHAR(20),
+			@rubro INT,
+			@mail NVARCHAR(255),
+			@contacto NVARCHAR(255),
+			@usuario VARCHAR(40),
+            
+			@calle VARCHAR(255),
+			@nro VARCHAR(10),
+			@piso NVARCHAR(255),
+			@dpto  VARCHAR(10),
+			@localidad NVARCHAR(255),
+			@cp INT,
+			@ciudad INT)
+			AS 
+			BEGIN
+				update GESTION_BDD_2C_2019.PROVEEDOR set RAZON_SOCIAL = @razonSocial, TELEFONO = @tel,
+					CUIT = @ciut, RUBRO = @rubro, MAIL = @mail, CONTACTO = @contacto 
+					where ID = @id_prov
+
+				update GESTION_BDD_2C_2019.DIRECCION set CALLE = @calle, DPTO = @dpto, NUMERO = @nro,
+					CODIGO_POSTAL = @cp, CIUDAD = @ciudad, PISO = @piso, LOCALIDAD = @localidad
+					where id = @direc
+			END
+			GO
+	
+
 		CREATE PROCEDURE SP_SAVE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
@@ -768,6 +805,23 @@ GO
 		END 
 
 		GO
+
+		CREATE PROCEDURE SP_UPDATE_DIRECCION
+		(	@id INT,
+			@calle VARCHAR(255),
+			@nro VARCHAR(10),
+			@piso NVARCHAR(255),
+			@dpto  VARCHAR(10),
+			@localidad NVARCHAR(255),
+			@cp INT)
+		AS
+		BEGIN
+			update GESTION_BDD_2C_2019.DIRECCION set CALLE = @calle,
+				NUMERO = @nro, PISO = @piso, DPTO = @dpto, CODIGO_POSTAL = @cp,
+				LOCALIDAD = @localidad where ID = @id
+		END
+		GO
+
 
 		/******SP delete rol ***********/
 		CREATE PROCEDURE SP_DELETE_ROL	

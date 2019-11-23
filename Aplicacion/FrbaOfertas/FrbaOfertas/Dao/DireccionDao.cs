@@ -72,5 +72,22 @@ namespace FrbaOfertas.Dao
             return id_postal_code;
         }
 
+        public void updateDireccion(Direccion direccion)
+        {
+            SqlCommand cmd_direccion = new SqlCommand("dbo.SP_UPDATE_DIRECCION", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_direccion.CommandType = CommandType.StoredProcedure;
+
+            cmd_direccion.Parameters.Add("@id", direccion.id);
+            cmd_direccion.Parameters.Add("@calle", direccion.calle);
+            cmd_direccion.Parameters.Add("@nro", direccion.nro);
+            cmd_direccion.Parameters.Add("@piso", direccion.piso);
+            cmd_direccion.Parameters.Add("@dpto", direccion.depto);
+            cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
+            cmd_direccion.Parameters.Add("@cp", direccion.codigoPostal);
+           
+            cmd_direccion.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
     }
 }

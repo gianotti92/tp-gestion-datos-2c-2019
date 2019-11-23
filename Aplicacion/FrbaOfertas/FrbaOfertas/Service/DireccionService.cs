@@ -22,5 +22,10 @@ namespace FrbaOfertas.Service
         {
            return direccionRepository.createCodigoPostal(codigoPostal);
         }
+
+        public Direccion getDireccion(int id)
+        {
+            return direccionRepository.GetById(id);
+        }
     }
 }

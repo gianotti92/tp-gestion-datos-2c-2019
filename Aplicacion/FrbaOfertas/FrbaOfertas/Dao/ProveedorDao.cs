@@ -188,7 +188,28 @@ namespace FrbaOfertas.Dao
 
         public void update(Proovedor proveedor)
         {
+            SqlCommand cmd_proveedor = new SqlCommand("dbo.SP_UPDATE_PROVIDER", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_proveedor.CommandType = CommandType.StoredProcedure;
+            cmd_proveedor.Parameters.Add(new SqlParameter("@razonSocial", proveedor.razonSocial));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@tel", proveedor.telefono));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@direc", proveedor.direccion.id));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@rubro", proveedor.rubro));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@mail", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@contacto", proveedor.contacto));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@usuario", proveedor.usuario));
             
+            cmd_proveedor.Parameters.Add(new SqlParameter("@calle", proveedor.direccion.calle));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@nro", proveedor.direccion.nro));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@piso", proveedor.direccion.piso));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@dpto", proveedor.direccion.depto));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@localidad", proveedor.direccion.localidad));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@cp", proveedor.direccion.codigoPostal));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@ciudad", proveedor.direccion.ciudad));
+            
+            cmd_proveedor.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
         }
 
         public void save(Proovedor proveedor)
