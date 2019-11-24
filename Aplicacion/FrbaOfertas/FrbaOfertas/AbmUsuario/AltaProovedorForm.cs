@@ -143,7 +143,7 @@ namespace FrbaOfertas.AbmUsuario
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(null,null);
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(false,null,null);
             this.Dispose();
             altaUsuario.Show();
         }

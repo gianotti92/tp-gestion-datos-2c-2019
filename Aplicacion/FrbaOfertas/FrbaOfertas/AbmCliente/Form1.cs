@@ -76,7 +76,7 @@ namespace FrbaOfertas.AbmCliente
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUser = new ABMUsuarioAltaForm(this, null);
+            ABMUsuarioAltaForm altaUser = new ABMUsuarioAltaForm(false,this, null);
             this.Hide();
             altaUser.Show();
         }

@@ -78,9 +78,9 @@ namespace FrbaOfertas.AbmUsuario
             }
 
 
-            return nombre != null && dni != null && mail != null && telefono != null && fechaNac != null &&
-                   calle != null && nro != null && piso != null && dpto != null && codigoPostal != null &&
-                   localidad != null && apellido != null || esNumero;
+            return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && string.IsNullOrEmpty(telefono)
+                   && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
+                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido) || esNumero;
         }
 
         private void crearUsuario()
@@ -130,11 +130,15 @@ namespace FrbaOfertas.AbmUsuario
                 
                 f.Show();
             }
+            else
+            {
+                MessageBox.Show("Hay campos con datos incorrectos");
+            }
         }
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(null, null);
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(false,null, null);
             this.Dispose();
             altaUsuario.Show();
         }
