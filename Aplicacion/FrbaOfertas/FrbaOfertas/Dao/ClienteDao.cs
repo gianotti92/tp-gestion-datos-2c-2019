@@ -26,6 +26,7 @@ namespace FrbaOfertas.Dao
             cmd_client.Parameters.Add(new SqlParameter("@direccion_id", cliente.direccion.id));
             cmd_client.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             cmd_client.Parameters.Add(new SqlParameter("@usuario_id", cliente.usuario));
+            cmd_client.Parameters.Add(new SqlParameter("@saldo", cliente.saldo));
 
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();

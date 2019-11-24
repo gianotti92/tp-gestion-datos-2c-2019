@@ -80,7 +80,7 @@ namespace FrbaOfertas.AbmUsuario
             }
 
 
-            return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && string.IsNullOrEmpty(telefono)
+            return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(telefono)
                    && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
                    && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido) && esNumero;
         }
@@ -95,6 +95,7 @@ namespace FrbaOfertas.AbmUsuario
             cliente.mail = mailTxt.Text;
             cliente.telefono = Convert.ToInt32(telefonoTxt.Text);
             cliente.fechaNac = fechaNacPicker1.Text;
+            cliente.saldo = 200;
 
             Direccion direccion = new Direccion();
 
