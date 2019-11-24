@@ -88,6 +88,20 @@ namespace FrbaOfertas.CargaCredito
 
         private bool SonCamposValidos()
         {
+            bool sonNumericos = true;
+
+            try
+            {
+                Convert.ToInt32(txtNumeroTarjeta.Text);
+                Convert.ToDouble(txtMonto.Text);
+                Convert.ToInt32(txtCodigoSeguridad.Text);
+            }
+            catch (Exception e)
+            {
+                sonNumericos = false;
+            }
+
+
             if(txtMonto.Text == "" || txtNumeroTarjeta.Text == "" || txtNombreTarjeta.Text == "" || txtCodigoSeguridad.Text == "")
             {
                 MessageBox.Show("No puede haber campos vacios");
@@ -103,6 +117,13 @@ namespace FrbaOfertas.CargaCredito
                 MessageBox.Show("El monto a acreditar no puede ser negativo");
                 return false;
             }
+
+            if (!sonNumericos)
+            {
+                MessageBox.Show("Campos numericos invalidos");
+                return false;  
+            }
+
             return true;
         }
     }

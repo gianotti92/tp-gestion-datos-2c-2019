@@ -44,9 +44,11 @@ namespace FrbaOfertas.AbmUsuario
         private Cliente cliente;
 
         private Usuario usuario;
+        private bool isFromLogin;
 
-        public AltaClienteForm(Usuario usuario)
+        public AltaClienteForm(Boolean isFromLogin, Usuario usuario)
         {
+            this.isFromLogin = isFromLogin;
             this.usuario = usuario;
             InitializeComponent();
         }
@@ -80,7 +82,7 @@ namespace FrbaOfertas.AbmUsuario
 
             return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && string.IsNullOrEmpty(telefono)
                    && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
-                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido) || esNumero;
+                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido) && esNumero;
         }
 
         private void crearUsuario()
@@ -138,7 +140,8 @@ namespace FrbaOfertas.AbmUsuario
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(false,null, null);
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin
+                ,null, null);
             this.Dispose();
             altaUsuario.Show();
         }

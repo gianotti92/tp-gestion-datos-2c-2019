@@ -47,9 +47,11 @@ namespace FrbaOfertas.AbmUsuario
         private Usuario usuario;
         private List<Rubro> rubros;
         private List<Ciudad> ciudades;
+        private Boolean isFromLogin;
 
-        public AltaProovedorForm(Usuario usuario)
+        public AltaProovedorForm(Boolean isFromLogin, Usuario usuario)
         {
+            this.isFromLogin = isFromLogin;
             this.usuario = usuario;
             InitializeComponent();
             llenarComboCiudad();
@@ -92,17 +94,27 @@ namespace FrbaOfertas.AbmUsuario
                 }
                 else
                 {
-                    MessageBox.Show("Hay campos incompletos");
+                    MessageBox.Show("Hay campos con datos incorrectos");
                 }
             }
 
         private bool camposValidos()
         {
-            return razonSocialTxt.Text != null && mailTxt.Text != null && cuitTxt.Text != null && telTxt.Text != null &&
+            bool esnumero = true;
+            try
+            {
+                Convert.ToInt32(telTxt.Text);
+            }
+            catch (Exception e)
+            {
+                esnumero = false;
+            }
+
+            return !string.IsNullOrEmpty(razonSocialTxt.Text) && !string.IsNullOrEmpty(mailTxt.Text) && !string.IsNullOrEmpty(cuitTxt.Text)&& !string.IsNullOrEmpty(telTxt.Text)&&
                    rubroCombo.SelectedIndex != -1 &&
-                   ciudadCombo.SelectedIndex != -1 && calleTxt.Text != null && nroTxt.Text != null &&
-                   pisoTxt.Text != null && pisoTxt.Text != null && pisoTxt.Text != null && dptotxt.Text != null &&
-                   codigoPostaltxt.Text != null && localidadTxt.Text != null;
+                   ciudadCombo.SelectedIndex != -1 && !string.IsNullOrEmpty(calleTxt.Text)&&!string.IsNullOrEmpty(nroTxt.Text)&&
+                   !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(pisoTxt.Text)&& !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(dptotxt.Text)&&
+                   !string.IsNullOrEmpty(codigoPostaltxt.Text)&& !string.IsNullOrEmpty(localidadTxt.Text) && esnumero;
         }
 
         private void crearProovedor()
@@ -143,7 +155,7 @@ namespace FrbaOfertas.AbmUsuario
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(false,null,null);
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin,null,null);
             this.Dispose();
             altaUsuario.Show();
         }

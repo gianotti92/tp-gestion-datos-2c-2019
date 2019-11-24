@@ -64,7 +64,7 @@ namespace FrbaOfertas.AbmCliente
             }
             else
             {
-                
+                MessageBox.Show("Hay campos con datos incorrectos");
             }
         }
 

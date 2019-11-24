@@ -102,14 +102,14 @@ namespace FrbaOfertas.AbmUsuario
                 if (usuario.tipoUsuario == TipoUsuario.CLIENTE)
                 {
                     usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Cliente")));
-                    AltaClienteForm clienteForm = new AltaClienteForm(usuario);
+                    AltaClienteForm clienteForm = new AltaClienteForm(isFromLogin,usuario);
                     clienteForm.Show();
                     this.Dispose();
                 }
                 else if (usuario.tipoUsuario == TipoUsuario.PROVEEDOR)
                 {
                     usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Proveedor")));
-                    AltaProovedorForm altaProovedorForm = new AltaProovedorForm(usuario);
+                    AltaProovedorForm altaProovedorForm = new AltaProovedorForm(isFromLogin,usuario);
                     altaProovedorForm.Show();
                     this.Dispose();
                 }
