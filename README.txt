@@ -1,4 +1,4 @@
-curso:
+cursos: K3573, K3671
 
 numero del grupo : 6
 
