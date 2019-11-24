@@ -9,9 +9,9 @@ namespace FrbaOfertas.Entities
     public class ListadoTop5Descuento
 
     {
-        public decimal idProveedor;
-        public String RazonSocial;
-        public decimal mayorPorcentajeOfrecido;
+        public decimal idProveedor { get; set;}
+        public String RazonSocial{ get; set;}
+        public decimal mayorPorcentajeOfrecido{ get; set;}
     
         public ListadoTop5Descuento(decimal v1, string v2, decimal v3)
         {

@@ -47,6 +47,9 @@
             ((System.ComponentModel.ISupportInitialize) (this.ClienteGrid)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // ClienteGrid
+            // 
             this.ClienteGrid.ColumnHeadersHeightSizeMode =
                 System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ClienteGrid.Columns.AddRange(
@@ -57,14 +60,23 @@
             this.ClienteGrid.TabIndex = 5;
             this.ClienteGrid.CellContentClick +=
                 new System.Windows.Forms.DataGridViewCellEventHandler(this.ClienteGrid_CellContentClick);
+            // 
+            // Eliminar
+            // 
             this.Eliminar.HeaderText = "Eliminar";
             this.Eliminar.Name = "Eliminar";
             this.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Editar
+            // 
             this.Editar.HeaderText = "Editar";
             this.Editar.Name = "Editar";
             this.Editar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Editar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // groupBox1
+            // 
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.DniFilroTxt);
             this.groupBox1.Controls.Add(this.mailFiltroTxt);
@@ -81,29 +93,47 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
+            // 
+            // label4
+            // 
             this.label4.Location = new System.Drawing.Point(211, 70);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 18);
             this.label4.TabIndex = 10;
             this.label4.Text = "Dni";
+            // 
+            // DniFilroTxt
+            // 
             this.DniFilroTxt.Location = new System.Drawing.Point(250, 65);
             this.DniFilroTxt.Name = "DniFilroTxt";
             this.DniFilroTxt.Size = new System.Drawing.Size(100, 23);
             this.DniFilroTxt.TabIndex = 9;
             this.DniFilroTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioTxt_KeyPress);
+            // 
+            // mailFiltroTxt
+            // 
             this.mailFiltroTxt.Location = new System.Drawing.Point(250, 36);
             this.mailFiltroTxt.Name = "mailFiltroTxt";
             this.mailFiltroTxt.Size = new System.Drawing.Size(100, 23);
             this.mailFiltroTxt.TabIndex = 8;
+            // 
+            // label3
+            // 
             this.label3.Location = new System.Drawing.Point(211, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(78, 18);
             this.label3.TabIndex = 7;
             this.label3.Text = "Mail";
+            // 
+            // nombreFiltroTxt
+            // 
             this.nombreFiltroTxt.Location = new System.Drawing.Point(98, 36);
             this.nombreFiltroTxt.Name = "nombreFiltroTxt";
             this.nombreFiltroTxt.Size = new System.Drawing.Size(100, 23);
             this.nombreFiltroTxt.TabIndex = 6;
+            // 
+            // filtrarBtn
+            // 
             this.filtrarBtn.Location = new System.Drawing.Point(232, 108);
             this.filtrarBtn.Name = "filtrarBtn";
             this.filtrarBtn.Size = new System.Drawing.Size(118, 30);
@@ -111,6 +141,9 @@
             this.filtrarBtn.Text = "Filtrar";
             this.filtrarBtn.UseVisualStyleBackColor = true;
             this.filtrarBtn.Click += new System.EventHandler(this.filtrarBtn_Click);
+            // 
+            // limpiarBtn
+            // 
             this.limpiarBtn.Location = new System.Drawing.Point(14, 108);
             this.limpiarBtn.Name = "limpiarBtn";
             this.limpiarBtn.Size = new System.Drawing.Size(118, 30);
@@ -118,20 +151,32 @@
             this.limpiarBtn.Text = "Limpiar";
             this.limpiarBtn.UseVisualStyleBackColor = true;
             this.limpiarBtn.Click += new System.EventHandler(this.limpiarBtn_Click);
+            // 
+            // ApellidoFiltroTxt
+            // 
             this.ApellidoFiltroTxt.Location = new System.Drawing.Point(98, 65);
             this.ApellidoFiltroTxt.Name = "ApellidoFiltroTxt";
             this.ApellidoFiltroTxt.Size = new System.Drawing.Size(100, 23);
             this.ApellidoFiltroTxt.TabIndex = 3;
+            // 
+            // label2
+            // 
             this.label2.Location = new System.Drawing.Point(14, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 18);
             this.label2.TabIndex = 1;
             this.label2.Text = "Apellido";
+            // 
+            // label1
+            // 
             this.label1.Location = new System.Drawing.Point(14, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
+            // 
+            // button1
+            // 
             this.button1.Location = new System.Drawing.Point(10, 460);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 31);
@@ -139,6 +184,9 @@
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
             this.button2.Location = new System.Drawing.Point(334, 460);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(115, 31);
@@ -146,6 +194,9 @@
             this.button2.Text = "Crear";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // Form1
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(461, 500);
