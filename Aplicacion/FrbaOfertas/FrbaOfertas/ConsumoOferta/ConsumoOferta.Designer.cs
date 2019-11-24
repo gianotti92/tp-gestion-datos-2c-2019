@@ -32,13 +32,13 @@ namespace FrbaOfertas.ConsumoOferta
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.OfertaDataGridView = new System.Windows.Forms.DataGridView();
-            this.volverBtn1 = new System.Windows.Forms.Button();
-            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.OfertaDataGridView = new System.Windows.Forms.DataGridView();
+            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.volverBtn1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.OfertaDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +56,40 @@ namespace FrbaOfertas.ConsumoOferta
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(236, 123);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 33);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Bucar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 123);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(119, 33);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Limpiar";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(117, 42);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(238, 23);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioTxt_KeyPress);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(13, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 21);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "numero compra";
+            // 
             // OfertaDataGridView
             // 
             this.OfertaDataGridView.ColumnHeadersHeightSizeMode =
@@ -66,53 +100,20 @@ namespace FrbaOfertas.ConsumoOferta
             this.OfertaDataGridView.Size = new System.Drawing.Size(386, 180);
             this.OfertaDataGridView.TabIndex = 3;
             // 
+            // Eliminar
+            // 
+            this.Eliminar.HeaderText = "Eliminar";
+            this.Eliminar.Name = "Eliminar";
+            // 
             // volverBtn1
             // 
-            this.volverBtn1.Location = new System.Drawing.Point(29, 431);
+            this.volverBtn1.Location = new System.Drawing.Point(29, 432);
             this.volverBtn1.Name = "volverBtn1";
             this.volverBtn1.Size = new System.Drawing.Size(119, 33);
             this.volverBtn1.TabIndex = 4;
             this.volverBtn1.Text = "Volver";
             this.volverBtn1.UseVisualStyleBackColor = true;
             this.volverBtn1.Click += new System.EventHandler(this.volverBtn1_Click);
-            // 
-            // Eliminar
-            // 
-            this.Eliminar.HeaderText = "Eliminar";
-            this.Eliminar.Name = "Eliminar";
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(13, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 21);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "numero compra";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(117, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(238, 23);
-            this.textBox1.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(13, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(119, 33);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Limpiar";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(236, 124);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 33);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Bucar";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // ConsumoOferta
             // 

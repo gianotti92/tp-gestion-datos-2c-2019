@@ -110,7 +110,8 @@ namespace FrbaOfertas
 
         private void createUserBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(null, null);
+            Boolean isFromLogin = true;
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin,null, null);
             this.Hide();
             altaUsuario.Show();
         }

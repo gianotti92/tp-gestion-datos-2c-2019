@@ -27,7 +27,7 @@ namespace FrbaOfertas.AbmUsuario
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ABMUsuarioAltaForm abmUsuarioAltaForm = new ABMUsuarioAltaForm(null, null);
+            ABMUsuarioAltaForm abmUsuarioAltaForm = new ABMUsuarioAltaForm(false,null, null);
             abmUsuarioAltaForm.Show();
         }
 

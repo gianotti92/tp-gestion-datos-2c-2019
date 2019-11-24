@@ -762,13 +762,14 @@ GO
 		 @telefono NUMERIC(18),
 		 @fechaNac datetime,
 		 @direccion_id INT,
-		 @usuario_id VARCHAR(40))
+		 @usuario_id VARCHAR(40),
+		 @saldo DECIMAL(18,2))
 	
 		AS
 		BEGIN
 
-		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO) 
-		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id);
+		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO, SALDO) 
+		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id, @saldo);
 		END
 		GO
 
@@ -1038,6 +1039,7 @@ GO
 
 		GO
 
+		
 
 		GO
 
