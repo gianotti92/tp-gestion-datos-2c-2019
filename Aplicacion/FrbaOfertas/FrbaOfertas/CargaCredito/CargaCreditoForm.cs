@@ -112,7 +112,7 @@ namespace FrbaOfertas.CargaCredito
                 MessageBox.Show("Debe seleccionar un tipo de pago");
                 return false;
             }
-            if (Convert.ToDouble(txtMonto.Text) < 0)
+            if (sonNumericos && Convert.ToDouble(txtMonto.Text) < 0)
             {
                 MessageBox.Show("El monto a acreditar no puede ser negativo");
                 return false;
