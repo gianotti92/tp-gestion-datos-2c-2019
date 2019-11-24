@@ -2,7 +2,7 @@
 
 namespace FrbaOfertas.ListadoEstadistico
 {
-    partial class TopCincoRecaudacionForm
+    partial class Listados
     {
         /// <summary>
         /// Required designer variable.
@@ -35,15 +35,14 @@ namespace FrbaOfertas.ListadoEstadistico
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tipoListadoCBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listadoGrid = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listadoGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -60,15 +59,13 @@ namespace FrbaOfertas.ListadoEstadistico
             // 
             this.groupBox2.Controls.Add(this.tipoListadoCBox);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.comboBox1);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(10, 10);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(340, 196);
+            this.groupBox2.Size = new System.Drawing.Size(340, 149);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtros de Búsqueda";
@@ -88,25 +85,6 @@ namespace FrbaOfertas.ListadoEstadistico
             this.label3.Size = new System.Drawing.Size(53, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "Listado";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(218, 151);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 23);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Buscar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(8, 151);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Limpiar";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // comboBox2
             // 
@@ -140,29 +118,41 @@ namespace FrbaOfertas.ListadoEstadistico
             this.label2.TabIndex = 2;
             this.label2.Text = "Semestre";
             // 
-            // dataGridView1
+            // button2
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(18, 225);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 11;
+            this.button2.Location = new System.Drawing.Point(235, 394);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(115, 23);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Buscar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // TopCincoRecaudacionForm
+            // listadoGrid
+            // 
+            this.listadoGrid.AllowUserToDeleteRows = false;
+            this.listadoGrid.AllowUserToOrderColumns = true;
+            this.listadoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listadoGrid.Location = new System.Drawing.Point(10, 165);
+            this.listadoGrid.Name = "listadoGrid";
+            this.listadoGrid.ReadOnly = true;
+            this.listadoGrid.Size = new System.Drawing.Size(332, 205);
+            this.listadoGrid.TabIndex = 11;
+            // 
+            // Listados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 449);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.listadoGrid);
             this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox2);
-            this.Name = "TopCincoRecaudacionForm";
+            this.Name = "Listados";
             this.Text = "TopCincoRecaudacionForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TopCincoRecaudacionForm_FormClosing);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listadoGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -173,12 +163,11 @@ namespace FrbaOfertas.ListadoEstadistico
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox tipoListadoCBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView listadoGrid;
     }
 }

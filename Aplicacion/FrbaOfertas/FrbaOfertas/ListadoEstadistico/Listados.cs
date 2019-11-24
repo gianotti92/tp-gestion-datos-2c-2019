@@ -9,16 +9,16 @@ using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.ListadoEstadistico
 {
-    public partial class TopCincoRecaudacionForm : Form
+    public partial class Listados : Form
     {
         Int32 semestre;
         Int32 anio;
         ListadoService listadoService;
-        //List<ListadoTop5VendorFact> top5Proveedores;
-        //top5Descuento;
+        private List<ListadoTop5VendorFact> top5Proveedores;
+        private List<ListadoTop5Descuento> top5Descuento;
 
 
-        public TopCincoRecaudacionForm(ListadoService listadoService)
+        public Listados(ListadoService listadoService)
         {
             this.listadoService = listadoService;
             InitializeComponent();
@@ -40,28 +40,32 @@ namespace FrbaOfertas.ListadoEstadistico
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.validar();
-            
+            try
+            { this.validar(); 
+              
             anio = Int32.Parse(comboBox1.SelectedValue.ToString());
             Semestre();
 
             if (tipoListadoCBox.Text.Equals("Top 5 Mayor Descuento"))
             {
-                List<ListadoTop5Descuento> top5Descuento = listadoService.top5Descuento(anio, semestre);
-                this.dataGridView1.AutoGenerateColumns = true;
-                this.dataGridView1.DataSource = new BindingSource(top5Descuento, null);
-                    
-            }
+                    top5Descuento = listadoService.top5Descuento(anio, semestre);
+                    this.listadoGrid.DataSource = new BindingSource(new BindingList<ListadoTop5Descuento>(top5Descuento), null);
+
+
+
+                }
             if (tipoListadoCBox.Text.Equals("Top 5 Mayor Recaudacion"))
             {
-                List<ListadoTop5VendorFact> top5Proveedores = listadoService.top5Facturacion(anio, semestre);
-                             
-                this.dataGridView1.DataSource = new BindingSource(top5Proveedores, null);
-                this.dataGridView1.AutoGenerateColumns = true;
+                    top5Proveedores = listadoService.top5Facturacion(anio, semestre);
+                    this.listadoGrid.DataSource =
+                        new BindingSource(new BindingList<ListadoTop5VendorFact>(top5Proveedores), null);
+                }
 
             }
-
-          
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
 
 
         }
@@ -99,5 +103,17 @@ namespace FrbaOfertas.ListadoEstadistico
             tipoListadoCBox.Items.Add("Top 5 Mayor Recaudacion");
         }
 
+        private void TopCincoRecaudacionForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+                System.Windows.Forms.Application.Exit();
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
