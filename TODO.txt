@@ -1,0 +1,11 @@
+TODO:
+
+- Cambiar el nombre de la tabla ROL de "estado" a "activo"
+- Agregar un campo de 'activo' en la tabla USUARIO porque actualmente se usa el campo 'habilitado' para dar la baja logica cuando solo debe usarse para inhabilitar un usuario luego de 3 intentos.
+- Cambiar nombre de 'PRECIO_LISTO' por 'PRECIO_LISTA' en la tabla OFERTA
+- Agregar un campo 'Total' en la tabla FACTURA
+- Eliminar el campo 'CUPON' y 'FACTURA_ID' de la tabla COMPRAS si es que no se usan.
+- El SP_DELETE_ROL deberia hacer una eliminacion logica del rol, es decir, seteando el campo 'estado' en 0 en la tabla ROL
+- VALIDAR que los text de numeros ejemplo codigo postal sea solo numeros.
+
+
