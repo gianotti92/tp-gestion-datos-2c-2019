@@ -214,11 +214,11 @@
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Listados.cs">
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\Listados.Designer.cs">
-      <DependentUpon>Listados.cs</DependentUpon>
+    <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.Designer.cs">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -316,8 +316,8 @@
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\Listados.resx">
-      <DependentUpon>Listados.cs</DependentUpon>
+    <EmbeddedResource Include="ListadoEstadistico\TopCincoRecaudacionForm.resx">
+      <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

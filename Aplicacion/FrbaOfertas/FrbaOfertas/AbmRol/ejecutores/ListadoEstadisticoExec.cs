@@ -20,7 +20,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
         {
             ListadosRepository listadorespo = new ListadosDao();
             ListadoService listadoser = new ListadoService(listadorespo);
-            Listados listadoEstadisticoForm = new Listados(listadoser);
+            TopCincoRecaudacionForm listadoEstadisticoForm = new TopCincoRecaudacionForm(listadoser);
             listadoEstadisticoForm.Show();
             pantallaACerrar.Hide();
         }

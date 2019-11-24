@@ -10,7 +10,7 @@ using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.ListadoEstadistico
 {
-    public partial class Listados : Form
+    public partial class TopCincoRecaudacionForm : Form
     {
         private Int32 semestre;
         private Int32 anio;
@@ -19,10 +19,10 @@ namespace FrbaOfertas.ListadoEstadistico
         private List<ListadoTop5Descuento> top5Descuento;
 
 
-        public Listados(ListadoService listadoService)
+        public TopCincoRecaudacionForm(ListadoService listadoService)
         {
             this.listadoService = listadoService;
-            InitializeComponent();;
+            InitializeComponent();
 
             comboBox2.Items.Add("PRIMER SEMESTRE");
             comboBox2.Items.Add("SEGUNDO SEMESTRE");
@@ -114,5 +114,6 @@ namespace FrbaOfertas.ListadoEstadistico
         {
 
         }
+
     }
 }
