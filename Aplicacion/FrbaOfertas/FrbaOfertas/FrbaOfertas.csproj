@@ -187,6 +187,7 @@
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Factura.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
+    <Compile Include="Entities\ListadoTop5Descuento.cs" />
     <Compile Include="Entities\ListadoTop5VendorFact.cs" />
     <Compile Include="Entities\Oferta.cs" />
     <Compile Include="Entities\Proovedor.cs" />
@@ -212,12 +213,6 @@
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.Designer.cs">
-      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.cs">
       <SubType>Form</SubType>
@@ -320,9 +315,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\TopCincoMayorDescuentoForm.resx">
-      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\TopCincoRecaudacionForm.resx">
       <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>

@@ -75,6 +75,8 @@ IF(OBJECT_ID('SP_SAVE_COMPRA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_COMPRA
 IF(OBJECT_ID('SP_TOP5PROVMAYORFACTURACION') IS NOT NULL)
 	DROP PROCEDURE SP_TOP5PROVMAYORFACTURACION
+IF(OBJECT_ID('SP_TOP5MAYORDESCUENTO') IS NOT NULL)
+	DROP PROCEDURE SP_TOP5MAYORDESCUENTO
 IF(OBJECT_ID('SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER
 IF(OBJECT_ID('SP_ELIMINAR_CLIENTE') IS NOT NULL)
@@ -1024,7 +1026,7 @@ GO
 				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
 				END
 
-				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO)
+				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO) as total_facturado
 				FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
 				JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
 				JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
@@ -1037,4 +1039,51 @@ GO
 		GO
 
 
-		SELECT * FROM GESTION_BDD_2C_2019.PROVEEDOR where ID = 1
+		GO
+
+		CREATE PROCEDURE SP_TOP5MAYORDESCUENTO
+		 @anio int, @semestre int
+		AS
+		BEGIN	
+	
+			DECLARE @mes_comienzo_semestre int
+			DECLARE @mes_fin_semestre int
+			DECLARE @fecha_comienzo_semestre datetime
+			DECLARE @fecha_fin_semestre datetime
+	
+				IF @semestre = 1	
+				BEGIN	
+				SET @mes_comienzo_semestre = 1	
+				SET @mes_fin_semestre = 6
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+				END
+	
+				IF @semestre = 2	
+				BEGIN	
+				SET @mes_comienzo_semestre = 7	
+				SET @mes_fin_semestre = 12	
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+				END
+
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( o.PRECIO / o.PRECIO_LISTO) * 100 as mayorPorcentaje
+				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
+				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
+				WHERE o.FECHA_PUBLIC >= @fecha_comienzo_semestre
+				AND o.FECHA_PUBLIC <= @fecha_fin_semestre
+				GROUP BY  p.ID, P.RAZON_SOCIAL
+				order by 3 desc
+		END
+
+		GO
+
+exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
+exec SP_TOP5MAYORDESCUENTO '2020', '1'
+
+go
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
+				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
+				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
+				GROUP BY  p.ID, P.RAZON_SOCIAL
+				order by 3 desc

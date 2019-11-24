@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
+using FrbaOfertas.Dao;
 using FrbaOfertas.ListadoEstadistico;
+using FrbaOfertas.Repository;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol.ejecutores
 {
@@ -15,7 +18,9 @@ namespace FrbaOfertas.AbmRol.ejecutores
 
         public override void execute(object sender, EventArgs e)
         {
-            ListadoEstadisticoForm listadoEstadisticoForm = new ListadoEstadisticoForm();
+            ListadosRepository listadorespo = new ListadosDao();
+            ListadoService listadoser = new ListadoService(listadorespo);
+            TopCincoRecaudacionForm listadoEstadisticoForm = new TopCincoRecaudacionForm(listadoser);
             listadoEstadisticoForm.Show();
             pantallaACerrar.Hide();
         }
