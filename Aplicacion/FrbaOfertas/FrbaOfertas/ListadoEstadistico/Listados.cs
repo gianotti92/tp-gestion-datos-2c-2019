@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using FrbaOfertas.Service;
 using FrbaOfertas.Entities;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FrbaOfertas.AbmRol;
 using FrbaOfertas.Utils;
 
@@ -11,9 +12,9 @@ namespace FrbaOfertas.ListadoEstadistico
 {
     public partial class Listados : Form
     {
-        Int32 semestre;
-        Int32 anio;
-        ListadoService listadoService;
+        private Int32 semestre;
+        private Int32 anio;
+        private ListadoService listadoService;
         private List<ListadoTop5VendorFact> top5Proveedores;
         private List<ListadoTop5Descuento> top5Descuento;
 
@@ -21,7 +22,7 @@ namespace FrbaOfertas.ListadoEstadistico
         public Listados(ListadoService listadoService)
         {
             this.listadoService = listadoService;
-            InitializeComponent();
+            InitializeComponent();;
 
             comboBox2.Items.Add("PRIMER SEMESTRE");
             comboBox2.Items.Add("SEGUNDO SEMESTRE");
@@ -35,7 +36,6 @@ namespace FrbaOfertas.ListadoEstadistico
             SeleccionarFuncionalidadForm1 seleccionFuncionalidad =
                 new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
             seleccionFuncionalidad.Show();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -74,14 +74,13 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             if (this.comboBox1.SelectedIndex == -1)
             {
-                SystemException ex = new SystemException("Eliga Año");
-                throw ex;
+               MessageBox.Show("Eliga Año");
+                
             }
  
             if (this.comboBox2.SelectedIndex == -1)
             {
-                SystemException ex = new SystemException("Seleccione el semestre");
-                throw ex;
+                MessageBox.Show("Seleccione el semestre");
             }
         }
 

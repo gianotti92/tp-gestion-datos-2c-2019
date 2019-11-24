@@ -8,7 +8,7 @@ namespace FrbaOfertas.Entities
 {
    public class ListadoTop5VendorFact
     {
-       public decimal idProveedor { get; set; }
+        public decimal idProveedor { get; set; }
         public String RazonSocial { get; set; }
         public decimal totalFacturacion { get; set; }
 
