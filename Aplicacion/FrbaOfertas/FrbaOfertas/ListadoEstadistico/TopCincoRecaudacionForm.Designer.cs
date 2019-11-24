@@ -33,14 +33,14 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tipoListadoCBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tipoListadoCBox = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -72,6 +72,22 @@ namespace FrbaOfertas.ListadoEstadistico
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtros de Búsqueda";
+            // 
+            // tipoListadoCBox
+            // 
+            this.tipoListadoCBox.FormattingEnabled = true;
+            this.tipoListadoCBox.Location = new System.Drawing.Point(75, 101);
+            this.tipoListadoCBox.Name = "tipoListadoCBox";
+            this.tipoListadoCBox.Size = new System.Drawing.Size(242, 21);
+            this.tipoListadoCBox.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(5, 104);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 16);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Listado";
             // 
             // button2
             // 
@@ -123,22 +139,6 @@ namespace FrbaOfertas.ListadoEstadistico
             this.label2.Size = new System.Drawing.Size(73, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Semestre";
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(5, 104);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 16);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Listado";
-            // 
-            // tipoListadoCBox
-            // 
-            this.tipoListadoCBox.FormattingEnabled = true;
-            this.tipoListadoCBox.Location = new System.Drawing.Point(75, 101);
-            this.tipoListadoCBox.Name = "tipoListadoCBox";
-            this.tipoListadoCBox.Size = new System.Drawing.Size(242, 21);
-            this.tipoListadoCBox.TabIndex = 8;
             // 
             // dataGridView1
             // 

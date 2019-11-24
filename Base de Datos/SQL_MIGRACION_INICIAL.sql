@@ -1069,7 +1069,7 @@ GO
 				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
 				END
 
-				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( o.PRECIO / o.PRECIO_LISTO) * 100 as mayorPorcentaje
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
 				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
 				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
 				WHERE o.FECHA_PUBLIC >= @fecha_comienzo_semestre
@@ -1080,7 +1080,7 @@ GO
 
 		GO
 
-exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
+/*exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
 exec SP_TOP5MAYORDESCUENTO '2020', '1'
 
 go
@@ -1089,3 +1089,4 @@ go
 				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
 				GROUP BY  p.ID, P.RAZON_SOCIAL
 				order by 3 desc
+				*/

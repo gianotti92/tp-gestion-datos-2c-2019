@@ -48,6 +48,7 @@ namespace FrbaOfertas.ListadoEstadistico
             if (tipoListadoCBox.Text.Equals("Top 5 Mayor Descuento"))
             {
                 List<ListadoTop5Descuento> top5Descuento = listadoService.top5Descuento(anio, semestre);
+                this.dataGridView1.AutoGenerateColumns = true;
                 this.dataGridView1.DataSource = new BindingSource(top5Descuento, null);
                     
             }
@@ -56,7 +57,8 @@ namespace FrbaOfertas.ListadoEstadistico
                 List<ListadoTop5VendorFact> top5Proveedores = listadoService.top5Facturacion(anio, semestre);
                              
                 this.dataGridView1.DataSource = new BindingSource(top5Proveedores, null);
-                
+                this.dataGridView1.AutoGenerateColumns = true;
+
             }
 
           
