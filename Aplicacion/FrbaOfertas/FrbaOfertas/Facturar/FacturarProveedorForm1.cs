@@ -12,30 +12,33 @@ namespace FrbaOfertas.Facturar
 {
     public partial class FacturarProveedorForm1 : Form
     {
-        
         private ProveedorService _proveedorService;
         private OfertaService _ofertaService;
         private FacturaService _facturaService;
+        private CompraService _compraService;
 
         private List<Proovedor> proovedores;
         private List<Oferta> ofertas;
+        private List<int> ofertasCompradasIds;
 
-        public FacturarProveedorForm1(ProveedorService _proveedorService, OfertaService _ofertaService,
+        public FacturarProveedorForm1(CompraService compraService, ProveedorService _proveedorService,
+            OfertaService _ofertaService,
             FacturaService _facturaService)
         {
+            this._compraService = compraService;
             this._proveedorService = _proveedorService;
             this._ofertaService = _ofertaService;
             this._facturaService = _facturaService;
             InitializeComponent();
             cargarProveedores();
         }
-        
+
         private void cargarProveedores()
         {
             proovedores = _proveedorService.searchProovedores();
             proovedores.ForEach(p => ProveedorCombo.Items.Add(p.razonSocial));
         }
-        
+
         private bool esEstadoValido()
         {
             return finFactDate.Value > inicioFactDate.Value;
@@ -53,7 +56,12 @@ namespace FrbaOfertas.Facturar
             if (esEstadoValido())
             {
                 int proveedorId = ProveedorCombo.SelectedIndex + 1;
-                ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId, inicioFactDate.Value, finFactDate.Value);
+                ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId, inicioFactDate.Value,
+                    finFactDate.Value);
+                ofertasCompradasIds = _compraService.buscarcompras();
+
+                ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
+
                 listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
                 decimal suma = 0;
                 totalFacttxt.Text = Convert.ToString(suma);
@@ -68,6 +76,8 @@ namespace FrbaOfertas.Facturar
                 factura.fin = finFactDate.Value;
                 factura.proveedorId = proveedorId;
                 int numeroFactura = _facturaService.save(factura);
+
+                _compraService.updateCompra(ofertasCompradasIds, numeroFactura);
 
                 totalFacttxt.Text = "$ " + Convert.ToString(suma);
                 NroFactTxt.Text = Convert.ToString(numeroFactura);

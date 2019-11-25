@@ -10,5 +10,6 @@ namespace FrbaOfertas.Repository
     public interface CompraRepository
     {
         int Save(Compra compra);
+        void updateCompra(List<int> ofertasCompradasIds, int numeroFactura);
     }
 }

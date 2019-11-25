@@ -21,5 +21,17 @@ namespace FrbaOfertas.Service
         {
             return CompraDao.Save(compra);
         }
+
+        public List<int> buscarcompras()
+        {
+            List<int> ids = new List<int>();
+            ids.Add(57306);
+            return new List<int>();
+        }
+
+        public void updateCompra(List<int> ofertasCompradasIds, int numeroFactura)
+        {
+            CompraDao.updateCompra(ofertasCompradasIds, numeroFactura);
+        }
     }
 }

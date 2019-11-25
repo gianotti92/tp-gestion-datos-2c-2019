@@ -28,5 +28,21 @@ namespace FrbaOfertas.Dao
 
             return idCompra;
         }
+
+        public void updateCompra(List<int> ofertasCompradasIds, int numeroFactura)
+        {
+            ofertasCompradasIds.ForEach(id => guardar(id, numeroFactura));
+        }
+
+        private void guardar(int id, int numeroFactura)
+        {
+            SqlCommand cmd_compra = new SqlCommand("dbo.SP_UPDATE_COMPRA", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_compra.Parameters.Add("@oferta_id", id);
+            cmd_compra.Parameters.Add("@factura_id", numeroFactura);
+            cmd_compra.CommandType = CommandType.StoredProcedure;
+            cmd_compra.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
     }
 }
