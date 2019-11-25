@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol;
+using FrbaOfertas.Service;
 using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.ConsumoOferta
 {
     public partial class ConsumoOferta : Form
     {
-        public ConsumoOferta()
+        private CompraService compraService;
+        public ConsumoOferta(CompraService compraService)
         {
+            this.compraService = compraService;
             InitializeComponent();
         }
 
@@ -39,6 +42,21 @@ namespace FrbaOfertas.ConsumoOferta
                 MessageBox.Show("Solo se permiten numeros Decimales2", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 e.Handled = true;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(idCompraTextBox.Text != "")
+            {
+
+               compraBindingSource.DataSource =  compraService.GetCompra(int.Parse(idCompraTextBox.Text));
+
+            }
+            
+
+
+
+
         }
     }
 }

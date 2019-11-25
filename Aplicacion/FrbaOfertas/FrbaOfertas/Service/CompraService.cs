@@ -21,5 +21,16 @@ namespace FrbaOfertas.Service
         {
             return CompraDao.Save(compra);
         }
+
+        public Compra GetCompra(int idCompra)
+        {
+            return CompraDao.GetCompra(idCompra);
+
+        }
+
+        public List<Compra> GetTodasCompras() {
+            return CompraDao.GetTodasCompras();
+
+        }
     }
 }
