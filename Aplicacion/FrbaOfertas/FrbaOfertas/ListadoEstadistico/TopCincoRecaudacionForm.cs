@@ -74,13 +74,18 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             if (this.comboBox1.SelectedIndex == -1)
             {
-               MessageBox.Show("Eliga Año");
-                
+              // MessageBox.Show("Eliga Año");
+
+                SystemException ex = new SystemException("Eliga Año");
+                throw ex;
+
             }
  
             if (this.comboBox2.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione el semestre");
+              //  MessageBox.Show("Seleccione el semestre");
+                SystemException ex = new SystemException("Seleccione el semestre");
+                throw ex;
             }
         }
 

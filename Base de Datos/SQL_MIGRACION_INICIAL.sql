@@ -312,7 +312,7 @@ GO
 		/* DATOS ROL_FUNCION le doy todo el poder al administrativo y ademas funcionalidad x usuario 
 		1 Cliente, 2 Provedor, 3 Admin*/
 		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(3,10),(3, 2),(3, 4),(3, 5), (3, 9), (3, 10), (1, 6), (1, 7), (2, 8), (2, 1), (4, 1), (4,2),(4,3),(4,4),(4,5),(4,6), (4,7), (4,8),(4,9),(4,10)
+		VALUES	(3,10),(3, 2),(3, 4),(3, 5), (3, 9), (3, 8), (1, 6), (1, 7), (2, 8), (2, 1), (4, 1), (4,2),(4,3),(4,4),(4,5),(4,6), (4,7), (4,8),(4,9),(4,10)
 					
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
@@ -498,6 +498,14 @@ SELECT DISTINCT
 	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
 	(rol_id,username)
      VALUES (4, 'admin')
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.Usuario
+	(username,tipo,pass,habilitado,intentos)
+     VALUES ('administrativo','3',HASHBYTES('SHA2_256','w23e'),1,0)
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+     VALUES (3, 'administrativo')
 
 /*
 	SELECT M.Oferta_Codigo,m.Cli_Dni
@@ -967,6 +975,7 @@ GO
 			@idOferta INT,
 			@idCliente NUMERIC(18,0),
 			@fecha DATETIME
+			--@cantidad int
 		)
 		AS
 		BEGIN
@@ -974,6 +983,14 @@ GO
 			OUTPUT inserted.ID
 			VALUES 
 				(@idOferta, @idCliente, @fecha)
+
+			update GESTION_BDD_2C_2019.OFERTA
+			set STOCK_DISPONIBLE = (
+			select (STOCK_DISPONIBLE-1 )
+			from GESTION_BDD_2C_2019.OFERTA o
+			where o.ID = @idOferta)
+			where OFERTA.ID = @idOferta
+
 		END
 		GO
 		

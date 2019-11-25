@@ -15,6 +15,7 @@ namespace FrbaOfertas.Entities
         public long? cupon { get; set; }
         public DateTime? fechaConsumo { get; set; }
         public int? idFactura { get; set; }
+        public int cantidad { get; set; }
 
         public Compra()
         {
