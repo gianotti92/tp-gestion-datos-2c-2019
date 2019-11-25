@@ -87,7 +87,7 @@ namespace FrbaOfertas.Dao
         {
             string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
             
-            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "'");
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC >= '" +fechaDia + "'");
             
             SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();

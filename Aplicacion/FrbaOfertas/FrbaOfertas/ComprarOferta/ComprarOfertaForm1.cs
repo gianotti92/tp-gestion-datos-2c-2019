@@ -156,7 +156,7 @@ namespace FrbaOfertas.ComprarOferta
         private void hayStock(Oferta ofertaSeleccionada)
         {
             int CantidadAComprar = int.Parse(CantidadOfertas.Text);
-            if (ofertaSeleccionada.stockDisponible < 0 || ofertaSeleccionada.stockDisponible <= CantidadAComprar)
+            if (ofertaSeleccionada.stockDisponible <= 0 || ofertaSeleccionada.stockDisponible < CantidadAComprar)
             {
                 SystemException ex = new SystemException("No hay Stock disponible o la cantidad supera el Stock Disponible");
                 throw ex;

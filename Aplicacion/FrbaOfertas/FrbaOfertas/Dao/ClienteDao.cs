@@ -82,11 +82,12 @@ namespace FrbaOfertas.Dao
             cmd_client.Parameters.Add(new SqlParameter("@apellido", cliente.apellido));
             cmd_client.Parameters.Add(new SqlParameter("@dni", cliente.dni));
             cmd_client.Parameters.Add(new SqlParameter("@mail", cliente.mail));
-            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
             cmd_client.Parameters.Add(new SqlParameter("@direccion_id", cliente.direccion.id));
             cmd_client.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             cmd_client.Parameters.Add(new SqlParameter("@usuario_id", cliente.usuario));
             cmd_client.Parameters.Add(new SqlParameter("@saldo", cliente.saldo));
+            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
+            
 
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();

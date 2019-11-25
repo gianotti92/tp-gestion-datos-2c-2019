@@ -41,7 +41,7 @@ namespace FrbaOfertas.Facturar
 
         private bool esEstadoValido()
         {
-            return finFactDate.Value > inicioFactDate.Value;
+            return finFactDate.Value >= inicioFactDate.Value;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace FrbaOfertas.Facturar
                 int proveedorId = ProveedorCombo.SelectedIndex + 1;
                 ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId, inicioFactDate.Value,
                     finFactDate.Value);
-                ofertasCompradasIds = _compraService.buscarcompras();
+                ofertasCompradasIds = _compraService.getComprasSinFactura(proveedorId).ToList();
 
                 ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
 
@@ -81,6 +81,8 @@ namespace FrbaOfertas.Facturar
 
                 totalFacttxt.Text = "$ " + Convert.ToString(suma);
                 NroFactTxt.Text = Convert.ToString(numeroFactura);
+            }else {
+                MessageBox.Show("Datos invalidos");
             }
         }
     }

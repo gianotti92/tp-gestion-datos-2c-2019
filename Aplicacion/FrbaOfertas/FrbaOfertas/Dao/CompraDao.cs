@@ -44,5 +44,86 @@ namespace FrbaOfertas.Dao
             cmd_compra.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+        
+         public Compra GetCompra(int idCompra)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.COMPRAS WHERE ID = @ID",
+                ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            cmd.Parameters.Add("@ID", SqlDbType.VarChar);
+            cmd.Parameters["@ID"].Value = idCompra;
+
+            SqlDataReader r_compra = cmd.ExecuteReader();
+
+            Compra compra = new Compra();
+
+            if (r_compra.Read())
+            {
+                compra.id = Convert.ToInt32(r_compra["ID"]);
+                compra.idOferta = Convert.ToInt32(r_compra["OFERTA_ID"]);
+                compra.idCliente = Convert.ToInt32(r_compra["CLIENTE_ID"]);
+                compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
+                //compra.cupon = Convert.ToInt32(r_compra["CUPON"]);
+                compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
+                compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
+
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return compra;
+        }
+
+
+        public List<Compra> GetTodasCompras(){
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.COMPRAS",
+             ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            SqlDataReader r_compra = cmd.ExecuteReader();
+            List<Compra> compras = new List<Compra>();
+
+            while (r_compra.Read())
+            {
+                Compra compra = new Compra();
+                compra.id = Convert.ToInt32(r_compra["ID"]);
+                compra.idOferta = Convert.ToInt32(r_compra["OFERTA_ID"]);
+                compra.idCliente = Convert.ToInt32(r_compra["CLIENTE_ID"]);
+                compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
+
+                if (!(r_compra["FECHA_CONSUMO"] is DBNull) && !(r_compra["FACTURA_ID"] is DBNull))
+                {
+                    compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
+                    compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
+                }
+                
+                compras.Add(compra);
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return compras;
+        }
+
+        public List<int> getComprasSinFactura(int provId)
+        {
+            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.COMPRAS c join GESTION_BDD_2C_2019.OFERTA o on c.OFERTA_ID = o.ID where o.PROV_ID = 1 and FACTURA_ID is null ", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            
+            SqlDataReader r_compra = cmd.ExecuteReader();
+            List<int> compras = new List<int>();
+
+            while (r_compra.Read())
+            {
+                if (!(r_compra["OFERTA_ID"] is DBNull))
+                {
+                    compras.Add(Convert.ToInt32(r_compra["OFERTA_ID"]));
+                }
+            }
+            ConnectionQuery.cerrarConexion();
+            return compras;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol
 {
@@ -43,7 +44,7 @@ namespace FrbaOfertas.AbmRol
         private void button1_Click(object sender, EventArgs e)
         {
             this.Dispose();
-            Form entregaCupon = new ConsumoOferta.ConsumoOferta();
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
             entregaCupon.Show();
         }
     }

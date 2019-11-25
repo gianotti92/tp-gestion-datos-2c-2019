@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FrbaOfertas.Service;
+using FrbaOfertas.ComprarOferta;
+using System;
 using System.Windows.Forms;
 
 namespace FrbaOfertas.AbmRol.ejecutores
@@ -15,7 +17,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
         public override void execute(object sender, EventArgs e)
         {
             pantallaACerrar.Hide();
-            Form entregaCupon = new ConsumoOferta.ConsumoOferta();
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
             entregaCupon.Show();
         }
     }
