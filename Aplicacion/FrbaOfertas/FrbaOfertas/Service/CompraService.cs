@@ -27,6 +27,11 @@ namespace FrbaOfertas.Service
             CompraDao.updateCompra(ofertasCompradasIds, numeroFactura);
         }
 
+        public void updateCompra(int ofertasCompradasIds, DateTime fechaConsumo)
+        {
+            CompraDao.updateCompra(ofertasCompradasIds, fechaConsumo);
+        }
+
         public Compra GetCompra(int idCompra)
         {
             return CompraDao.GetCompra(idCompra);

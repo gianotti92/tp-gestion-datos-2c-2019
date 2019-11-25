@@ -14,5 +14,6 @@ namespace FrbaOfertas.Repository
         Compra GetCompra(int idCompra);
         List<Compra> GetTodasCompras();
         List<int> getComprasSinFactura(int provId);
+        void updateCompra(int ofertasCompradasIds, DateTime fechaConsumo);
     }
 }

@@ -29,6 +29,17 @@ namespace FrbaOfertas.Dao
             return idCompra;
         }
 
+        public void updateCompra(int ofertasCompradasIds, DateTime fechaConsumo)
+        {
+            SqlCommand cmd_compra = new SqlCommand("dbo.SP_UPDATE_FECHA_CONSUMO", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_compra.Parameters.Add("@compra_id", ofertasCompradasIds);
+            cmd_compra.Parameters.Add("@fecha_consumo", fechaConsumo);
+            cmd_compra.CommandType = CommandType.StoredProcedure;
+            cmd_compra.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
         public void updateCompra(List<int> ofertasCompradasIds, int numeroFactura)
         {
             ofertasCompradasIds.ForEach(id => guardar(id, numeroFactura));
@@ -93,9 +104,13 @@ namespace FrbaOfertas.Dao
                 compra.idCliente = Convert.ToInt32(r_compra["CLIENTE_ID"]);
                 compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
 
-                if (!(r_compra["FECHA_CONSUMO"] is DBNull) && !(r_compra["FACTURA_ID"] is DBNull))
+                if (!(r_compra["FECHA_CONSUMO"] is DBNull))
                 {
                     compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
+                }
+
+                if (!(r_compra["FACTURA_ID"] is DBNull))
+                {
                     compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
                 }
                 

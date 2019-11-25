@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol;
@@ -22,7 +23,7 @@ namespace FrbaOfertas.ConsumoOferta
 
         private void cargarDataDridView()
         {
-            ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.idFactura != null && compra.fechaConsumo != null)
+            ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.idFactura != null && compra.fechaConsumo == null)
                 .ToList();
             
             OfertaDataGridView.DataSource = new BindingSource(ofertasCompradas, null);
@@ -69,7 +70,9 @@ namespace FrbaOfertas.ConsumoOferta
 
         private void OfertaDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Oferta ofertaConsumida = (Oferta)OfertaDataGridView.CurrentRow.DataBoundItem;
+            Compra ofertaConsumida = (Compra)OfertaDataGridView.CurrentRow.DataBoundItem;
+            compraService.updateCompra(ofertaConsumida.id, DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
+            cargarDataDridView();
         }
     }
 }
