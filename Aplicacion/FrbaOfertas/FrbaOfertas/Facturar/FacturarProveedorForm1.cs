@@ -63,6 +63,12 @@ namespace FrbaOfertas.Facturar
                 ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
 
                 listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
+                if (ofertas.Count <= 0)
+                {
+                    MessageBox.Show("No hay facturas para procesar");
+                    return;
+                }
+
                 decimal suma = 0;
                 totalFacttxt.Text = Convert.ToString(suma);
                 if (ofertas.Count > 0)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -31,6 +32,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -77,6 +79,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -106,6 +109,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -127,6 +131,7 @@ namespace FrbaOfertas.Dao
             cmd_oferta.Parameters.Add("@fechaPublicacion", oferta.fechaPublicacion);
             cmd_oferta.Parameters.Add("@fechaVencimiento", oferta.fechaVencimiento);
             cmd_oferta.Parameters.Add("@cantidadMaximaPorCompra", oferta.cantidadMaximaPorCompra);
+            cmd_oferta.Parameters.Add("@descripcion", oferta.descripcion);
 
 
             int id = Convert.ToInt32(cmd_oferta.ExecuteScalar());
@@ -159,6 +164,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_oferta["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_oferta["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_oferta["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -187,6 +193,8 @@ namespace FrbaOfertas.Dao
             cmd_oferta.Parameters.Add("@id_proveedor", proveedorId);
             cmd_oferta.Parameters.Add("@fecha_inicio", fechaInicio);
             cmd_oferta.Parameters.Add("@fecha_fin", fechaFin);
+            cmd_oferta.Parameters.Add("@fecha_del_dia", DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
+            
 
             SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();
@@ -203,6 +211,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime)r_oferta["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime)r_oferta["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_oferta["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
