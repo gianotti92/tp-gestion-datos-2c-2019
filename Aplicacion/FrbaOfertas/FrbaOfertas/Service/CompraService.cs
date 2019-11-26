@@ -43,9 +43,9 @@ namespace FrbaOfertas.Service
 
         }
 
-        public List<int> getComprasSinFactura(int provId)
+        public List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
         {
-            return CompraDao.getComprasSinFactura(provId);
+            return CompraDao.getComprasSinFactura(provId, fechaInicio, fechaFin);
         }
     }
 }

@@ -966,7 +966,6 @@ GO
 		BEGIN
 			SELECT * FROM GESTION_BDD_2C_2019.OFERTA 
 			WHERE PROV_ID = @id_proveedor
-			AND (FECHA_PUBLIC between @fecha_inicio AND @fecha_fin) AND FECHA_VENC >= @fecha_del_dia
 		END
 		GO
 
@@ -1138,3 +1137,5 @@ go
 				GROUP BY  p.ID, P.RAZON_SOCIAL
 				order by 3 desc
 				*/
+
+			

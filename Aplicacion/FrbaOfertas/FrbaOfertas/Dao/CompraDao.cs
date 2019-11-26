@@ -76,9 +76,15 @@ namespace FrbaOfertas.Dao
                 compra.idCliente = Convert.ToInt32(r_compra["CLIENTE_ID"]);
                 compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
                 //compra.cupon = Convert.ToInt32(r_compra["CUPON"]);
-                compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
-                compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
+                if (!(r_compra["FECHA_CONSUMO"] is DBNull))
+                {
+                    compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
+                }
 
+                if (!(r_compra["FACTURA_ID"] is DBNull))
+                {
+                    compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
+                }
             }
 
             ConnectionQuery.cerrarConexion();
@@ -122,9 +128,11 @@ namespace FrbaOfertas.Dao
             return compras;
         }
 
-        public List<int> getComprasSinFactura(int provId)
+        public List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
         {
-            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.COMPRAS c join GESTION_BDD_2C_2019.OFERTA o on c.OFERTA_ID = o.ID where o.PROV_ID = 1 and FACTURA_ID is null ", ConnectionQuery.Instance());
+            string fechaIni = fechaInicio.ToString("yyyy-MM-dd");
+            string fechaFini = fechaFin.ToString("yyyy-MM-dd");
+            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.COMPRAS c join GESTION_BDD_2C_2019.OFERTA o on c.OFERTA_ID = o.ID where o.PROV_ID = "+ provId +" and FACTURA_ID is null and FECHA BETWEEN " + "'"+fechaIni+"'" + " AND " + "'"+fechaFini + "'", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             
             SqlDataReader r_compra = cmd.ExecuteReader();

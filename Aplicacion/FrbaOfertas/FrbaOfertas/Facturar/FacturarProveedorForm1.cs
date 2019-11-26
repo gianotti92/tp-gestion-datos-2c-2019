@@ -58,7 +58,8 @@ namespace FrbaOfertas.Facturar
                 int proveedorId = ProveedorCombo.SelectedIndex + 1;
                 ofertas = _ofertaService.searchOfertasAdquiridasByProveedor(proveedorId, inicioFactDate.Value,
                     finFactDate.Value);
-                ofertasCompradasIds = _compraService.getComprasSinFactura(proveedorId).ToList();
+                ofertasCompradasIds = _compraService.getComprasSinFactura(proveedorId, inicioFactDate.Value,
+                    finFactDate.Value).ToList();
 
                 ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
 
