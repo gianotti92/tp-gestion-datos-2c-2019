@@ -18,15 +18,18 @@ namespace FrbaOfertas.ConsumoOferta
         {
             this.compraService = compraService;
             InitializeComponent();
-            cargarDataDridView();
+            //cargarDataDridView();
         }
 
         private void cargarDataDridView()
         {
-            ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.idFactura != null && compra.fechaConsumo == null)
-                .ToList();
-            
-            OfertaDataGridView.DataSource = new BindingSource(ofertasCompradas, null);
+            //ofertasCompradas = compraService.GetTodasCompras();
+            //.Where(compra => compra.fechaConsumo == null)
+            //.ToList();
+
+            //OfertaDataGridView.DataSource = new BindingSource(ofertasCompradas, null);
+            compraBindingSource.DataSource = ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.fechaConsumo == null)
+        .ToList();
         }
 
         private void volverBtn1_Click(object sender, EventArgs e)
@@ -63,7 +66,8 @@ namespace FrbaOfertas.ConsumoOferta
             if(idCompraTextBox.Text != "")
             {
 
-               compraBindingSource.DataSource =  compraService.GetCompra(int.Parse(idCompraTextBox.Text));
+                compraBindingSource.DataSource = compraService.GetCompra(int.Parse(idCompraTextBox.Text));
+                //ofertasCompradas.Add(compraService.GetCompra(int.Parse(idCompraTextBox.Text)));
 
             }
         }
@@ -71,7 +75,20 @@ namespace FrbaOfertas.ConsumoOferta
         private void OfertaDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             Compra ofertaConsumida = (Compra)OfertaDataGridView.CurrentRow.DataBoundItem;
-            compraService.updateCompra(ofertaConsumida.id, DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
+            if (ofertaConsumida.fechaConsumo.Equals(null))
+            {
+                compraService.updateCompra(ofertaConsumida.id, DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
+
+                MessageBox.Show("la compra: " + ofertaConsumida.id + " fue consumida");
+                cargarDataDridView();
+            }
+            else
+                MessageBox.Show("la compra ya se encuentra consumida");
+            ////cargarDataDridView();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
             cargarDataDridView();
         }
     }

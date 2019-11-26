@@ -77,14 +77,10 @@ namespace FrbaOfertas.Dao
                 compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
                 //compra.cupon = Convert.ToInt32(r_compra["CUPON"]);
                 if (!(r_compra["FECHA_CONSUMO"] is DBNull))
-                {
                     compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
-                }
-
                 if (!(r_compra["FACTURA_ID"] is DBNull))
-                {
                     compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
-                }
+
             }
 
             ConnectionQuery.cerrarConexion();
