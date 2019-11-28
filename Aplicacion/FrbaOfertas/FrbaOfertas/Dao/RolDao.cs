@@ -141,17 +141,23 @@ using System;
 
             if (!string.IsNullOrEmpty(nombre))
             {
-                builder.Append("NOMBRE LIKE '%" + nombre + "%'");
+                builder.Append("NOMBRE LIKE '%" + nombre + "%' ");
             }
 
             if (estado == 1)
             {
-                builder.Append("AND ESTADO = 1");
+                if(!string.IsNullOrEmpty(nombre))
+                    builder.Append("AND ");
+
+                builder.Append("ESTADO = 1");
             }
 
             if (estado == 2)
             {
-                builder.Append("AND ESTADO = 2");
+                if (!string.IsNullOrEmpty(nombre))
+                    builder.Append("AND ");
+
+                builder.Append("ESTADO = 2");
             }
 
             SqlCommand cmd_rol = new SqlCommand( builder.ToString(), ConnectionQuery.Instance());
