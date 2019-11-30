@@ -767,12 +767,13 @@ GO
 		 @piso NVARCHAR(255),
 		 @depto VARCHAR(10),
 		 @localidad NVARCHAR(255),
-		 @id_cod_postal INT)
+		 @id_cod_postal INT,
+		 @id_ciudad INT)
 		 AS
 		 BEGIN
-			INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+			INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL, CIUDAD)
 			OUTPUT inserted.id
-			VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+			VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal, @id_ciudad)
 		 END
 		GO
 

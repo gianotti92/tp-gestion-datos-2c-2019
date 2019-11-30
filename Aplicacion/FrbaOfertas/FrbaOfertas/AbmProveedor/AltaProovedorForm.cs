@@ -36,7 +36,7 @@ namespace FrbaOfertas.AbmProveedor
             razonSocialTxt.Text = proveedor.razonSocial;
             mailTxt.Text = proveedor.mail;
             cuitTxt.Text = proveedor.cuit;
-            rubroCombo.SelectedIndex = proveedor.rubro;
+            rubroCombo.SelectedIndex = proveedor.rubro - 1;
             telTxt.Text = proveedor.telefono.ToString();
             contactotxt.Text = proveedor.contacto;
 
@@ -49,7 +49,7 @@ namespace FrbaOfertas.AbmProveedor
 
                 localidadTxt.Text = proveedor.direccion.localidad;
                 codigoPostaltxt.Text = proveedor.direccion.codigoPostal.ToString();
-                ciudadCombo.SelectedIndex = proveedor.direccion.ciudad;
+                ciudadCombo.SelectedIndex = proveedor.direccion.ciudad - 1;
             }
         }
 
@@ -72,62 +72,69 @@ namespace FrbaOfertas.AbmProveedor
         }
         private void creatBtn_Click(object sender, EventArgs e)
         {
-            proveedor.razonSocial = razonSocialTxt.Text;
-            proveedor.cuit = cuitTxt.Text;
-            proveedor.mail = mailTxt.Text;
-            proveedor.mail = mailTxt.Text;
-            proveedor.telefono = Convert.ToInt32(telTxt.Text);
-            proveedor.contacto = contactotxt.Text;
-
-            int rubroIndex = rubroCombo.SelectedIndex;
-
-            proveedor.rubro = rubros[rubroIndex].id;
-
-            int id_direccion;
-            if (proveedor.direccion == null)
-            {
-                Direccion d = new Direccion();
-                
-                d.calle = calleTxt.Text;
-                d.nro = nroTxt.Text;
-                d.piso = pisoTxt.Text;
-                d.depto = dptotxt.Text;
-                d.localidad = localidadTxt.Text;
-                
-                int cityIndex = ciudadCombo.SelectedIndex;
-                Ciudad city = ciudades[cityIndex];
-       
-                int pcIdId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
-
-                d.ciudad = city.id;
-                d.codigoPostal = pcIdId ;
-
-                d = direccionService.CreateDireccion(d);
-                proveedor.direccion = d;
-            }
+            if (proveedorService.esRazonSocialRepetido(razonSocialTxt.Text))
+                MessageBox.Show("Existe un proveedor con esa razon social");
+            if (proveedorService.esCUITRepetido(cuitTxt.Text))
+                MessageBox.Show("Existe un proveedor con ese cuit");
             else
             {
-                proveedor.direccion.calle = calleTxt.Text;
-                proveedor.direccion.nro = nroTxt.Text;
-                proveedor.direccion.piso = pisoTxt.Text;
-                proveedor.direccion.depto = dptotxt.Text;
-                int ciudadIndex = ciudadCombo.SelectedIndex;
-                Ciudad ciudad = ciudades[ciudadIndex];
-       
-                int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
-                proveedor.direccion.codigoPostal = postalCodeId;
-                proveedor.direccion.localidad = localidadTxt.Text;
-                proveedor.direccion.ciudad = ciudad.id;
-            }
-            
+                proveedor.razonSocial = razonSocialTxt.Text;
+                proveedor.cuit = cuitTxt.Text;
+                proveedor.mail = mailTxt.Text;
+                proveedor.mail = mailTxt.Text;
+                proveedor.telefono = Convert.ToInt32(telTxt.Text);
+                proveedor.contacto = contactotxt.Text;
 
-            proveedorService.update(proveedor);
-            
-            MessageBox.Show("Proveedor actualizado correctamente");
-            
-            Form1 form = new Form1(ServiceDependencies.getProveedorService());
-            this.Hide();
-            form.Show();
+                int rubroIndex = rubroCombo.SelectedIndex;
+
+                proveedor.rubro = rubros[rubroIndex].id;
+
+                int id_direccion;
+                if (proveedor.direccion == null)
+                {
+                    Direccion d = new Direccion();
+
+                    d.calle = calleTxt.Text;
+                    d.nro = nroTxt.Text;
+                    d.piso = pisoTxt.Text;
+                    d.depto = dptotxt.Text;
+                    d.localidad = localidadTxt.Text;
+
+                    int cityIndex = ciudadCombo.SelectedIndex;
+                    Ciudad city = ciudades[cityIndex];
+
+                    int pcIdId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
+
+                    d.ciudad = city.id;
+                    d.codigoPostal = pcIdId;
+
+                    d = direccionService.CreateDireccion(d);
+                    proveedor.direccion = d;
+                }
+                else
+                {
+                    proveedor.direccion.calle = calleTxt.Text;
+                    proveedor.direccion.nro = nroTxt.Text;
+                    proveedor.direccion.piso = pisoTxt.Text;
+                    proveedor.direccion.depto = dptotxt.Text;
+                    int ciudadIndex = ciudadCombo.SelectedIndex;
+                    Ciudad ciudad = ciudades[ciudadIndex];
+
+                    int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
+                    proveedor.direccion.codigoPostal = postalCodeId;
+                    proveedor.direccion.localidad = localidadTxt.Text;
+                    proveedor.direccion.ciudad = ciudad.id;
+                }
+
+
+                proveedorService.update(proveedor);
+
+                MessageBox.Show("Proveedor actualizado correctamente");
+
+                Form1 form = new Form1(ServiceDependencies.getProveedorService());
+                this.Hide();
+                form.Show();
+            }
         }
 
         private void volverBtn_Click(object sender, EventArgs e)
