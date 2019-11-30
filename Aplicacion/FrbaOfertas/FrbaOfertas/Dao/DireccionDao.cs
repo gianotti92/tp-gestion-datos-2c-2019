@@ -12,7 +12,9 @@ namespace FrbaOfertas.Dao
         public Direccion GetById(int id)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.DIRECCION WHERE id = @id", ConnectionQuery.Instance());
-            ConnectionQuery.abrirConexion();
+
+                            ConnectionQuery.abrirConexion();
+           
 
             cmd.Parameters.Add("@id", SqlDbType.VarChar);
             cmd.Parameters["@id"].Value = id;
@@ -34,8 +36,9 @@ namespace FrbaOfertas.Dao
                 direccion.codigoPostal = Convert.ToInt32(r_direccion["CODIGO_POSTAL"]);
             }
 
-            ConnectionQuery.cerrarConexion();
-
+          
+                ConnectionQuery.cerrarConexion();
+           
             return direccion;
         }
 

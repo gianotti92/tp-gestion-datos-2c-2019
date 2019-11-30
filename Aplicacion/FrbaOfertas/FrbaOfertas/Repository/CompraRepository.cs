@@ -10,5 +10,10 @@ namespace FrbaOfertas.Repository
     public interface CompraRepository
     {
         int Save(Compra compra);
+        void updateCompra(List<int> ofertasCompradasIds, int numeroFactura);
+        Compra GetCompra(int idCompra);
+        List<Compra> GetTodasCompras();
+        List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin);
+        void updateCompra(int ofertasCompradasIds, DateTime fechaConsumo);
     }
 }

@@ -22,7 +22,7 @@ namespace FrbaOfertas.ListadoEstadistico
         public TopCincoRecaudacionForm(ListadoService listadoService)
         {
             this.listadoService = listadoService;
-            InitializeComponent();;
+            InitializeComponent();
 
             comboBox2.Items.Add("PRIMER SEMESTRE");
             comboBox2.Items.Add("SEGUNDO SEMESTRE");
@@ -40,35 +40,52 @@ namespace FrbaOfertas.ListadoEstadistico
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.validar();
-            
+            try
+            { this.validar(); 
+              
             anio = Int32.Parse(comboBox1.SelectedValue.ToString());
             Semestre();
 
             if (tipoListadoCBox.Text.Equals("Top 5 Mayor Descuento"))
             {
-                top5Descuento = listadoService.top5Descuento(anio, semestre);
-                this.listadoGrid.DataSource = new BindingSource(new BindingList<ListadoTop5Descuento>(top5Descuento), null);
-            }
+                    top5Descuento = listadoService.top5Descuento(anio, semestre);
+                    this.listadoGrid.DataSource = new BindingSource(new BindingList<ListadoTop5Descuento>(top5Descuento), null);
+
+
+
+                }
             if (tipoListadoCBox.Text.Equals("Top 5 Mayor Recaudacion"))
             {
-                top5Proveedores = listadoService.top5Facturacion(anio, semestre);
-                this.listadoGrid.DataSource =
-                    new BindingSource(new BindingList<ListadoTop5VendorFact>(top5Proveedores), null);
+                    top5Proveedores = listadoService.top5Facturacion(anio, semestre);
+                    this.listadoGrid.DataSource =
+                        new BindingSource(new BindingList<ListadoTop5VendorFact>(top5Proveedores), null);
+                }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
+
+
         }
 
         private void validar()
         {
             if (this.comboBox1.SelectedIndex == -1)
             {
-               MessageBox.Show("Eliga Año");
-                
+              // MessageBox.Show("Eliga Año");
+
+                SystemException ex = new SystemException("Eliga Año");
+                throw ex;
+
             }
  
             if (this.comboBox2.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione el semestre");
+              //  MessageBox.Show("Seleccione el semestre");
+                SystemException ex = new SystemException("Seleccione el semestre");
+                throw ex;
             }
         }
 
@@ -88,6 +105,19 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             tipoListadoCBox.Items.Add("Top 5 Mayor Descuento");
             tipoListadoCBox.Items.Add("Top 5 Mayor Recaudacion");
+        }
+
+        private void TopCincoRecaudacionForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+                System.Windows.Forms.Application.Exit();
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

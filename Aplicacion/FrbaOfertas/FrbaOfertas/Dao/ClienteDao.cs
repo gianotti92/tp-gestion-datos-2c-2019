@@ -82,11 +82,12 @@ namespace FrbaOfertas.Dao
             cmd_client.Parameters.Add(new SqlParameter("@apellido", cliente.apellido));
             cmd_client.Parameters.Add(new SqlParameter("@dni", cliente.dni));
             cmd_client.Parameters.Add(new SqlParameter("@mail", cliente.mail));
-            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
             cmd_client.Parameters.Add(new SqlParameter("@direccion_id", cliente.direccion.id));
             cmd_client.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             cmd_client.Parameters.Add(new SqlParameter("@usuario_id", cliente.usuario));
             cmd_client.Parameters.Add(new SqlParameter("@saldo", cliente.saldo));
+            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
+            
 
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
@@ -102,13 +103,10 @@ namespace FrbaOfertas.Dao
 
             List<Cliente> clientes = new List<Cliente>();
 
-            if (r_cliente.Read())
-            {
-                if (ConnectionQuery.conexion == null)
-                {
-                    ConnectionQuery.abrirConexion();
-                }
-                
+            Dictionary<int, int> diccionarioIdClienteIdDireccion = new Dictionary<int, int>();
+
+            while (r_cliente.Read())
+            {    
                 Cliente cliente = new Cliente();
                 cliente.id = Convert.ToInt32(r_cliente["ID"]);
                 cliente.dni = Convert.ToInt32(r_cliente["DNI"]);
@@ -120,13 +118,18 @@ namespace FrbaOfertas.Dao
                 cliente.usuario = r_cliente["USUARIO"].ToString();
                 cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
                 idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
-                ConnectionQuery.cerrarConexion();
+                diccionarioIdClienteIdDireccion.Add(cliente.id, idDireccion);
 
-                Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
-
-                cliente.direccion = direccion;
                 clientes.Add(cliente);
             }
+
+            ConnectionQuery.cerrarConexion();
+
+            clientes.ForEach(x =>
+            {
+                idDireccion = diccionarioIdClienteIdDireccion[x.id];
+                x.direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+            });
 
             return clientes;
         }
@@ -148,28 +151,36 @@ namespace FrbaOfertas.Dao
 
                 if (!string.IsNullOrEmpty(nombreFiltro))
                 {
-                    builder.Append("NOMBRE = " + nombreFiltro + " AND");
+                    builder.Append("NOMBRE LIKE '%" + nombreFiltro + "%' ");
                 }
 
                 if (!string.IsNullOrEmpty(apellidoFiltro))
                 {
-                    builder.Append("APELLIDO = " + apellidoFiltro + " AND");
+                    if (!string.IsNullOrEmpty(nombreFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("APELLIDO LIKE '%" + apellidoFiltro + "%' ");
                 }
 
                 if (!string.IsNullOrEmpty(dniFiltro))
                 {
-                    builder.Append("DNI = " + dniFiltro + " AND");
+                    if (!string.IsNullOrEmpty(nombreFiltro) || !string.IsNullOrEmpty(apellidoFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("DNI = '" + dniFiltro + "' ");
                 }
 
                 if (!string.IsNullOrEmpty(mailFIltro))
                 {
-                    builder.Append("MAIL = " + mailFIltro + " AND");
+                    if (!string.IsNullOrEmpty(nombreFiltro) || !string.IsNullOrEmpty(apellidoFiltro) || !string.IsNullOrEmpty(dniFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("MAIL LIKE '%" + mailFIltro + "%'");
                 }
 
                 //PARA BORRAR LOS AND, el ultimo tambien esta con and por si se da la condicion de que solamente
                 //se haya filtrado por mail
-                String query = builder.ToString().Substring(0, builder.ToString().Length - 3);
-
+                String query = builder.ToString();
 
                 SqlCommand cmd = new SqlCommand(builder.ToString(),
                     ConnectionQuery.Instance());
@@ -179,19 +190,10 @@ namespace FrbaOfertas.Dao
 
                 int idDireccion = 0;
 
-                
+                Dictionary<int, int> diccionarioIdClienteIdDireccion = new Dictionary<int, int>();
 
-                if (r_cliente.Read())
+                while (r_cliente.Read())
                 {
-                    if (ConnectionQuery.conexion == null)
-                    {
-                        return new List<Cliente>();
-                    }
-                    else
-                    {
-                        ConnectionQuery.abrirConexion();
-                    }
-
                     Cliente cliente = new Cliente();
                     cliente.id = Convert.ToInt32(r_cliente["ID"]);
                     cliente.dni = Convert.ToInt32(r_cliente["DNI"]);
@@ -203,14 +205,21 @@ namespace FrbaOfertas.Dao
                     cliente.usuario = r_cliente["USUARIO"].ToString();
                     cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
                     idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
+                    diccionarioIdClienteIdDireccion.Add(cliente.id, idDireccion);
+
                     clientes.Add(cliente);
-                    ConnectionQuery.cerrarConexion();
-
-                    Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
-
-                    cliente.direccion = direccion;
                 }
+
+                ConnectionQuery.cerrarConexion();
+
+                clientes.ForEach(x =>
+                {
+                    idDireccion = diccionarioIdClienteIdDireccion[x.id];
+                    x.direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+                });
             }
+            
+
             return clientes;
         }
 

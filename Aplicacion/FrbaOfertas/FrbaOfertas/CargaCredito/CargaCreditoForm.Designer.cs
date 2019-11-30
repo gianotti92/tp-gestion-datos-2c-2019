@@ -59,59 +59,68 @@
             this.gbCargaCredito.Controls.Add(this.lblTipoPago);
             this.gbCargaCredito.Controls.Add(this.txtCliente);
             this.gbCargaCredito.Controls.Add(this.lblCliente);
-            this.gbCargaCredito.Location = new System.Drawing.Point(39, 32);
+            this.gbCargaCredito.Location = new System.Drawing.Point(26, 21);
+            this.gbCargaCredito.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gbCargaCredito.Name = "gbCargaCredito";
-            this.gbCargaCredito.Size = new System.Drawing.Size(566, 210);
+            this.gbCargaCredito.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbCargaCredito.Size = new System.Drawing.Size(377, 136);
             this.gbCargaCredito.TabIndex = 0;
             this.gbCargaCredito.TabStop = false;
             this.gbCargaCredito.Text = "Datos carga crédito";
             // 
             // txtMonto
             // 
-            this.txtMonto.Location = new System.Drawing.Point(189, 158);
+            this.txtMonto.Location = new System.Drawing.Point(126, 103);
+            this.txtMonto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtMonto.Name = "txtMonto";
-            this.txtMonto.Size = new System.Drawing.Size(326, 26);
+            this.txtMonto.Size = new System.Drawing.Size(219, 20);
             this.txtMonto.TabIndex = 7;
+            this.txtMonto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMonto_KeyPress);
             // 
             // lblMonto
             // 
             this.lblMonto.AutoSize = true;
-            this.lblMonto.Location = new System.Drawing.Point(23, 161);
+            this.lblMonto.Location = new System.Drawing.Point(15, 105);
+            this.lblMonto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMonto.Name = "lblMonto";
-            this.lblMonto.Size = new System.Drawing.Size(54, 20);
+            this.lblMonto.Size = new System.Drawing.Size(37, 13);
             this.lblMonto.TabIndex = 6;
             this.lblMonto.Text = "Monto";
             // 
             // cbTipoPago
             // 
             this.cbTipoPago.FormattingEnabled = true;
-            this.cbTipoPago.Location = new System.Drawing.Point(189, 97);
+            this.cbTipoPago.Location = new System.Drawing.Point(126, 63);
+            this.cbTipoPago.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbTipoPago.Name = "cbTipoPago";
-            this.cbTipoPago.Size = new System.Drawing.Size(326, 28);
+            this.cbTipoPago.Size = new System.Drawing.Size(219, 21);
             this.cbTipoPago.TabIndex = 5;
             // 
             // lblTipoPago
             // 
             this.lblTipoPago.AutoSize = true;
-            this.lblTipoPago.Location = new System.Drawing.Point(23, 100);
+            this.lblTipoPago.Location = new System.Drawing.Point(15, 65);
+            this.lblTipoPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTipoPago.Name = "lblTipoPago";
-            this.lblTipoPago.Size = new System.Drawing.Size(76, 20);
+            this.lblTipoPago.Size = new System.Drawing.Size(53, 13);
             this.lblTipoPago.TabIndex = 4;
             this.lblTipoPago.Text = "TipoPago";
             // 
             // txtCliente
             // 
-            this.txtCliente.Location = new System.Drawing.Point(189, 42);
+            this.txtCliente.Location = new System.Drawing.Point(126, 27);
+            this.txtCliente.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCliente.Name = "txtCliente";
-            this.txtCliente.Size = new System.Drawing.Size(326, 26);
+            this.txtCliente.Size = new System.Drawing.Size(219, 20);
             this.txtCliente.TabIndex = 3;
             // 
             // lblCliente
             // 
             this.lblCliente.AutoSize = true;
-            this.lblCliente.Location = new System.Drawing.Point(23, 45);
+            this.lblCliente.Location = new System.Drawing.Point(15, 29);
+            this.lblCliente.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(58, 20);
+            this.lblCliente.Size = new System.Drawing.Size(39, 13);
             this.lblCliente.TabIndex = 2;
             this.lblCliente.Text = "Cliente";
             // 
@@ -125,82 +134,93 @@
             this.gbDatosTarjeta.Controls.Add(this.lblNombreTarjeta);
             this.gbDatosTarjeta.Controls.Add(this.txtNumeroTarjeta);
             this.gbDatosTarjeta.Controls.Add(this.lblNumero);
-            this.gbDatosTarjeta.Location = new System.Drawing.Point(39, 262);
+            this.gbDatosTarjeta.Location = new System.Drawing.Point(26, 170);
+            this.gbDatosTarjeta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gbDatosTarjeta.Name = "gbDatosTarjeta";
-            this.gbDatosTarjeta.Size = new System.Drawing.Size(566, 261);
+            this.gbDatosTarjeta.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbDatosTarjeta.Size = new System.Drawing.Size(377, 170);
             this.gbDatosTarjeta.TabIndex = 1;
             this.gbDatosTarjeta.TabStop = false;
             this.gbDatosTarjeta.Text = "Datos tarjeta";
             // 
             // dtpFechaVencimientoTarjeta
             // 
-            this.dtpFechaVencimientoTarjeta.Location = new System.Drawing.Point(189, 155);
+            this.dtpFechaVencimientoTarjeta.Location = new System.Drawing.Point(126, 101);
+            this.dtpFechaVencimientoTarjeta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dtpFechaVencimientoTarjeta.Name = "dtpFechaVencimientoTarjeta";
-            this.dtpFechaVencimientoTarjeta.Size = new System.Drawing.Size(326, 26);
+            this.dtpFechaVencimientoTarjeta.Size = new System.Drawing.Size(219, 20);
             this.dtpFechaVencimientoTarjeta.TabIndex = 15;
             // 
             // txtCodigoSeguridad
             // 
-            this.txtCodigoSeguridad.Location = new System.Drawing.Point(189, 209);
+            this.txtCodigoSeguridad.Location = new System.Drawing.Point(126, 136);
+            this.txtCodigoSeguridad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCodigoSeguridad.Name = "txtCodigoSeguridad";
-            this.txtCodigoSeguridad.Size = new System.Drawing.Size(326, 26);
+            this.txtCodigoSeguridad.Size = new System.Drawing.Size(219, 20);
             this.txtCodigoSeguridad.TabIndex = 14;
             // 
             // lblCodigoSeguridadTarjeta
             // 
             this.lblCodigoSeguridadTarjeta.AutoSize = true;
-            this.lblCodigoSeguridadTarjeta.Location = new System.Drawing.Point(23, 212);
+            this.lblCodigoSeguridadTarjeta.Location = new System.Drawing.Point(15, 138);
+            this.lblCodigoSeguridadTarjeta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCodigoSeguridadTarjeta.Name = "lblCodigoSeguridadTarjeta";
-            this.lblCodigoSeguridadTarjeta.Size = new System.Drawing.Size(133, 20);
+            this.lblCodigoSeguridadTarjeta.Size = new System.Drawing.Size(89, 13);
             this.lblCodigoSeguridadTarjeta.TabIndex = 13;
             this.lblCodigoSeguridadTarjeta.Text = "Código seguridad";
             // 
             // lblFechaVencimiento
             // 
             this.lblFechaVencimiento.AutoSize = true;
-            this.lblFechaVencimiento.Location = new System.Drawing.Point(23, 160);
+            this.lblFechaVencimiento.Location = new System.Drawing.Point(15, 104);
+            this.lblFechaVencimiento.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFechaVencimiento.Name = "lblFechaVencimiento";
-            this.lblFechaVencimiento.Size = new System.Drawing.Size(142, 20);
+            this.lblFechaVencimiento.Size = new System.Drawing.Size(97, 13);
             this.lblFechaVencimiento.TabIndex = 12;
             this.lblFechaVencimiento.Text = "Fecha vencimiento";
             // 
             // txtNombreTarjeta
             // 
-            this.txtNombreTarjeta.Location = new System.Drawing.Point(189, 103);
+            this.txtNombreTarjeta.Location = new System.Drawing.Point(126, 67);
+            this.txtNombreTarjeta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNombreTarjeta.Name = "txtNombreTarjeta";
-            this.txtNombreTarjeta.Size = new System.Drawing.Size(326, 26);
+            this.txtNombreTarjeta.Size = new System.Drawing.Size(219, 20);
             this.txtNombreTarjeta.TabIndex = 11;
             // 
             // lblNombreTarjeta
             // 
             this.lblNombreTarjeta.AutoSize = true;
-            this.lblNombreTarjeta.Location = new System.Drawing.Point(23, 109);
+            this.lblNombreTarjeta.Location = new System.Drawing.Point(15, 71);
+            this.lblNombreTarjeta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNombreTarjeta.Name = "lblNombreTarjeta";
-            this.lblNombreTarjeta.Size = new System.Drawing.Size(65, 20);
+            this.lblNombreTarjeta.Size = new System.Drawing.Size(44, 13);
             this.lblNombreTarjeta.TabIndex = 10;
             this.lblNombreTarjeta.Text = "Nombre";
             // 
             // txtNumeroTarjeta
             // 
-            this.txtNumeroTarjeta.Location = new System.Drawing.Point(189, 53);
+            this.txtNumeroTarjeta.Location = new System.Drawing.Point(126, 34);
+            this.txtNumeroTarjeta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNumeroTarjeta.Name = "txtNumeroTarjeta";
-            this.txtNumeroTarjeta.Size = new System.Drawing.Size(326, 26);
+            this.txtNumeroTarjeta.Size = new System.Drawing.Size(219, 20);
             this.txtNumeroTarjeta.TabIndex = 9;
             // 
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
-            this.lblNumero.Location = new System.Drawing.Point(23, 59);
+            this.lblNumero.Location = new System.Drawing.Point(15, 38);
+            this.lblNumero.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNumero.Name = "lblNumero";
-            this.lblNumero.Size = new System.Drawing.Size(65, 20);
+            this.lblNumero.Size = new System.Drawing.Size(44, 13);
             this.lblNumero.TabIndex = 8;
             this.lblNumero.Text = "Número";
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(39, 557);
+            this.btnVolver.Location = new System.Drawing.Point(26, 362);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(111, 35);
+            this.btnVolver.Size = new System.Drawing.Size(74, 23);
             this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -208,9 +228,10 @@
             // 
             // btnCargarCredito
             // 
-            this.btnCargarCredito.Location = new System.Drawing.Point(470, 557);
+            this.btnCargarCredito.Location = new System.Drawing.Point(313, 362);
+            this.btnCargarCredito.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCargarCredito.Name = "btnCargarCredito";
-            this.btnCargarCredito.Size = new System.Drawing.Size(135, 35);
+            this.btnCargarCredito.Size = new System.Drawing.Size(90, 23);
             this.btnCargarCredito.TabIndex = 3;
             this.btnCargarCredito.Text = "Cargar crédito";
             this.btnCargarCredito.UseVisualStyleBackColor = true;
@@ -218,9 +239,10 @@
             // 
             // btnLimpiarCampos
             // 
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(249, 557);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(166, 362);
+            this.btnLimpiarCampos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
-            this.btnLimpiarCampos.Size = new System.Drawing.Size(135, 35);
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(90, 23);
             this.btnLimpiarCampos.TabIndex = 4;
             this.btnLimpiarCampos.Text = "Limpiar campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
@@ -228,14 +250,15 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 613);
+            this.ClientSize = new System.Drawing.Size(442, 398);
             this.Controls.Add(this.btnLimpiarCampos);
             this.Controls.Add(this.btnCargarCredito);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.gbDatosTarjeta);
             this.Controls.Add(this.gbCargaCredito);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Carga crédito";
             this.gbCargaCredito.ResumeLayout(false);

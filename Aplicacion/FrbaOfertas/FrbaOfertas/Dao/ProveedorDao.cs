@@ -21,14 +21,14 @@ namespace FrbaOfertas.Dao
             List<Proovedor> proovedores = new List<Proovedor>();
 
             int idDIreccion = 0;
-
-            if (r_proovedor.Read())
+         
+            while (r_proovedor.Read())
             {
+
                 if (ConnectionQuery.conexion == null)
                 {
                     ConnectionQuery.abrirConexion();
                 }
-
                 Proovedor proovedor = new Proovedor();
                 proovedor.id = Convert.ToInt32(r_proovedor["ID"]);
                 proovedor.cuit = Convert.ToString(r_proovedor["CUIT"]);
@@ -36,17 +36,16 @@ namespace FrbaOfertas.Dao
                 proovedor.mail = Convert.ToString(r_proovedor["MAIL"]);
                 proovedor.telefono = Convert.ToInt32(r_proovedor["TELEFONO"]);
                 proovedor.contacto = Convert.ToString(r_proovedor["CONTACTO"]);
-                idDIreccion = Convert.ToInt32(r_proovedor["DIRECCION"]);
-                ConnectionQuery.cerrarConexion();
-                
-                Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDIreccion);
-
+                Direccion direccion = new Direccion();
+                direccion.id = Convert.ToInt32(r_proovedor["DIRECCION"]);
+                //Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDIreccion);
                 proovedor.direccion = direccion;
-
                 proovedores.Add(proovedor);
             }
-            
-            
+            ConnectionQuery.cerrarConexion();
+
+              proovedores.ForEach(p => p.direccion= ServiceDependencies.getDireccionDao().GetById(p.direccion.id));
+
             return proovedores;
         }
 
