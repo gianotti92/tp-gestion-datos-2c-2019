@@ -113,6 +113,7 @@ namespace FrbaOfertas.AbmUsuario
             this.telefonoTxt.Name = "telefonoTxt";
             this.telefonoTxt.Size = new System.Drawing.Size(216, 23);
             this.telefonoTxt.TabIndex = 11;
+            this.telefonoTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.solo_numero_KeyPress);
             // 
             // mailTxt
             // 
@@ -129,6 +130,7 @@ namespace FrbaOfertas.AbmUsuario
             this.dniTxt.Name = "dniTxt";
             this.dniTxt.Size = new System.Drawing.Size(216, 23);
             this.dniTxt.TabIndex = 9;
+            this.dniTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.solo_numero_KeyPress);
             // 
             // groupBox1
             // 
@@ -162,6 +164,7 @@ namespace FrbaOfertas.AbmUsuario
             this.codigoPostaltxt.Name = "codigoPostaltxt";
             this.codigoPostaltxt.Size = new System.Drawing.Size(216, 23);
             this.codigoPostaltxt.TabIndex = 18;
+            this.codigoPostaltxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.solo_numero_KeyPress);
             // 
             // label11
             // 
@@ -234,6 +237,7 @@ namespace FrbaOfertas.AbmUsuario
             this.nroTxt.Name = "nroTxt";
             this.nroTxt.Size = new System.Drawing.Size(46, 23);
             this.nroTxt.TabIndex = 10;
+            this.nroTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.solo_numero_KeyPress);
             // 
             // label6
             // 

@@ -1013,7 +1013,7 @@ GO
 		BEGIN
 			declare @id_usuario varchar(40)
 
-			set @id_usuario = (select c.USUARIO from GESTION_BDD_2C_2019.CLIENTE c where ID = @id_usuario)
+			set @id_usuario = (select USUARIO from GESTION_BDD_2C_2019.CLIENTE where ID = @id)
 			
 			update GESTION_BDD_2C_2019.USUARIO set habilitado = 0 where username = @id_usuario
 		END
@@ -1137,5 +1137,3 @@ go
 				GROUP BY  p.ID, P.RAZON_SOCIAL
 				order by 3 desc
 				*/
-
-			

@@ -68,21 +68,10 @@ namespace FrbaOfertas.AbmUsuario
             codigoPostal = codigoPostaltxt.Text;
             localidad = localidadTxt.Text;
 
-            bool esNumero = true;
-            try
-            {
-                Convert.ToInt32(telefonoTxt.Text);
-                Convert.ToInt32(dniTxt.Text);
-            }
-            catch (Exception e)
-            {
-                esNumero = false;
-            }
-
 
             return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(telefono)
                    && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
-                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido) && esNumero;
+                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido);
         }
 
         private void crearUsuario()
@@ -135,7 +124,7 @@ namespace FrbaOfertas.AbmUsuario
             }
             else
             {
-                MessageBox.Show("Hay campos con datos incorrectos");
+                MessageBox.Show("Hay campos con datos incompletos");
             }
         }
 
@@ -145,6 +134,16 @@ namespace FrbaOfertas.AbmUsuario
                 ,null, null);
             this.Dispose();
             altaUsuario.Show();
+        }
+        
+        private void solo_numero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+            }
         }
     }
 }

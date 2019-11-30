@@ -159,6 +159,16 @@ namespace FrbaOfertas.AbmUsuario
             this.Dispose();
             altaUsuario.Show();
         }
+        
+        private void solo_numero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+            }
+        }
     }
 }
 

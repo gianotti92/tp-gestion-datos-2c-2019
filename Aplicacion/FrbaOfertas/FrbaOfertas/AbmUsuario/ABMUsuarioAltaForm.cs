@@ -93,7 +93,7 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (EsUsuarioValido())
             {
-                roles = rolService.searchRoles();
+                roles = rolService.searchRoles().Where(r => r.activo).ToList();
                 Usuario usuario = new Usuario();
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
@@ -101,14 +101,28 @@ namespace FrbaOfertas.AbmUsuario
 
                 if (usuario.tipoUsuario == TipoUsuario.CLIENTE)
                 {
-                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Cliente")));
+                    usuario.roles = roles.Where(r => r.nombre.Equals("Cliente")).ToList();
+
+                    if (usuario.roles.Count <= 0)
+                    {
+                        MessageBox.Show("El rol cliente no esta habilitado");
+                        return;
+                    }
+
                     AltaClienteForm clienteForm = new AltaClienteForm(isFromLogin,usuario);
                     clienteForm.Show();
                     this.Dispose();
                 }
                 else if (usuario.tipoUsuario == TipoUsuario.PROVEEDOR)
                 {
-                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Proveedor")));
+                    usuario.roles = roles.Where(r => r.nombre.Equals("Proveedor")).ToList();
+                   
+                    if (usuario.roles.Count <= 0)
+                    {
+                        MessageBox.Show("El rol proveedor no esta habilitado");
+                        return;
+                    }
+                    
                     AltaProovedorForm altaProovedorForm = new AltaProovedorForm(isFromLogin,usuario);
                     altaProovedorForm.Show();
                     this.Dispose();
