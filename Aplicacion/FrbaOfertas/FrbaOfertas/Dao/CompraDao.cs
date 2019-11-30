@@ -49,7 +49,7 @@ namespace FrbaOfertas.Dao
         {
             SqlCommand cmd_compra = new SqlCommand("dbo.SP_UPDATE_COMPRA", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
-            cmd_compra.Parameters.Add("@oferta_id", id);
+            cmd_compra.Parameters.Add("@id_compra", id);
             cmd_compra.Parameters.Add("@factura_id", numeroFactura);
             cmd_compra.CommandType = CommandType.StoredProcedure;
             cmd_compra.ExecuteNonQuery();
@@ -126,9 +126,9 @@ namespace FrbaOfertas.Dao
 
         public List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
         {
-            string fechaIni = fechaInicio.ToString("yyyy-MM-dd");
-            string fechaFini = fechaFin.ToString("yyyy-MM-dd");
-            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.COMPRAS c join GESTION_BDD_2C_2019.OFERTA o on c.OFERTA_ID = o.ID where o.PROV_ID = "+ provId +" and FACTURA_ID is null and FECHA BETWEEN " + "'"+fechaIni+"'" + " AND " + "'"+fechaFini + "'", ConnectionQuery.Instance());
+            string fechaIni = fechaInicio.ToString("yyyy-MM-ddThh:mm:ss");
+            string fechaFini = fechaFin.ToString("yyyy-MM-ddThh:mm:ss");
+            SqlCommand cmd = new SqlCommand("select c.* from GESTION_BDD_2C_2019.COMPRAS c join GESTION_BDD_2C_2019.OFERTA o on c.OFERTA_ID = o.ID where o.PROV_ID = "+ provId +" and FACTURA_ID is null and FECHA BETWEEN " + "'"+fechaIni+"'" + " AND " + "'"+fechaFini + "'", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             
             SqlDataReader r_compra = cmd.ExecuteReader();
@@ -136,9 +136,9 @@ namespace FrbaOfertas.Dao
 
             while (r_compra.Read())
             {
-                if (!(r_compra["OFERTA_ID"] is DBNull))
+                if (!(r_compra["ID"] is DBNull))
                 {
-                    compras.Add(Convert.ToInt32(r_compra["OFERTA_ID"]));
+                    compras.Add(Convert.ToInt32(r_compra["ID"]));
                 }
             }
             ConnectionQuery.cerrarConexion();

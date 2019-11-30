@@ -13,9 +13,9 @@ namespace FrbaOfertas.Service
             this.direccionRepository = direccionRepository;
         }
 
-        public Direccion CreateDireccion(Direccion direccion)
+        public Direccion CreateDireccion(Direccion direccion, bool esCliente)
         {
-            return direccionRepository.createDireccion(direccion);
+            return direccionRepository.createDireccion(direccion, esCliente);
         }
 
         public int createCodigoPostal(string codigoPostal)

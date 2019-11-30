@@ -48,5 +48,15 @@ namespace FrbaOfertas.Service
         {
             proovedorRepository.update(proveedor);
         }
+
+        public bool esRazonSocialRepetido(string razonSocial)
+        {
+            return proovedorRepository.esRazonSocialRepetido(razonSocial);
+        }
+
+        public bool esCUITRepetido(string cuit)
+        {
+            return proovedorRepository.esCUITRepetido(cuit);
+        }
     }
 }

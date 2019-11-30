@@ -35,10 +35,16 @@ namespace FrbaOfertas.AbmRol
                 new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)
             {
-                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad, this));
+                if (esProveedorInhabilitadoCrearOfertas(funcionalidad))
+                    listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad, this));
             }
 
             return listaBotonesFuncionalidadAEjecutar;
+        }
+
+        private bool esProveedorInhabilitadoCrearOfertas(Funcionalidad funcionalidad)
+        {
+            return !(funcionalidad.id == 8 && Utils.UsuarioUtil.Usuario.tipoUsuario == TipoUsuario.PROVEEDOR && !Utils.UsuarioUtil.Usuario.habilitado);
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -775,12 +775,22 @@ GO
 		 @piso NVARCHAR(255),
 		 @depto VARCHAR(10),
 		 @localidad NVARCHAR(255),
-		 @id_cod_postal INT)
+		 @id_cod_postal INT,
+		 @id_ciudad INT)
 		 AS
 		 BEGIN
-			INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-			OUTPUT inserted.id
-			VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+			IF @id_ciudad = -1
+			BEGIN
+				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+				OUTPUT inserted.id
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+			END
+			ELSE
+			BEGIN
+				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL, CIUDAD)
+				OUTPUT inserted.id
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal, @id_ciudad)
+			END
 		 END
 		GO
 
@@ -974,12 +984,14 @@ GO
 		CREATE PROCEDURE SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER(
 		@id_proveedor NUMERIC(18,0),
 		@fecha_inicio DATETIME,
-		@fecha_fin DATETIME,
-		@fecha_del_dia DATETIME)
+		@fecha_fin DATETIME)
 		AS
 		BEGIN
-			SELECT * FROM GESTION_BDD_2C_2019.OFERTA 
-			WHERE PROV_ID = @id_proveedor
+			SELECT DISTINCT o.* from GESTION_BDD_2C_2019.COMPRAS c
+			JOIN GESTION_BDD_2C_2019.OFERTA o
+			ON o.ID = c.OFERTA_ID
+			WHERE o.PROV_ID = @id_proveedor AND @fecha_inicio <= c.FECHA AND c.FECHA <= @fecha_fin
+				  AND C.FACTURA_ID IS NULL
 		END
 		GO
 
@@ -1121,12 +1133,12 @@ GO
 		GO
 
 		create procedure SP_UPDATE_COMPRA
-		(@oferta_id INT,
+		(@id_compra INT,
 		 @factura_id int)
 		 as
 		 begin
 			update GESTION_BDD_2C_2019.COMPRAS set FACTURA_ID = @factura_id
-			where OFERTA_ID = @oferta_id
+			where ID = @id_compra
 		 end
 		
 		go

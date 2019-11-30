@@ -112,13 +112,11 @@ namespace FrbaOfertas.Dao
             unProveedor.direccion = direccion;
 
             return unProveedor;
-
-
         }
 
         public List<Proovedor> searchProovedoresPorFiltro(string razonsocialFiltro, string cuitFiltro, string mailFiltro)
         {
-            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.PROVEEDO ");
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.PROVEEDOR ");
             
             List<Proovedor> proovedors = new List<Proovedor>();
 
@@ -131,22 +129,26 @@ namespace FrbaOfertas.Dao
 
                 if (!string.IsNullOrEmpty(razonsocialFiltro))
                 {
-                    builder.Append("RAZON_SOCIAL = " + razonsocialFiltro + " AND");
+                    builder.Append("RAZON_SOCIAL LIKE '%" + razonsocialFiltro + "%' ");
                 }
 
                 if (!string.IsNullOrEmpty(cuitFiltro))
                 {
-                    builder.Append("CUIT = " + cuitFiltro + " AND");
+                    if (!string.IsNullOrEmpty(razonsocialFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("CUIT = '" + cuitFiltro + "' ");
                 }
 
                 if (!string.IsNullOrEmpty(mailFiltro))
                 {
-                    builder.Append("MAIL = " + mailFiltro + " AND");
+                    if (!string.IsNullOrEmpty(razonsocialFiltro) || !string.IsNullOrEmpty(cuitFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("MAIL LIKE '%" + mailFiltro + "%'");
                 }
 
-                //PARA BORRAR LOS AND, el ultimo tambien esta con and por si se da la condicion de que solamente
-                //se haya filtrado por mail
-                String query = builder.ToString().Substring(0, builder.ToString().Length - 3);
+                String query = builder.ToString();
 
 
                 SqlCommand cmd = new SqlCommand(builder.ToString(),
@@ -156,17 +158,11 @@ namespace FrbaOfertas.Dao
                 SqlDataReader r_proveedor = cmd.ExecuteReader();
 
                 int idDireccion = 0;
+
+                Dictionary<int, int> diccionarioIdProveedorIdDireccion = new Dictionary<int, int>();
                 
-                if (r_proveedor.Read())
+                while (r_proveedor.Read())
                 {
-                    if (ConnectionQuery.conexion == null)
-                    {
-                        return new List<Proovedor>();
-                    }
-                    else
-                    {
-                        ConnectionQuery.abrirConexion();
-                    }
                     Proovedor unProveedor = new Proovedor();
                     unProveedor.id = Convert.ToInt32(r_proveedor["ID"]);
                     unProveedor.cuit = r_proveedor["CUIT"].ToString();
@@ -177,15 +173,20 @@ namespace FrbaOfertas.Dao
                     unProveedor.contacto = r_proveedor["CONTACTO"].ToString();
                     unProveedor.usuario = r_proveedor["USUARIO"].ToString();
                     idDireccion = Convert.ToInt32(r_proveedor["DIRECCION"]);
-                    ConnectionQuery.cerrarConexion();
-                    
-                    Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
-
-                    unProveedor.direccion = direccion;
+                    diccionarioIdProveedorIdDireccion.Add(unProveedor.id, idDireccion);
                     
                     proovedors.Add(unProveedor);
                 }
+
+                ConnectionQuery.cerrarConexion();
+
+                proovedors.ForEach(x =>
+                {
+                    idDireccion = diccionarioIdProveedorIdDireccion[x.id];
+                    x.direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+                });
             }
+
             return proovedors;
         }
 
@@ -208,7 +209,7 @@ namespace FrbaOfertas.Dao
             cmd_proveedor.Parameters.Add(new SqlParameter("@razonSocial", proveedor.razonSocial));
             cmd_proveedor.Parameters.Add(new SqlParameter("@tel", proveedor.telefono));
             cmd_proveedor.Parameters.Add(new SqlParameter("@direc", proveedor.direccion.id));
-            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.cuit));
             cmd_proveedor.Parameters.Add(new SqlParameter("@rubro", proveedor.rubro));
             cmd_proveedor.Parameters.Add(new SqlParameter("@mail", proveedor.mail));
             cmd_proveedor.Parameters.Add(new SqlParameter("@contacto", proveedor.contacto));
@@ -234,7 +235,7 @@ namespace FrbaOfertas.Dao
             cmd_proveedor.Parameters.Add(new SqlParameter("@razonSocial", proveedor.razonSocial));
             cmd_proveedor.Parameters.Add(new SqlParameter("@tel", proveedor.telefono));
             cmd_proveedor.Parameters.Add(new SqlParameter("@direc", proveedor.direccion.id));
-            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.mail));
+            cmd_proveedor.Parameters.Add(new SqlParameter("@ciut", proveedor.cuit));
             cmd_proveedor.Parameters.Add(new SqlParameter("@rubro", proveedor.rubro));
             cmd_proveedor.Parameters.Add(new SqlParameter("@mail", proveedor.mail));
             cmd_proveedor.Parameters.Add(new SqlParameter("@contacto", proveedor.contacto));
@@ -243,5 +244,50 @@ namespace FrbaOfertas.Dao
             cmd_proveedor.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+
+        public bool esRazonSocialRepetido(string razonSocial)
+        {
+            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.PROVEEDOR WHERE RAZON_SOCIAL = @razonSocial", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            bool razonSocialRepetido = false;
+
+            cmd.Parameters.Add("@razonSocial", SqlDbType.VarChar);
+            cmd.Parameters["@razonSocial"].Value = razonSocial;
+
+            SqlDataReader r_proveedor = cmd.ExecuteReader();
+
+            if (r_proveedor.Read())
+            {
+                razonSocialRepetido = true;
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return razonSocialRepetido;
+        }
+
+        public bool esCUITRepetido(string cuit)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * from GESTION_BDD_2C_2019.PROVEEDOR WHERE CUIT = @cuit", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            bool cuitRepetido = false;
+
+            cmd.Parameters.Add("@cuit", SqlDbType.VarChar);
+            cmd.Parameters["@cuit"].Value = cuit;
+
+            SqlDataReader r_proveedor = cmd.ExecuteReader();
+
+            if (r_proveedor.Read())
+            {
+                cuitRepetido = true;
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            return cuitRepetido;
+        }
+
     }
 }
