@@ -78,25 +78,35 @@ namespace FrbaOfertas.AbmUsuario
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
-                if (camposValidos())
-                {
-                    crearProovedor();
-                    MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
-                    this.Dispose();
-                
-                    Form1 f = new Form1(
-                        new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
-                            new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
-                        new FuncionalidadPorRolService(new RolService(new RolDao()),
-                            new FuncionalidadService(new FuncionalidadDao())));
-                
-                    f.Show();
-                }
+            if (proveedorService.esRazonSocialRepetido(razonSocialTxt.Text))
+                MessageBox.Show("Existe un proveedor con esa razon social");
+            else
+            {
+                if (proveedorService.esCUITRepetido(cuitTxt.Text))
+                    MessageBox.Show("Existe un proveedor con ese cuit");
                 else
                 {
-                    MessageBox.Show("Hay campos con datos incorrectos");
+                    if (camposValidos())
+                    {
+                        crearProovedor();
+                        MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
+                        this.Dispose();
+
+                        Form1 f = new Form1(
+                            new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
+                                new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
+                            new FuncionalidadPorRolService(new RolService(new RolDao()),
+                                new FuncionalidadService(new FuncionalidadDao())));
+
+                        f.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hay campos con datos incorrectos");
+                    }
                 }
             }
+        }
 
         private bool camposValidos()
         {
@@ -130,7 +140,7 @@ namespace FrbaOfertas.AbmUsuario
             int rubroIndex = rubroCombo.SelectedIndex;
 
             proovedor.rubro = rubros[rubroIndex].id;
-            
+
             Direccion direccion = new Direccion();
             direccion.calle = calleTxt.Text;
             direccion.nro = nroTxt.Text;
@@ -138,14 +148,14 @@ namespace FrbaOfertas.AbmUsuario
             direccion.depto = dptotxt.Text;
             int ciudadIndex = ciudadCombo.SelectedIndex;
             Ciudad ciudad = ciudades[ciudadIndex];
-           
+
             int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
             direccion.codigoPostal = postalCodeId;
             direccion.localidad = localidadTxt.Text;
             direccion.ciudad = ciudad.id;
-            
 
-            direccionService.CreateDireccion(direccion);
+
+            direccionService.CreateDireccion(direccion, false);
 
             proovedor.direccion = direccion;
             proovedor.usuario = usuario.userName;

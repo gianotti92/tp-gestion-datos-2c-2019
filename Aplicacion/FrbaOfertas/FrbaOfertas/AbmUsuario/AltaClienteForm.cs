@@ -96,7 +96,7 @@ namespace FrbaOfertas.AbmUsuario
 
             int postalCodeId = direccionService.createCodigoPostal(codigoPostal);
             direccion.codigoPostal = postalCodeId;
-            direccion = direccionService.CreateDireccion(direccion);
+            direccion = direccionService.CreateDireccion(direccion, true);
             cliente.direccion = direccion;
 
             usuarioService.CreateUsuario(usuario);

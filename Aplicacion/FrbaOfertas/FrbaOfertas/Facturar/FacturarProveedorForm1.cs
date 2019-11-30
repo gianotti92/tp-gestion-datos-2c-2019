@@ -61,7 +61,7 @@ namespace FrbaOfertas.Facturar
                 ofertasCompradasIds = _compraService.getComprasSinFactura(proveedorId, inicioFactDate.Value,
                     finFactDate.Value).ToList();
 
-                ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
+                //ofertas = ofertas.Where(o => ofertasCompradasIds.Contains(o.id)).ToList();
 
                 listadoOfertasGrid.DataSource = new BindingSource(ofertas, null);
                 if (ofertas.Count <= 0)
