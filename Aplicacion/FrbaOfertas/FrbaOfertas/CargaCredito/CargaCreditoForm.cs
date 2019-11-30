@@ -4,6 +4,7 @@ using FrbaOfertas.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -81,7 +82,7 @@ namespace FrbaOfertas.CargaCredito
                 cargaSaldo.codigoSeguridadTarjeta = Convert.ToInt32(txtCodigoSeguridad.Text);
 
                 CargarSalgoService.SaveCargarSaldo(cargaSaldo);
-
+                MessageBox.Show("Credito cargado correctamente");
                 Volver();
             }
         }
@@ -93,6 +94,16 @@ namespace FrbaOfertas.CargaCredito
             try
             {
                 Convert.ToInt32(txtNumeroTarjeta.Text);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("La cantidad de números de la tarjeta de credito sobrepasa a la cantidad esperada");
+                sonNumericos = false;
+            }
+            
+            try
+            {
+               
                 Convert.ToDouble(txtMonto.Text);
                 Convert.ToInt32(txtCodigoSeguridad.Text);
             }
@@ -123,7 +134,14 @@ namespace FrbaOfertas.CargaCredito
                 MessageBox.Show("Campos numericos invalidos");
                 return false;  
             }
-
+            
+            DateTime fechaDelDia = DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]);
+            if (DateTime.Parse(dtpFechaVencimientoTarjeta.Text) < fechaDelDia)
+            {
+                MessageBox.Show("La tarjeta no puede estar vencida");
+                return false;
+            }
+            
             return true;
         }
 
