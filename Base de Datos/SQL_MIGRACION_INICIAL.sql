@@ -697,6 +697,7 @@ GO
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
 		values (@username,HASHBYTES('SHA2_256',@pass) , @tipo);
 		END
+		
 		GO
 
 		CREATE PROCEDURE SP_UPDATE_USER
@@ -748,6 +749,13 @@ GO
 			nombre = @nombre,
 			estado = @estado
 		WHERE id = @id; 
+
+		if (@estado = 0)
+		begin
+			delete from GESTION_BDD_2C_2019.ROL_USUARIO where rol_id = @id;
+		end
+
+
 		END
 		GO
 
@@ -848,8 +856,14 @@ GO
 		AS
 		BEGIN
 			delete from GESTION_BDD_2C_2019.ROL_USUARIO where rol_id = @rol_id;
-			delete from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD where rol_id = @rol_id
-			delete from GESTION_BDD_2C_2019.ROL where id = @rol_id
+		--delete from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD where rol_id = @rol_id
+		--	delete from GESTION_BDD_2C_2019.ROL where id = @rol_id
+			
+			UPDATE GESTION_BDD_2C_2019.ROL 
+			SET
+				estado = 0
+				WHERE id = @rol_id; 
+
 		END
 		GO
 
