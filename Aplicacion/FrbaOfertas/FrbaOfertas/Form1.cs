@@ -44,9 +44,9 @@ namespace FrbaOfertas
             Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
             if (usuario != null)
             {
-                if (usuario.intento == 3)
+                if (!usuario.habilitado)
                 {
-                    MessageBox.Show("Usuario inhabilitado");
+                    MessageBox.Show("Usuario inhabilitado por exceso de errores de ingreso");
                 }
                 else if (usuarioLoginService.ValidateUser(nombreUsuario,contrasena))
                 {
