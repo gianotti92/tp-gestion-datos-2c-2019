@@ -193,9 +193,7 @@ namespace FrbaOfertas.Dao
             cmd_oferta.Parameters.Add("@id_proveedor", proveedorId);
             cmd_oferta.Parameters.Add("@fecha_inicio", fechaInicio);
             cmd_oferta.Parameters.Add("@fecha_fin", fechaFin);
-            cmd_oferta.Parameters.Add("@fecha_del_dia", DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
-            
-
+           
             SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();
 

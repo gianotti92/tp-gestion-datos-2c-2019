@@ -42,7 +42,7 @@ namespace FrbaOfertas.Dao
             return direccion;
         }
 
-        public Direccion createDireccion(Direccion direccion)
+        public Direccion createDireccion(Direccion direccion, bool esCliente)
         {
             SqlCommand cmd_direccion = new SqlCommand("dbo.SP_SAVE_DIRECCION", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
@@ -54,7 +54,10 @@ namespace FrbaOfertas.Dao
             cmd_direccion.Parameters.Add("@depto", direccion.depto);
             cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
             cmd_direccion.Parameters.Add("@id_cod_postal", direccion.codigoPostal);
-            cmd_direccion.Parameters.Add("@id_ciudad", direccion.ciudad);
+            if (esCliente)
+                cmd_direccion.Parameters.Add("@id_ciudad", -1);
+            else
+                cmd_direccion.Parameters.Add("@id_ciudad", direccion.ciudad);
             
             int id = Convert.ToInt32(cmd_direccion.ExecuteScalar());
 

@@ -6,7 +6,7 @@ namespace FrbaOfertas.Repository
     public interface DireccionRepository
     {
         Direccion GetById(int id);
-        Direccion createDireccion(Direccion direccion);
+        Direccion createDireccion(Direccion direccion, bool esCliente);
         int createCodigoPostal(String codigoPostal);
     }
 }
