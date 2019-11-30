@@ -119,7 +119,7 @@ namespace FrbaOfertas.Dao
                 cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
                 idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
                 diccionarioIdClienteIdDireccion.Add(cliente.id, idDireccion);
-
+                
                 clientes.Add(cliente);
             }
 

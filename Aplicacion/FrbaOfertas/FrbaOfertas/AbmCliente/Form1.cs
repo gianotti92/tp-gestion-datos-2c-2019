@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol;
 using FrbaOfertas.AbmUsuario;
@@ -24,6 +25,7 @@ namespace FrbaOfertas.AbmCliente
         private void cargarDataGrid()
         {
             clientes = _clienteService.searchClientes();
+            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -34,6 +36,7 @@ namespace FrbaOfertas.AbmCliente
             DniFilroTxt.Text = "";
             ApellidoFiltroTxt.Text = "";
             clientes = _clienteService.searchClientes();
+            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -45,6 +48,7 @@ namespace FrbaOfertas.AbmCliente
             string mailFIltro = mailFiltroTxt.Text;
 
             clientes = _clienteService.searchClientesByFiltro(nombreFiltro, apellidoFiltro, dniFiltro, mailFIltro );
+            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -55,6 +59,7 @@ namespace FrbaOfertas.AbmCliente
                 Cliente c = (Cliente)ClienteGrid.CurrentRow.DataBoundItem;
                 _clienteService.Delete(c.id);
                 clientes = _clienteService.searchClientes();
+                clientes = clientes.Where(cli =>  estaHabilitado(cli)).ToList();
                 this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
             }
             else if (e.ColumnIndex == 1)//EDITAR
@@ -64,6 +69,13 @@ namespace FrbaOfertas.AbmCliente
                 this.Hide();
                 formAlta.Show();
             }
+        }
+
+        private bool estaHabilitado(Cliente cliente)
+        {
+            Usuario user = ServiceDependencies.GetUsuarioDao().getUsuario(cliente.usuario);
+
+            return user.habilitado;
         }
 
         private void button1_Click(object sender, EventArgs e)
