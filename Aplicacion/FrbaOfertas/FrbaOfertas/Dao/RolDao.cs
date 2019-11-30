@@ -141,22 +141,20 @@ using System;
 
             if (!string.IsNullOrEmpty(nombre))
             {
-                builder.Append("NOMBRE LIKE '%" + nombre + "%' ");
+                builder.Append("NOMBRE LIKE '%" + nombre + "%'");
+                if (estado == 1 || estado == 2)
+                {
+                    builder.Append(" AND ");
+                }
             }
-
+            
             if (estado == 1)
             {
-                if(!string.IsNullOrEmpty(nombre))
-                    builder.Append("AND ");
-
                 builder.Append("ESTADO = 1");
             }
 
             if (estado == 2)
             {
-                if (!string.IsNullOrEmpty(nombre))
-                    builder.Append("AND ");
-
                 builder.Append("ESTADO = 2");
             }
 
