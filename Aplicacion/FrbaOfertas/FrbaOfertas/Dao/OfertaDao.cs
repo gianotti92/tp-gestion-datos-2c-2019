@@ -61,7 +61,6 @@ namespace FrbaOfertas.Dao
                 builder.Append("DESCRIPCION LIKE '%" + descripcion + "%' AND PROV_ID = " + provId);
             }
 
-
             SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             SqlDataReader r_rol = cmd_oferta.ExecuteReader();

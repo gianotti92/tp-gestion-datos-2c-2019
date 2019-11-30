@@ -16,7 +16,7 @@ namespace FrbaOfertas.ComprarOferta
         private CompraService compraService { get { return ServiceDependencies.getCompraService(); } }
 
         private List<Oferta> ofertas;
-        
+       
         public ComprarOfertaForm1(OfertaService ofertaService, ProveedorService proveedorService,
             ClienteService clienteService)
         {
@@ -33,8 +33,8 @@ namespace FrbaOfertas.ComprarOferta
             filtroProvCombo.DropDownStyle = ComboBoxStyle.DropDownList;
             List<Proovedor> proveedores = proveedorService.searchProovedores();
             proovedorBindingSource.DataSource = proveedores;
-            //filtroProvCombo.Items.Add("Seleccionar");
-
+            filtroProvCombo.SelectedIndex = -1;
+            filtroDescTxt.Text = "";
         }
 
 
@@ -60,10 +60,15 @@ namespace FrbaOfertas.ComprarOferta
 
         private void filtrarBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(filtroDescTxt.Text) || (int)filtroProvCombo.SelectedValue != 0)
+            int provId = 0;
+            if (filtroProvCombo.SelectedValue != null)
+            {
+                provId = (int)filtroProvCombo.SelectedValue;
+            }
+            
+            if (!string.IsNullOrEmpty(filtroDescTxt.Text) || provId > 0 )
             {
                 string text = filtroDescTxt.Text;
-                int provId = (int)filtroProvCombo.SelectedValue;
                 ofertas = ofertaService.searchOfertasVigentes(text, provId);
                 compraOfertaDgw.DataSource = new BindingSource(ofertas, null);
             }
@@ -170,7 +175,7 @@ namespace FrbaOfertas.ComprarOferta
             int CantidadAComprar = int.Parse(CantidadOfertas.Text);
             if ( ! (cliente.saldo >= (oferta.precio * CantidadAComprar)))
             {
-                SystemException ex = new SystemException("El cliente no tiene suficiente saldo para realizar la compra.");
+                SystemException ex = new SystemException("No tiene suficiente saldo para realizar la compra.");
                 throw ex;
             }
         }
