@@ -110,17 +110,22 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (camposValidos())
             {
-                crearUsuario();
-                MessageBox.Show("Usuario creado correctamente\n logueate con tu user y pass");
-                this.Dispose();
-                
-                Login f = new Login(
-                    new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
-                        new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
-                    new FuncionalidadPorRolService(new RolService(new RolDao()),
-                        new FuncionalidadService(new FuncionalidadDao())));
-                
-                f.Show();
+                if (! clienteService.GetByDni(Convert.ToInt32(dniTxt.Text)))
+                {
+                    crearUsuario();
+                    MessageBox.Show("Usuario creado correctamente\n logueate con tu user y pass");
+                    this.Dispose();
+
+                    Login f = new Login(
+                        new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
+                            new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
+                        new FuncionalidadPorRolService(new RolService(new RolDao()),
+                            new FuncionalidadService(new FuncionalidadDao())));
+
+                    f.Show();
+                }
+                else
+                    MessageBox.Show("Ya existe un usuario Cliente registrado con ese DNI");
             }
             else
             {

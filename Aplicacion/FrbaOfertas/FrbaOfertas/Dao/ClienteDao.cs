@@ -232,5 +232,48 @@ namespace FrbaOfertas.Dao
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+
+        public void habilitarCliente(int id)
+        {
+            SqlCommand cmd_client = new SqlCommand("dbo.SP_HABILITAR_CLIENTE", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_client.CommandType = CommandType.StoredProcedure;
+            cmd_client.Parameters.Add(new SqlParameter("@id", id));
+            cmd_client.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
+
+        public bool GetByDni( int DNI)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE WHERE DNI = @DNI",
+                ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            cmd.Parameters.Add("@DNI", SqlDbType.Int);
+            cmd.Parameters["@DNI"].Value = DNI;
+
+            SqlDataReader r_cliente = cmd.ExecuteReader();
+      
+            if (r_cliente.Read())
+            {                
+                ConnectionQuery.cerrarConexion();
+                return true;
+            }
+            else
+            {             
+                ConnectionQuery.cerrarConexion();
+                return false;
+            }
+
+        }
+
+
+
+
+
     }
+
+
+
 }

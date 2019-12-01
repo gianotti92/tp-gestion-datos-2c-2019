@@ -81,6 +81,8 @@ IF(OBJECT_ID('SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER
 IF(OBJECT_ID('SP_ELIMINAR_CLIENTE') IS NOT NULL)
 	DROP PROCEDURE SP_ELIMINAR_CLIENTE
+IF(OBJECT_ID('SP_HABILITAR_CLIENTE') IS NOT NULL)
+	DROP PROCEDURE SP_HABILITAR_CLIENTE
 IF(OBJECT_ID('SP_ELIMINAR_PROVEEDOR') IS NOT NULL)
 	DROP PROCEDURE SP_ELIMINAR_PROVEEDOR
 IF(OBJECT_ID('SP_UPDATE_PROVIDER') IS NOT NULL)
@@ -1045,6 +1047,16 @@ GO
 		END
 		GO
 
+CREATE PROCEDURE SP_HABILITAR_CLIENTE
+	(@id INT)
+	AS
+	BEGIN
+		declare @id_usuario varchar(40)
+		set @id_usuario = (select USUARIO from GESTION_BDD_2C_2019.CLIENTE where ID = @id)
+		update GESTION_BDD_2C_2019.USUARIO set habilitado = 1 where username = @id_usuario
+	END
+GO
+
 		CREATE PROCEDURE SP_ELIMINAR_PROVEEDOR
 		(@id INT)
 		AS
@@ -1143,15 +1155,17 @@ GO
 		
 		go
 
-		create procedure SP_UPDATE_FECHA_CONSUMO
-		(@compra_id INT,
-		@fecha_consumo datetime)
-		as
-		begin
-			update GESTION_BDD_2C_2019.COMPRAS set FECHA_CONSUMO = @fecha_consumo
-			where ID = @compra_id 
-		end
-		go
+create procedure SP_UPDATE_FECHA_CONSUMO
+(@compra_id INT,
+@fecha_consumo datetime)
+as
+	begin
+		update GESTION_BDD_2C_2019.COMPRAS set FECHA_CONSUMO = @fecha_consumo
+					where ID = @compra_id 
+	end
+go
+
+
 
 /*exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
 exec SP_TOP5MAYORDESCUENTO '2020', '1'

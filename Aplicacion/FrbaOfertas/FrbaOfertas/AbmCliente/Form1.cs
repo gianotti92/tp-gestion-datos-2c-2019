@@ -25,7 +25,7 @@ namespace FrbaOfertas.AbmCliente
         private void cargarDataGrid()
         {
             clientes = _clienteService.searchClientes();
-            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
+            //clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -36,7 +36,7 @@ namespace FrbaOfertas.AbmCliente
             DniFilroTxt.Text = "";
             ApellidoFiltroTxt.Text = "";
             clientes = _clienteService.searchClientes();
-            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
+            //clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -48,7 +48,7 @@ namespace FrbaOfertas.AbmCliente
             string mailFIltro = mailFiltroTxt.Text;
 
             clientes = _clienteService.searchClientesByFiltro(nombreFiltro, apellidoFiltro, dniFiltro, mailFIltro );
-            clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
+            //clientes = clientes.Where(clie => estaHabilitado(clie)).ToList();
             this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
         }
 
@@ -59,16 +59,29 @@ namespace FrbaOfertas.AbmCliente
                 Cliente c = (Cliente)ClienteGrid.CurrentRow.DataBoundItem;
                 _clienteService.Delete(c.id);
                 clientes = _clienteService.searchClientes();
-                clientes = clientes.Where(cli =>  estaHabilitado(cli)).ToList();
-                this.ClienteGrid.DataSource = new BindingSource(clientes, null); 
+                //clientes = clientes.Where(cli => estaHabilitado(cli)).ToList();
+                this.ClienteGrid.DataSource = new BindingSource(clientes, null);
             }
             else if (e.ColumnIndex == 1)//EDITAR
             {
                 Cliente c = (Cliente)ClienteGrid.CurrentRow.DataBoundItem;
-                AltaCliente formAlta = new AltaCliente(c,ServiceDependencies.getClienteService());
+                AltaCliente formAlta = new AltaCliente(c, ServiceDependencies.getClienteService());
                 this.Hide();
                 formAlta.Show();
             }
+            else if ((e.ColumnIndex == 2)) //habilitar
+            {
+                Cliente c = (Cliente)ClienteGrid.CurrentRow.DataBoundItem;
+                _clienteService.habilitarCliente(c.id);
+                clientes = _clienteService.searchClientes();
+                //clientes = clientes.Where(cli => estaHabilitado(cli)).ToList();
+                this.ClienteGrid.DataSource = new BindingSource(clientes, null);
+
+            }
+
+
+
+
         }
 
         private bool estaHabilitado(Cliente cliente)

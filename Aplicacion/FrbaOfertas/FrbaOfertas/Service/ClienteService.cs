@@ -43,5 +43,18 @@ namespace FrbaOfertas.Service
         {
             clienteRepository.delete(id);
         }
+        public void habilitarCliente(int id)
+        {
+            clienteRepository.habilitarCliente(id);
+        }
+
+
+        public bool GetByDni(int DNI)
+        {
+            return clienteRepository.GetByDni(DNI);
+        }
+
+
+
     }
 }

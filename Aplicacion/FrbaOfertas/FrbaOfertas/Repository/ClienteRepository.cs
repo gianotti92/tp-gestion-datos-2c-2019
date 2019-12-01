@@ -11,5 +11,9 @@ namespace FrbaOfertas.Repository
         List<Cliente> searchClientes();
         List<Cliente> searchClientesxByFiltro(string nombreFiltro, string apellidoFiltro, string dniFiltro, string mailFIltro);
         void delete(int id);
+        void habilitarCliente(int id);
+        bool GetByDni(int DNI);
+
+
     }
 }

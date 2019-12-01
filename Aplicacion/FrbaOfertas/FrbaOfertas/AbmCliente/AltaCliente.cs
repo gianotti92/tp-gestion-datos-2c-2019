@@ -38,33 +38,42 @@ namespace FrbaOfertas.AbmCliente
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
+
+
+
+
             if (isValid())
             {
-                c.apellido = apellidotxt.Text;
-                c.nombre = nombreTxt.Text;
-                c.mail = mailTxt.Text;
-                c.dni = Convert.ToInt32(dniTxt.Text);
-                c.telefono = Convert.ToInt32(telefonoTxt.Text);
-                c.fechaNac = fechaNacPicker1.Text;
-            
-                c.direccion.calle = calleTxt.Text;
-                c.direccion.piso = pisoTxt.Text;
-                c.direccion.nro = nroTxt.Text;
-                c.direccion.depto = dptotxt.Text;
-                c.direccion.localidad = localidadTxt.Text ;
-                c.direccion.codigoPostal = Convert.ToInt16(codigoPostaltxt.Text);
-                _clienteService.UpdateCliente(c);
-                ServiceDependencies.getDireccionDao().updateDireccion(c.direccion);
+                if (!_clienteService.GetByDni(Convert.ToInt32(dniTxt.Text)))
+                {
+                    c.apellido = apellidotxt.Text;
+                    c.nombre = nombreTxt.Text;
+                    c.mail = mailTxt.Text;
+                    c.dni = Convert.ToInt32(dniTxt.Text);
+                    c.telefono = Convert.ToInt32(telefonoTxt.Text);
+                    c.fechaNac = fechaNacPicker1.Text;
 
-                MessageBox.Show("Usuario actualizado correctamente");
-            
-                Form1 form = new Form1(ServiceDependencies.getClienteService());
-                this.Hide();
-                form.Show();
+                    c.direccion.calle = calleTxt.Text;
+                    c.direccion.piso = pisoTxt.Text;
+                    c.direccion.nro = nroTxt.Text;
+                    c.direccion.depto = dptotxt.Text;
+                    c.direccion.localidad = localidadTxt.Text;
+                    c.direccion.codigoPostal = Convert.ToInt16(codigoPostaltxt.Text);
+                    _clienteService.UpdateCliente(c);
+                    ServiceDependencies.getDireccionDao().updateDireccion(c.direccion);
+
+                    MessageBox.Show("Usuario actualizado correctamente");
+
+                    Form1 form = new Form1(ServiceDependencies.getClienteService());
+                    this.Hide();
+                    form.Show();
+                }
+                else
+                    MessageBox.Show("Ya existe un usuario Cliente registrado con ese DNI");
             }
             else
             {
-                MessageBox.Show("Hay campos con datos incorrectos");
+                MessageBox.Show("Hay campos incompletos o con datos incorrectos");
             }
         }
 
@@ -108,7 +117,30 @@ namespace FrbaOfertas.AbmCliente
                 }
             }
 
+            valid = camposValidos();
+
             return valid;
+        }
+
+        private bool camposValidos()
+        {
+            //nombreTxt = nombreTxt.Text;
+            //apellidotxt = apellidotxt.Text;
+            //dniTxt = dniTxt.Text;
+            //mail = mailTxt.Text;
+            //telefono = telefonoTxt.Text;
+            //fechaNac = fechaNacPicker1.Text;
+            //calle = calleTxt.Text;
+            //nro = nroTxt.Text;
+            //piso = pisoTxt.Text;
+            //dpto = dptotxt.Text;
+            //codigoPostal = codigoPostaltxt.Text;
+            //localidad = localidadTxt.Text;
+
+
+            return !string.IsNullOrEmpty(nombreTxt.Text) && !string.IsNullOrEmpty(dniTxt.Text) && !string.IsNullOrEmpty(mailTxt.Text) && !string.IsNullOrEmpty(telefonoTxt.Text)
+                   && !string.IsNullOrEmpty(fechaNacPicker1.Text) && !string.IsNullOrEmpty(calleTxt.Text) && !string.IsNullOrEmpty(nroTxt.Text) && !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(dptotxt.Text)
+                   && !string.IsNullOrEmpty(codigoPostaltxt.Text) && !string.IsNullOrEmpty(localidadTxt.Text) && !string.IsNullOrEmpty(apellidotxt.Text);
         }
 
         private void volverBtn_Click(object sender, EventArgs e)
