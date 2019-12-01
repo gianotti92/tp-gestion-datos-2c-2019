@@ -198,7 +198,7 @@
             // 
             // Habilitar
             // 
-            this.Habilitar.HeaderText = "HabilitarColumn";
+            this.Habilitar.HeaderText = "Habilitar";
             this.Habilitar.Name = "Habilitar";
             this.Habilitar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Habilitar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;

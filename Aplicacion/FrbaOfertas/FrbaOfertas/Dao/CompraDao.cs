@@ -40,9 +40,9 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
         }
 
-        public void updateCompra(List<int> ofertasCompradasIds, int numeroFactura)
+        public void updateCompra(List<Compra> ofertasCompradasIds, int numeroFactura)
         {
-            ofertasCompradasIds.ForEach(id => guardar(id, numeroFactura));
+            ofertasCompradasIds.ForEach(compra => guardar(compra.id, numeroFactura));
         }
 
         private void guardar(int id, int numeroFactura)
@@ -124,7 +124,7 @@ namespace FrbaOfertas.Dao
             return compras;
         }
 
-        public List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
+        public List<Compra> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
         {
             string fechaIni = fechaInicio.ToString("yyyy-MM-ddThh:mm:ss");
             string fechaFini = fechaFin.ToString("yyyy-MM-ddThh:mm:ss");
@@ -132,13 +132,23 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.abrirConexion();
             
             SqlDataReader r_compra = cmd.ExecuteReader();
-            List<int> compras = new List<int>();
+            List<Compra> compras = new List<Compra>();
 
             while (r_compra.Read())
             {
                 if (!(r_compra["ID"] is DBNull))
                 {
-                    compras.Add(Convert.ToInt32(r_compra["ID"]));
+                    Compra compra = new Compra();
+                    compra.id = Convert.ToInt32(r_compra["ID"]);
+                    compra.idOferta = Convert.ToInt32(r_compra["OFERTA_ID"]);
+                    compra.idCliente = Convert.ToInt32(r_compra["CLIENTE_ID"]);
+                    compra.fecha = Convert.ToDateTime(r_compra["FECHA"]);
+                    //compra.cupon = Convert.ToInt32(r_compra["CUPON"]);
+                    if (!(r_compra["FECHA_CONSUMO"] is DBNull))
+                        compra.fechaConsumo = Convert.ToDateTime(r_compra["FECHA_CONSUMO"]);
+                    if (!(r_compra["FACTURA_ID"] is DBNull))
+                        compra.idFactura = Convert.ToInt32(r_compra["FACTURA_ID"]);
+                    compras.Add(compra);
                 }
             }
             ConnectionQuery.cerrarConexion();

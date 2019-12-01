@@ -56,7 +56,7 @@ namespace FrbaOfertas.AbmRol
 
         private void SeleccionarFuncionalidadForm1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            //System.Windows.Forms.Application.Exit();
 
         }
     }

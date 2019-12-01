@@ -44,8 +44,6 @@ namespace FrbaOfertas.AbmCliente
 
             if (isValid())
             {
-                if (!_clienteService.GetByDni(Convert.ToInt32(dniTxt.Text)))
-                {
                     c.apellido = apellidotxt.Text;
                     c.nombre = nombreTxt.Text;
                     c.mail = mailTxt.Text;
@@ -67,9 +65,7 @@ namespace FrbaOfertas.AbmCliente
                     Form1 form = new Form1(ServiceDependencies.getClienteService());
                     this.Hide();
                     form.Show();
-                }
-                else
-                    MessageBox.Show("Ya existe un usuario Cliente registrado con ese DNI");
+
             }
             else
             {
