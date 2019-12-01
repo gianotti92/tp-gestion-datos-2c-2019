@@ -104,5 +104,11 @@ namespace FrbaOfertas.AbmRol
             this.Hide();
             form.Show();
         }
+
+        private void ModificacionRolViewForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

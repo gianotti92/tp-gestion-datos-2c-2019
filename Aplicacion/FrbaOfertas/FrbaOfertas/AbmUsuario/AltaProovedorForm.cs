@@ -92,7 +92,7 @@ namespace FrbaOfertas.AbmUsuario
                         MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
                         this.Dispose();
 
-                        Form1 f = new Form1(
+                        Login f = new Login(
                             new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
                                 new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
                             new FuncionalidadPorRolService(new RolService(new RolDao()),
@@ -178,6 +178,12 @@ namespace FrbaOfertas.AbmUsuario
                 MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 e.Handled = true;
             }
+        }
+
+        private void AltaProovedorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }

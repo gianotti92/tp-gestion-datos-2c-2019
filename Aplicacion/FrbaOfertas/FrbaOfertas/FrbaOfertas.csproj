@@ -202,11 +202,11 @@
     <Compile Include="Facturar\FacturarProveedorForm1.Designer.cs">
       <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
       <SubType>Form</SubType>
@@ -310,8 +310,8 @@
     <EmbeddedResource Include="Facturar\FacturarProveedorForm1.resx">
       <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>

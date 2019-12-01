@@ -29,7 +29,7 @@ namespace FrbaOfertas
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(usuarioLoginService, funcionalidadPorRolService));
+            Application.Run(new Login(usuarioLoginService, funcionalidadPorRolService));
         }
     }
 }

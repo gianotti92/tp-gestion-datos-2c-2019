@@ -53,5 +53,11 @@ namespace FrbaOfertas.AbmRol
             Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
             entregaCupon.Show();
         }
+
+        private void SeleccionarFuncionalidadForm1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

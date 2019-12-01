@@ -17,11 +17,11 @@ using System.Windows.Forms;
 
 namespace FrbaOfertas
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
         private UsuarioLoginService usuarioLoginService;
         private FuncionalidadPorRolService funcionalidadPorRolService;
-        public Form1(UsuarioLoginService usuarioLoginService, FuncionalidadPorRolService funcionalidadPorRolService)
+        public Login(UsuarioLoginService usuarioLoginService, FuncionalidadPorRolService funcionalidadPorRolService)
         {
             this.usuarioLoginService = usuarioLoginService;
             this.funcionalidadPorRolService = funcionalidadPorRolService;

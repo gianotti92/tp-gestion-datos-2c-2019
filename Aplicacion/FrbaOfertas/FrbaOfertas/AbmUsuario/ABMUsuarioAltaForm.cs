@@ -57,7 +57,7 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (isFromLogin)
             {
-                Form1 login = new Form1(ServiceDependencies.getUsuarioLoginService(), ServiceDependencies.getFuncionalidadPorRolService());
+                Login login = new Login(ServiceDependencies.getUsuarioLoginService(), ServiceDependencies.getFuncionalidadPorRolService());
                 this.Dispose();
                 login.Show();
             }
@@ -168,5 +168,10 @@ namespace FrbaOfertas.AbmUsuario
             return esValido;
         }
 
+        private void ABMUsuarioAltaForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

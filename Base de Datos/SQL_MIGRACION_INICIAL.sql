@@ -316,7 +316,7 @@ GO
 		/* DATOS ROL_FUNCION le doy todo el poder al administrativo y ademas funcionalidad x usuario 
 		1 Cliente, 2 Provedor, 3 Admin*/
 		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(3,10),(3, 2),(3, 4),(3, 5), (3, 9), (3, 8), (1, 6), (1, 7), (2, 8), (2, 1), (4, 1), (4,2),(4,3),(4,4),(4,5),(4,6), (4,7), (4,8),(4,9),(4,10)
+		VALUES	(3,10),(3, 2),(3, 4),(3, 5), (3, 9), (3, 8),(1, 3), (1, 6), (1, 7), (2, 8),(2, 3), (2, 1), (4, 1), (4,2),(4,3),(4,4),(4,5),(4,6), (4,7), (4,8),(4,9),(4,10)
 					
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
