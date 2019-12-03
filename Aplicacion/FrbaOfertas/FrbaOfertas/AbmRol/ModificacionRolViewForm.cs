@@ -85,16 +85,25 @@ namespace FrbaOfertas.AbmRol
 
         private void button4_Click(object sender, EventArgs e)
         {
-            rolAEditar.activo = Boolean.Parse(habilitadoComboBox.Text);
-            rolAEditar.funcionalidades = funcionalidadesSeleccionadas;
-            rolAEditar.nombre = nombreTxt.Text;
-            rolService.Update(rolAEditar);
-            this.Hide();
-            
-            RolRepository rolRepository = new RolDao();
-            FuncionalidadPorRolService funcionalidadPorRolService = new FuncionalidadPorRolService(rolService, new FuncionalidadService(new FuncionalidadDao()));
-            AbmRolMenuForm form = new AbmRolMenuForm(rolService,funcionalidadPorRolService);
-            form.Show();
+            try
+            {
+                validarCreacion();
+                rolAEditar.activo = Boolean.Parse(habilitadoComboBox.Text);
+                rolAEditar.funcionalidades = funcionalidadesSeleccionadas;
+                rolAEditar.nombre = nombreTxt.Text;
+                rolService.Update(rolAEditar);
+                this.Hide();
+
+                RolRepository rolRepository = new RolDao();
+                FuncionalidadPorRolService funcionalidadPorRolService = new FuncionalidadPorRolService(rolService, new FuncionalidadService(new FuncionalidadDao()));
+                AbmRolMenuForm form = new AbmRolMenuForm(rolService, funcionalidadPorRolService);
+                form.Show();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
         }
 
         private void Cancelarbtn_Click(object sender, EventArgs e)
@@ -103,6 +112,17 @@ namespace FrbaOfertas.AbmRol
             AbmRolMenuForm form = new AbmRolMenuForm(rolService,new FuncionalidadPorRolService(rolService,funcionalidadService));
             this.Hide();
             form.Show();
+        }
+
+        private void validarCreacion()
+        {
+
+            if (nombreTxt.Text.Equals("") || rolesListBox.Items.Count.Equals(0))
+            {
+                SystemException ex = new SystemException("Debe completar el nombre y la lista de Funcionalidades");
+                throw ex;
+            }
+
         }
 
         private void ModificacionRolViewForm_FormClosing(object sender, FormClosingEventArgs e)

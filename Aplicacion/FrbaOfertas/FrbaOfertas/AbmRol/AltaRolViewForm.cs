@@ -44,8 +44,11 @@ namespace FrbaOfertas.AbmRol
         {
             int index = this.funcionalidadComboBox.SelectedIndex;
             Funcionalidad f = funcionalidades[index];
-            rolesListBox.Items.Add(f.nombre);
-            funcionalidadesSeleccionadas.Add(f);
+            if (!funcionalidadesSeleccionadas.Exists(F => F.id.Equals(f.id)))
+            {
+                rolesListBox.Items.Add(f.nombre);
+                funcionalidadesSeleccionadas.Add(f);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
