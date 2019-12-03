@@ -156,5 +156,10 @@ namespace FrbaOfertas.CrearOferta
             System.Windows.Forms.Application.Exit();
 
         }
+
+        private void fechaPublicPicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

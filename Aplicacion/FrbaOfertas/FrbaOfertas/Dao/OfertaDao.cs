@@ -38,6 +38,31 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
             return ofertas;
         }
+        public Oferta searchOfertabyId(int id)
+        {
+            SqlCommand cmd_oferta = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.OFERTA where id = '" + id + "'", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_oferta.ExecuteReader();
+            Oferta oferta = new Oferta();
+            if (r_rol.Read())
+            {
+                
+                oferta.id = Convert.ToInt32(r_rol["ID"]);
+                oferta.idold = Convert.ToString(r_rol["IDold"]);
+                oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_rol["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime)r_rol["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime)r_rol["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
+                
+            }
+            ConnectionQuery.cerrarConexion();
+            return oferta;
+        }
+
 
         public List<Oferta> searchOfertasVigentes(string descripcion, int provId)
         {

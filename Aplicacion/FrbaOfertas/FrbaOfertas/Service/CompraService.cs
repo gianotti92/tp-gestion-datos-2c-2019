@@ -22,7 +22,7 @@ namespace FrbaOfertas.Service
             return CompraDao.Save(compra);
         }
         
-        public void updateCompra(List<int> ofertasCompradasIds, int numeroFactura)
+        public void updateCompra(List<Compra> ofertasCompradasIds, int numeroFactura)
         {
             CompraDao.updateCompra(ofertasCompradasIds, numeroFactura);
         }
@@ -43,7 +43,7 @@ namespace FrbaOfertas.Service
 
         }
 
-        public List<int> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
+        public List<Compra> getComprasSinFactura(int provId, DateTime fechaInicio, DateTime fechaFin)
         {
             return CompraDao.getComprasSinFactura(provId, fechaInicio, fechaFin);
         }

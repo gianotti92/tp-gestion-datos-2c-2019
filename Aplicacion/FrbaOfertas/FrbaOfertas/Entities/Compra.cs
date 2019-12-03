@@ -23,5 +23,6 @@ namespace FrbaOfertas.Entities
             fechaConsumo = null;
             idFactura = null;
         }
+
     }
 }

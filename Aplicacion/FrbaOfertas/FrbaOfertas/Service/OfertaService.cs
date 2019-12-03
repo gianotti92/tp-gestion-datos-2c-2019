@@ -47,5 +47,11 @@ namespace FrbaOfertas.Service
         {
             return ofertaRepository.searchOfertasAdquiridasByProveedor(idProveedor, fechaInicio, fechaFin);
         }
+
+        public Oferta searchOfertabyId(int id)
+        {
+            return ofertaRepository.searchOfertabyId(id);
+
+        }
     }
 }
