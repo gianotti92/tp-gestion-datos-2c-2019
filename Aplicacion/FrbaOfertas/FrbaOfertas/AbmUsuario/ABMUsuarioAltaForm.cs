@@ -42,7 +42,18 @@ namespace FrbaOfertas.AbmUsuario
             cbTipoUsuario.Items.Add("Seleccionar");
             cbTipoUsuario.Items.Add(TipoUsuario.CLIENTE.ToString());
             cbTipoUsuario.Items.Add(TipoUsuario.PROVEEDOR.ToString());
-            cbTipoUsuario.SelectedItem = "Seleccionar";
+            if (isFromLogin) cbTipoUsuario.SelectedItem = "Seleccionar";
+            if (clienteForm != null)
+            {
+                cbTipoUsuario.SelectedItem = TipoUsuario.CLIENTE.ToString();
+                cbTipoUsuario.Enabled = false;
+            }
+
+            if (proveedorForm != null)
+            {
+                cbTipoUsuario.SelectedItem = TipoUsuario.PROVEEDOR.ToString();
+                cbTipoUsuario.Enabled = false;
+            }
         }
 
 

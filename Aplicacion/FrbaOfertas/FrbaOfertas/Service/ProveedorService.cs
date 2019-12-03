@@ -49,14 +49,14 @@ namespace FrbaOfertas.Service
             proovedorRepository.update(proveedor);
         }
 
-        public bool esRazonSocialRepetido(string razonSocial)
+        public bool esRazonSocialRepetido(int idProv, string razonSocial)
         {
-            return proovedorRepository.esRazonSocialRepetido(razonSocial);
+            return proovedorRepository.esRazonSocialRepetido(idProv, razonSocial);
         }
 
-        public bool esCUITRepetido(string cuit)
+        public bool esCUITRepetido(int idProv, string cuit)
         {
-            return proovedorRepository.esCUITRepetido(cuit);
+            return proovedorRepository.esCUITRepetido(idProv, cuit);
         }
     }
 }

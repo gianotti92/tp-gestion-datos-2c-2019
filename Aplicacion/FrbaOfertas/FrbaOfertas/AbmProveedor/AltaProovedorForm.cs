@@ -36,7 +36,7 @@ namespace FrbaOfertas.AbmProveedor
             razonSocialTxt.Text = proveedor.razonSocial;
             mailTxt.Text = proveedor.mail;
             cuitTxt.Text = proveedor.cuit;
-            rubroCombo.SelectedIndex = proveedor.rubro - 1;
+            rubroCombo.SelectedIndex = proveedor.rubro;
             telTxt.Text = proveedor.telefono.ToString();
             contactotxt.Text = proveedor.contacto;
 
@@ -72,11 +72,11 @@ namespace FrbaOfertas.AbmProveedor
         }
         private void creatBtn_Click(object sender, EventArgs e)
         {
-            if (proveedorService.esRazonSocialRepetido(razonSocialTxt.Text))
+            if (proveedorService.esRazonSocialRepetido(this.proveedor.id, razonSocialTxt.Text))
                 MessageBox.Show("Existe un proveedor con esa razon social");
             else
             {
-                if (proveedorService.esCUITRepetido(cuitTxt.Text))
+                if (proveedorService.esCUITRepetido(this.proveedor.id, cuitTxt.Text))
                     MessageBox.Show("Existe un proveedor con ese cuit");
                 else
                 {
@@ -89,8 +89,11 @@ namespace FrbaOfertas.AbmProveedor
 
                     int rubroIndex = rubroCombo.SelectedIndex;
 
-                    proveedor.rubro = rubros[rubroIndex].id;
-
+                    if (rubroIndex >= 0)
+                    {
+                        proveedor.rubro = rubros[rubroIndex].id ;
+                    }
+                    
                     int id_direccion;
                     if (proveedor.direccion == null)
                     {
