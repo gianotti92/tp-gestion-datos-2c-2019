@@ -16,5 +16,7 @@ namespace FrbaOfertas.Repository
         
         List<int> searchAnios();
         List<Oferta> searchOfertasAdquiridasByProveedor(int proveedorId, DateTime fechaInicio, DateTime fechaFin);
+
+        Oferta searchOfertabyId(int id);
     }
 }

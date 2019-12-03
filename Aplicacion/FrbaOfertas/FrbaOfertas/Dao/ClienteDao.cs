@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Text;
 using FrbaOfertas.Connection;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Repository;
@@ -23,14 +26,16 @@ namespace FrbaOfertas.Dao
             cmd_client.Parameters.Add(new SqlParameter("@direccion_id", cliente.direccion.id));
             cmd_client.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             cmd_client.Parameters.Add(new SqlParameter("@usuario_id", cliente.usuario));
-            
+            cmd_client.Parameters.Add(new SqlParameter("@saldo", cliente.saldo));
+
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
 
         public Cliente GetByUsername(string username)
         {
-            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE WHERE USUARIO = @username", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE WHERE USUARIO = @username",
+                ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
 
             cmd.Parameters.Add("@username", SqlDbType.VarChar);
@@ -77,14 +82,198 @@ namespace FrbaOfertas.Dao
             cmd_client.Parameters.Add(new SqlParameter("@apellido", cliente.apellido));
             cmd_client.Parameters.Add(new SqlParameter("@dni", cliente.dni));
             cmd_client.Parameters.Add(new SqlParameter("@mail", cliente.mail));
-            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
             cmd_client.Parameters.Add(new SqlParameter("@direccion_id", cliente.direccion.id));
             cmd_client.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             cmd_client.Parameters.Add(new SqlParameter("@usuario_id", cliente.usuario));
             cmd_client.Parameters.Add(new SqlParameter("@saldo", cliente.saldo));
+            cmd_client.Parameters.Add(new SqlParameter("@fechaNac", Convert.ToDateTime(cliente.fechaNac)));
+            
 
             cmd_client.ExecuteNonQuery();
             ConnectionQuery.cerrarConexion();
         }
+
+        public List<Cliente> searchClientes()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_cliente = cmd.ExecuteReader();
+
+            int idDireccion = 0;
+
+            List<Cliente> clientes = new List<Cliente>();
+
+            Dictionary<int, int> diccionarioIdClienteIdDireccion = new Dictionary<int, int>();
+
+            while (r_cliente.Read())
+            {    
+                Cliente cliente = new Cliente();
+                cliente.id = Convert.ToInt32(r_cliente["ID"]);
+                cliente.dni = Convert.ToInt32(r_cliente["DNI"]);
+                cliente.nombre = r_cliente["NOMBRE"].ToString();
+                cliente.apellido = r_cliente["APELLIDO"].ToString();
+                cliente.mail = r_cliente["MAIL"].ToString();
+                cliente.telefono = Convert.ToInt32(r_cliente["TELEFONO"]);
+                cliente.fechaNac = r_cliente["FNANCIAMIENTO"].ToString();
+                cliente.usuario = r_cliente["USUARIO"].ToString();
+                cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
+                idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
+                diccionarioIdClienteIdDireccion.Add(cliente.id, idDireccion);
+                
+                clientes.Add(cliente);
+            }
+
+            ConnectionQuery.cerrarConexion();
+
+            clientes.ForEach(x =>
+            {
+                idDireccion = diccionarioIdClienteIdDireccion[x.id];
+                x.direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+            });
+
+            return clientes;
+        }
+
+        public List<Cliente> searchClientesxByFiltro(string nombreFiltro, string apellidoFiltro, string dniFiltro,
+            string mailFIltro)
+        {
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE ");
+            
+            List<Cliente> clientes = new List<Cliente>();
+
+            if (!string.IsNullOrEmpty(nombreFiltro)
+                || !string.IsNullOrEmpty(apellidoFiltro)
+                || !string.IsNullOrEmpty(dniFiltro)
+                || !string.IsNullOrEmpty(mailFIltro))
+            {
+
+                builder.Append("WHERE ");
+
+                if (!string.IsNullOrEmpty(nombreFiltro))
+                {
+                    builder.Append("NOMBRE LIKE '%" + nombreFiltro + "%' ");
+                }
+
+                if (!string.IsNullOrEmpty(apellidoFiltro))
+                {
+                    if (!string.IsNullOrEmpty(nombreFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("APELLIDO LIKE '%" + apellidoFiltro + "%' ");
+                }
+
+                if (!string.IsNullOrEmpty(dniFiltro))
+                {
+                    if (!string.IsNullOrEmpty(nombreFiltro) || !string.IsNullOrEmpty(apellidoFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("DNI = '" + dniFiltro + "' ");
+                }
+
+                if (!string.IsNullOrEmpty(mailFIltro))
+                {
+                    if (!string.IsNullOrEmpty(nombreFiltro) || !string.IsNullOrEmpty(apellidoFiltro) || !string.IsNullOrEmpty(dniFiltro))
+                        builder.Append("AND ");
+
+                    builder.Append("MAIL LIKE '%" + mailFIltro + "%'");
+                }
+
+                //PARA BORRAR LOS AND, el ultimo tambien esta con and por si se da la condicion de que solamente
+                //se haya filtrado por mail
+                String query = builder.ToString();
+
+                SqlCommand cmd = new SqlCommand(builder.ToString(),
+                    ConnectionQuery.Instance());
+                ConnectionQuery.abrirConexion();
+
+                SqlDataReader r_cliente = cmd.ExecuteReader();
+
+                int idDireccion = 0;
+
+                Dictionary<int, int> diccionarioIdClienteIdDireccion = new Dictionary<int, int>();
+
+                while (r_cliente.Read())
+                {
+                    Cliente cliente = new Cliente();
+                    cliente.id = Convert.ToInt32(r_cliente["ID"]);
+                    cliente.dni = Convert.ToInt32(r_cliente["DNI"]);
+                    cliente.nombre = r_cliente["NOMBRE"].ToString();
+                    cliente.apellido = r_cliente["APELLIDO"].ToString();
+                    cliente.mail = r_cliente["MAIL"].ToString();
+                    cliente.telefono = Convert.ToInt32(r_cliente["TELEFONO"]);
+                    cliente.fechaNac = r_cliente["FNANCIAMIENTO"].ToString();
+                    cliente.usuario = r_cliente["USUARIO"].ToString();
+                    cliente.saldo = Convert.ToDouble(r_cliente["SALDO"]);
+                    idDireccion = Convert.ToInt32(r_cliente["DIRECCION"]);
+                    diccionarioIdClienteIdDireccion.Add(cliente.id, idDireccion);
+
+                    clientes.Add(cliente);
+                }
+
+                ConnectionQuery.cerrarConexion();
+
+                clientes.ForEach(x =>
+                {
+                    idDireccion = diccionarioIdClienteIdDireccion[x.id];
+                    x.direccion = ServiceDependencies.getDireccionDao().GetById(idDireccion);
+                });
+            }
+            
+
+            return clientes;
+        }
+
+        public void delete(int id)
+        {
+            SqlCommand cmd_client = new SqlCommand("dbo.SP_ELIMINAR_CLIENTE", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_client.CommandType = CommandType.StoredProcedure;
+            cmd_client.Parameters.Add(new SqlParameter("@id", id));
+            cmd_client.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
+        public void habilitarCliente(int id)
+        {
+            SqlCommand cmd_client = new SqlCommand("dbo.SP_HABILITAR_CLIENTE", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_client.CommandType = CommandType.StoredProcedure;
+            cmd_client.Parameters.Add(new SqlParameter("@id", id));
+            cmd_client.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
+
+
+        public bool GetByDni( int DNI)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.CLIENTE WHERE DNI = @DNI",
+                ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+
+            cmd.Parameters.Add("@DNI", SqlDbType.Int);
+            cmd.Parameters["@DNI"].Value = DNI;
+
+            SqlDataReader r_cliente = cmd.ExecuteReader();
+      
+            if (r_cliente.Read())
+            {                
+                ConnectionQuery.cerrarConexion();
+                return true;
+            }
+            else
+            {             
+                ConnectionQuery.cerrarConexion();
+                return false;
+            }
+
+        }
+
+
+
+
+
     }
+
+
+
 }

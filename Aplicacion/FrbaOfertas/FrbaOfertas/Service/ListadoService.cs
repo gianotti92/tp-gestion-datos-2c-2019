@@ -11,14 +11,20 @@ namespace FrbaOfertas.Service
     public class ListadoService
     {
         private ListadosRepository listadoRepository;
-
-
-
-      public  List<ListadoTop5VendorFact> top5Facturacion(Int32 anio, Int32 mes)
+       
+        public ListadoService(ListadosRepository _listadoRepository)
         {
+            this.listadoRepository = _listadoRepository;
+        }
 
-            return listadoRepository.top5Facturacion(anio,mes);
+        public  List<ListadoTop5VendorFact> top5Facturacion(Int32 anio, Int32 mes)
+        {
+            return listadoRepository.Top5Facturacion(anio,mes);
+        }
 
+        public List<ListadoTop5Descuento> top5Descuento(Int32 anio, Int32 mes)
+        {
+            return listadoRepository.Top5Descuento(anio, mes);
         }
     }
 }

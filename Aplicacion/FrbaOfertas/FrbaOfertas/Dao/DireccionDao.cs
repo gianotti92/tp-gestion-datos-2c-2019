@@ -12,7 +12,9 @@ namespace FrbaOfertas.Dao
         public Direccion GetById(int id)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.DIRECCION WHERE id = @id", ConnectionQuery.Instance());
-            ConnectionQuery.abrirConexion();
+
+                            ConnectionQuery.abrirConexion();
+           
 
             cmd.Parameters.Add("@id", SqlDbType.VarChar);
             cmd.Parameters["@id"].Value = id;
@@ -34,12 +36,13 @@ namespace FrbaOfertas.Dao
                 direccion.codigoPostal = Convert.ToInt32(r_direccion["CODIGO_POSTAL"]);
             }
 
-            ConnectionQuery.cerrarConexion();
-
+          
+                ConnectionQuery.cerrarConexion();
+           
             return direccion;
         }
 
-        public Direccion createDireccion(Direccion direccion)
+        public Direccion createDireccion(Direccion direccion, bool esCliente)
         {
             SqlCommand cmd_direccion = new SqlCommand("dbo.SP_SAVE_DIRECCION", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
@@ -51,6 +54,10 @@ namespace FrbaOfertas.Dao
             cmd_direccion.Parameters.Add("@depto", direccion.depto);
             cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
             cmd_direccion.Parameters.Add("@id_cod_postal", direccion.codigoPostal);
+            if (esCliente)
+                cmd_direccion.Parameters.Add("@id_ciudad", -1);
+            else
+                cmd_direccion.Parameters.Add("@id_ciudad", direccion.ciudad);
             
             int id = Convert.ToInt32(cmd_direccion.ExecuteScalar());
 
@@ -72,5 +79,22 @@ namespace FrbaOfertas.Dao
             return id_postal_code;
         }
 
+        public void updateDireccion(Direccion direccion)
+        {
+            SqlCommand cmd_direccion = new SqlCommand("dbo.SP_UPDATE_DIRECCION", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            cmd_direccion.CommandType = CommandType.StoredProcedure;
+
+            cmd_direccion.Parameters.Add("@id", direccion.id);
+            cmd_direccion.Parameters.Add("@calle", direccion.calle);
+            cmd_direccion.Parameters.Add("@nro", direccion.nro);
+            cmd_direccion.Parameters.Add("@piso", direccion.piso);
+            cmd_direccion.Parameters.Add("@dpto", direccion.depto);
+            cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
+            cmd_direccion.Parameters.Add("@cp", direccion.codigoPostal);
+           
+            cmd_direccion.ExecuteNonQuery();
+            ConnectionQuery.cerrarConexion();
+        }
     }
 }

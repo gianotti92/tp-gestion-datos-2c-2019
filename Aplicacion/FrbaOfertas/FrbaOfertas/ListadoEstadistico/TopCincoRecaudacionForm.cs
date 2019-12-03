@@ -4,43 +4,68 @@ using System.Windows.Forms;
 using FrbaOfertas.Service;
 using FrbaOfertas.Entities;
 using System.Collections.Generic;
+using System.ComponentModel;
+using FrbaOfertas.AbmRol;
+using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.ListadoEstadistico
 {
     public partial class TopCincoRecaudacionForm : Form
     {
-        Int32 semestre;
-        Int32 anio;
+        private Int32 semestre;
+        private Int32 anio;
         private ListadoService listadoService;
         private List<ListadoTop5VendorFact> top5Proveedores;
+        private List<ListadoTop5Descuento> top5Descuento;
 
 
-        public TopCincoRecaudacionForm()
+        public TopCincoRecaudacionForm(ListadoService listadoService)
         {
+            this.listadoService = listadoService;
             InitializeComponent();
+
             comboBox2.Items.Add("PRIMER SEMESTRE");
             comboBox2.Items.Add("SEGUNDO SEMESTRE");
-            comboBox1.DataSource = Enumerable.Range(2000, DateTime.Today.Year).ToList();
+            comboBox1.DataSource = Enumerable.Range(2010, DateTime.Today.Year).ToList();
+            cargarListados();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ListadoEstadisticoForm listado = new ListadoEstadisticoForm();
             this.Hide();
-            listado.Show();
-
+            SeleccionarFuncionalidadForm1 seleccionFuncionalidad =
+                new SeleccionarFuncionalidadForm1(FuncionalidadUtil.Funcionalidades);
+            seleccionFuncionalidad.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.validar();
-
+            try
+            { this.validar(); 
+              
             anio = Int32.Parse(comboBox1.SelectedValue.ToString());
             Semestre();
 
-            top5Proveedores = listadoService.top5Facturacion(anio, semestre);
-                    
-            dataGridView1.DataSource = top5Proveedores;
+            if (tipoListadoCBox.Text.Equals("Top 5 Mayor Descuento"))
+            {
+                    top5Descuento = listadoService.top5Descuento(anio, semestre);
+                    this.listadoGrid.DataSource = new BindingSource(new BindingList<ListadoTop5Descuento>(top5Descuento), null);
+
+
+
+                }
+            if (tipoListadoCBox.Text.Equals("Top 5 Mayor Recaudacion"))
+            {
+                    top5Proveedores = listadoService.top5Facturacion(anio, semestre);
+                    this.listadoGrid.DataSource =
+                        new BindingSource(new BindingList<ListadoTop5VendorFact>(top5Proveedores), null);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
 
 
         }
@@ -49,12 +74,16 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             if (this.comboBox1.SelectedIndex == -1)
             {
+              // MessageBox.Show("Eliga Año");
+
                 SystemException ex = new SystemException("Eliga Año");
                 throw ex;
+
             }
  
             if (this.comboBox2.SelectedIndex == -1)
             {
+              //  MessageBox.Show("Seleccione el semestre");
                 SystemException ex = new SystemException("Seleccione el semestre");
                 throw ex;
             }
@@ -71,5 +100,25 @@ namespace FrbaOfertas.ListadoEstadistico
                 semestre = 2;
             }
         }
+
+        private void cargarListados()
+        {
+            tipoListadoCBox.Items.Add("Top 5 Mayor Descuento");
+            tipoListadoCBox.Items.Add("Top 5 Mayor Recaudacion");
+        }
+
+        private void TopCincoRecaudacionForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+                System.Windows.Forms.Application.Exit();
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

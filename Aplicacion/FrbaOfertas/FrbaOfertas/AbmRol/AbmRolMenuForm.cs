@@ -105,5 +105,11 @@ namespace FrbaOfertas.AbmRol
         {
             return estado == 1 || estado == 2;
         }
+
+        private void AbmRolMenuForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

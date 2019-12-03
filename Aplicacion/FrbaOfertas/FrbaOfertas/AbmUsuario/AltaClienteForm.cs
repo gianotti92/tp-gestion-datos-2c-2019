@@ -44,9 +44,11 @@ namespace FrbaOfertas.AbmUsuario
         private Cliente cliente;
 
         private Usuario usuario;
+        private bool isFromLogin;
 
-        public AltaClienteForm(Usuario usuario)
+        public AltaClienteForm(Boolean isFromLogin, Usuario usuario)
         {
+            this.isFromLogin = isFromLogin;
             this.usuario = usuario;
             InitializeComponent();
         }
@@ -66,21 +68,10 @@ namespace FrbaOfertas.AbmUsuario
             codigoPostal = codigoPostaltxt.Text;
             localidad = localidadTxt.Text;
 
-            bool esNumero = true;
-            try
-            {
-                Convert.ToInt32(telefonoTxt.Text);
-                Convert.ToInt32(dniTxt.Text);
-            }
-            catch (Exception e)
-            {
-                esNumero = false;
-            }
 
-
-            return nombre != null && dni != null && mail != null && telefono != null && fechaNac != null &&
-                   calle != null && nro != null && piso != null && dpto != null && codigoPostal != null &&
-                   localidad != null && apellido != null || esNumero;
+            return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(telefono)
+                   && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
+                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido);
         }
 
         private void crearUsuario()
@@ -93,6 +84,7 @@ namespace FrbaOfertas.AbmUsuario
             cliente.mail = mailTxt.Text;
             cliente.telefono = Convert.ToInt32(telefonoTxt.Text);
             cliente.fechaNac = fechaNacPicker1.Text;
+            cliente.saldo = 200;
 
             Direccion direccion = new Direccion();
 
@@ -104,7 +96,7 @@ namespace FrbaOfertas.AbmUsuario
 
             int postalCodeId = direccionService.createCodigoPostal(codigoPostal);
             direccion.codigoPostal = postalCodeId;
-            direccion = direccionService.CreateDireccion(direccion);
+            direccion = direccionService.CreateDireccion(direccion, true);
             cliente.direccion = direccion;
 
             usuarioService.CreateUsuario(usuario);
@@ -118,25 +110,51 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (camposValidos())
             {
-                crearUsuario();
-                MessageBox.Show("Usuario creado correctamente\n logueate con tu user y pass");
-                this.Dispose();
-                
-                Form1 f = new Form1(
-                    new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
-                        new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
-                    new FuncionalidadPorRolService(new RolService(new RolDao()),
-                        new FuncionalidadService(new FuncionalidadDao())));
-                
-                f.Show();
+                if (! clienteService.GetByDni(Convert.ToInt32(dniTxt.Text)))
+                {
+                    crearUsuario();
+                    MessageBox.Show("Usuario creado correctamente\n logueate con tu user y pass");
+                    this.Dispose();
+
+                    Login f = new Login(
+                        new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
+                            new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
+                        new FuncionalidadPorRolService(new RolService(new RolDao()),
+                            new FuncionalidadService(new FuncionalidadDao())));
+
+                    f.Show();
+                }
+                else
+                    MessageBox.Show("Ya existe un usuario Cliente registrado con ese DNI");
+            }
+            else
+            {
+                MessageBox.Show("Hay campos con datos incompletos");
             }
         }
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin
+                ,null, null);
             this.Dispose();
             altaUsuario.Show();
+        }
+        
+        private void solo_numero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+            }
+        }
+
+        private void AltaClienteForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }

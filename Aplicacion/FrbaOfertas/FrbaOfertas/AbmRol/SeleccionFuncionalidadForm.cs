@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using FrbaOfertas.AbmRol.ejecutores;
 using FrbaOfertas.Entities;
+using FrbaOfertas.Service;
 
 namespace FrbaOfertas.AbmRol
 {
@@ -34,17 +35,29 @@ namespace FrbaOfertas.AbmRol
                 new List<BotonFuncionalidadAEjecutar>();
             foreach (var funcionalidad in funcionalidades)
             {
-                listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad, this));
+                if (esProveedorInhabilitadoCrearOfertas(funcionalidad))
+                    listaBotonesFuncionalidadAEjecutar.Add(EjecutorFactory.create(funcionalidad, this));
             }
 
             return listaBotonesFuncionalidadAEjecutar;
         }
 
+        private bool esProveedorInhabilitadoCrearOfertas(Funcionalidad funcionalidad)
+        {
+            return !(funcionalidad.id == 8 && Utils.UsuarioUtil.Usuario.tipoUsuario == TipoUsuario.PROVEEDOR && !Utils.UsuarioUtil.Usuario.habilitado);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             this.Dispose();
-            Form entregaCupon = new ConsumoOferta.ConsumoOferta();
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
             entregaCupon.Show();
+        }
+
+        private void SeleccionarFuncionalidadForm1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //System.Windows.Forms.Application.Exit();
+
         }
     }
 }

@@ -139,7 +139,7 @@ namespace FrbaOfertas.Dao
 
         public System.Collections.Generic.List<Usuario> GetAll()
         {
-            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.USUARIO WHERE habilitado = 1", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.USUARIO", ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
 
             SqlDataReader r_usuario = cmd.ExecuteReader();

@@ -14,14 +14,20 @@ namespace FrbaOfertas.AbmUsuario
 {
     public partial class ABMUsuarioAltaForm : Form
     {
+        private Boolean isFromLogin;
+        private Form proveedorForm;
+        private Form clienteForm;
         private RolService rolService { get { return ServiceDependencies.GetRolService(); } }
         private UsuarioService UsuarioService { get { return ServiceDependencies.GetUsuarioService(); } }
         private List<Rol> roles;
         private List<Rol> rolesSeleccionados;
 
 
-        public ABMUsuarioAltaForm()
+        public ABMUsuarioAltaForm(Boolean isFromLogin, AbmCliente.Form1 abmClienteForm, AbmProveedor.Form1 abmProveedorForm)
         {
+            this.isFromLogin = isFromLogin;
+            this.clienteForm = abmClienteForm;
+            this.proveedorForm = abmProveedorForm;
             InitializeComponent();
             CargarDatos();
         }
@@ -36,7 +42,18 @@ namespace FrbaOfertas.AbmUsuario
             cbTipoUsuario.Items.Add("Seleccionar");
             cbTipoUsuario.Items.Add(TipoUsuario.CLIENTE.ToString());
             cbTipoUsuario.Items.Add(TipoUsuario.PROVEEDOR.ToString());
-            cbTipoUsuario.SelectedItem = "Seleccionar";
+            if (isFromLogin) cbTipoUsuario.SelectedItem = "Seleccionar";
+            if (clienteForm != null)
+            {
+                cbTipoUsuario.SelectedItem = TipoUsuario.CLIENTE.ToString();
+                cbTipoUsuario.Enabled = false;
+            }
+
+            if (proveedorForm != null)
+            {
+                cbTipoUsuario.SelectedItem = TipoUsuario.PROVEEDOR.ToString();
+                cbTipoUsuario.Enabled = false;
+            }
         }
 
 
@@ -49,7 +66,30 @@ namespace FrbaOfertas.AbmUsuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Volver();
+            if (isFromLogin)
+            {
+                Login login = new Login(ServiceDependencies.getUsuarioLoginService(), ServiceDependencies.getFuncionalidadPorRolService());
+                this.Dispose();
+                login.Show();
+            }
+            else if (clienteForm == null && proveedorForm == null)
+            {
+                 Volver();
+            }
+            else if(clienteForm != null)
+            {
+                clienteForm = new AbmCliente.Form1(ServiceDependencies.getClienteService());
+                this.Hide();
+                clienteForm.Show();
+            }
+            else if (proveedorForm != null)
+            {
+                proveedorForm = new AbmProveedor.Form1(ServiceDependencies.getProveedorService());
+                this.Hide();
+                proveedorForm.Show();
+            }
+
+
         }
 
         private void Volver()
@@ -64,7 +104,7 @@ namespace FrbaOfertas.AbmUsuario
         {
             if (EsUsuarioValido())
             {
-                roles = rolService.searchRoles();
+                roles = rolService.searchRoles().Where(r => r.activo).ToList();
                 Usuario usuario = new Usuario();
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
@@ -72,15 +112,29 @@ namespace FrbaOfertas.AbmUsuario
 
                 if (usuario.tipoUsuario == TipoUsuario.CLIENTE)
                 {
-                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Cliente")));
-                    AltaClienteForm clienteForm = new AltaClienteForm(usuario);
+                    usuario.roles = roles.Where(r => r.nombre.Equals("Cliente")).ToList();
+
+                    if (usuario.roles.Count <= 0)
+                    {
+                        MessageBox.Show("El rol cliente no esta habilitado");
+                        return;
+                    }
+
+                    AltaClienteForm clienteForm = new AltaClienteForm(isFromLogin,usuario);
                     clienteForm.Show();
                     this.Dispose();
                 }
                 else if (usuario.tipoUsuario == TipoUsuario.PROVEEDOR)
                 {
-                    usuario.roles.Add(roles.Find(rol => rol.nombre.Equals("Proveedor")));
-                    AltaProovedorForm altaProovedorForm = new AltaProovedorForm(usuario);
+                    usuario.roles = roles.Where(r => r.nombre.Equals("Proveedor")).ToList();
+                   
+                    if (usuario.roles.Count <= 0)
+                    {
+                        MessageBox.Show("El rol proveedor no esta habilitado");
+                        return;
+                    }
+                    
+                    AltaProovedorForm altaProovedorForm = new AltaProovedorForm(isFromLogin,usuario);
                     altaProovedorForm.Show();
                     this.Dispose();
                 }
@@ -125,5 +179,10 @@ namespace FrbaOfertas.AbmUsuario
             return esValido;
         }
 
+        private void ABMUsuarioAltaForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

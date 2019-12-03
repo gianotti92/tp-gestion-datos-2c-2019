@@ -17,11 +17,11 @@ using System.Windows.Forms;
 
 namespace FrbaOfertas
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
         private UsuarioLoginService usuarioLoginService;
         private FuncionalidadPorRolService funcionalidadPorRolService;
-        public Form1(UsuarioLoginService usuarioLoginService, FuncionalidadPorRolService funcionalidadPorRolService)
+        public Login(UsuarioLoginService usuarioLoginService, FuncionalidadPorRolService funcionalidadPorRolService)
         {
             this.usuarioLoginService = usuarioLoginService;
             this.funcionalidadPorRolService = funcionalidadPorRolService;
@@ -44,9 +44,9 @@ namespace FrbaOfertas
             Usuario usuario = usuarioLoginService.searchUsuario(nombreUsuario);
             if (usuario != null)
             {
-                if (usuario.intento == 3)
+                if (!usuario.habilitado)
                 {
-                    MessageBox.Show("Usuario inhabilitado");
+                    MessageBox.Show("Usuario inhabilitado por exceso de errores de ingreso");
                 }
                 else if (usuarioLoginService.ValidateUser(nombreUsuario,contrasena))
                 {
@@ -110,7 +110,8 @@ namespace FrbaOfertas
 
         private void createUserBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            Boolean isFromLogin = true;
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin,null, null);
             this.Hide();
             altaUsuario.Show();
         }

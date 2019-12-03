@@ -11,7 +11,7 @@ namespace FrbaOfertas.AbmRol
         {
             if (funcionalidad.id == 1)
             {
-                return new LoginYSeguridadExec(funcionalidad.nombre);
+                return new LoginYSeguridadExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 2)
             {
@@ -27,7 +27,7 @@ namespace FrbaOfertas.AbmRol
             }
             else if (funcionalidad.id == 5)
             {
-                return new AbmProovedorExec(funcionalidad.nombre);
+                return new AbmProovedorExec(funcionalidad.nombre, pantallaACerrar);
             }
             else if (funcionalidad.id == 6)
             {

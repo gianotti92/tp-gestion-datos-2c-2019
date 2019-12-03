@@ -8,11 +8,11 @@ namespace FrbaOfertas.Entities
 {
    public class ListadoTop5VendorFact
     {
-       public int idProveedor;
-        public String RazonSocial;
-        public double totalFacturacion;
+        public decimal idProveedor { get; set; }
+        public String RazonSocial { get; set; }
+        public decimal totalFacturacion { get; set; }
 
-        public ListadoTop5VendorFact(int v1, string v2, double v3)
+        public ListadoTop5VendorFact(decimal v1, string v2, decimal v3)
         {
             this.idProveedor = v1;
             this.RazonSocial = v2;

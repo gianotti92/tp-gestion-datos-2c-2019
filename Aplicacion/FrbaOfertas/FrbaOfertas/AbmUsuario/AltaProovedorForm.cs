@@ -47,9 +47,11 @@ namespace FrbaOfertas.AbmUsuario
         private Usuario usuario;
         private List<Rubro> rubros;
         private List<Ciudad> ciudades;
+        private Boolean isFromLogin;
 
-        public AltaProovedorForm(Usuario usuario)
+        public AltaProovedorForm(Boolean isFromLogin, Usuario usuario)
         {
+            this.isFromLogin = isFromLogin;
             this.usuario = usuario;
             InitializeComponent();
             llenarComboCiudad();
@@ -76,33 +78,60 @@ namespace FrbaOfertas.AbmUsuario
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
-                if (camposValidos())
-                {
-                    crearProovedor();
-                    MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
-                    this.Dispose();
-                
-                    Form1 f = new Form1(
-                        new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
-                            new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
-                        new FuncionalidadPorRolService(new RolService(new RolDao()),
-                            new FuncionalidadService(new FuncionalidadDao())));
-                
-                    f.Show();
-                }
+            if (proveedorService.esRazonSocialRepetido(0, razonSocialTxt.Text))
+                MessageBox.Show("Existe un proveedor con esa razon social");
+            else
+            {
+                if (proveedorService.esCUITRepetido(0, cuitTxt.Text))
+                    MessageBox.Show("Existe un proveedor con ese cuit");
                 else
                 {
-                    MessageBox.Show("Hay campos incompletos");
+                    if (camposValidos())
+                    {
+                        crearProovedor();
+                        MessageBox.Show("Usuario proveedor correctamente\n logueate con tu usr y pass");
+                        this.Dispose();
+
+                        Login f = new Login(
+                            new UsuarioLoginService(new FuncionalidadService(new FuncionalidadDao()),
+                                new RolService(new RolDao()), new UsuarioService(new UsuarioDao())),
+                            new FuncionalidadPorRolService(new RolService(new RolDao()),
+                                new FuncionalidadService(new FuncionalidadDao())));
+
+                        f.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Los campos con * son obligatorios y para aquellos que poseen "
+                        + "un desplegable, se debe seleccionar una opcion de ellas", "Advertencia");
+                    }
                 }
             }
+        }
 
         private bool camposValidos()
         {
-            return razonSocialTxt.Text != null && mailTxt.Text != null && cuitTxt.Text != null && telTxt.Text != null &&
+            bool esnumero = true;
+            try
+            {
+                Convert.ToInt32(telTxt.Text);
+            }
+            catch (Exception e)
+            {
+                esnumero = false;
+            }
+
+            return !string.IsNullOrEmpty(razonSocialTxt.Text) &&
+                   !string.IsNullOrEmpty(mailTxt.Text) && 
+                   !string.IsNullOrEmpty(cuitTxt.Text) && 
+                   !string.IsNullOrEmpty(telTxt.Text) &&
                    rubroCombo.SelectedIndex != -1 &&
-                   ciudadCombo.SelectedIndex != -1 && calleTxt.Text != null && nroTxt.Text != null &&
-                   pisoTxt.Text != null && pisoTxt.Text != null && pisoTxt.Text != null && dptotxt.Text != null &&
-                   codigoPostaltxt.Text != null && localidadTxt.Text != null;
+                   ciudadCombo.SelectedIndex != -1 && 
+                   !string.IsNullOrEmpty(calleTxt.Text) &&
+                   !string.IsNullOrEmpty(nroTxt.Text) &&
+                   !string.IsNullOrEmpty(codigoPostaltxt.Text) && 
+                   !string.IsNullOrEmpty(localidadTxt.Text) && 
+                   esnumero;
         }
 
         private void crearProovedor()
@@ -117,7 +146,10 @@ namespace FrbaOfertas.AbmUsuario
 
             int rubroIndex = rubroCombo.SelectedIndex;
 
-            proovedor.rubro = rubros[rubroIndex].id;
+            if (rubroIndex >= 0)
+            {
+                proovedor.rubro = rubros[rubroIndex].id;  
+            }
             
             Direccion direccion = new Direccion();
             direccion.calle = calleTxt.Text;
@@ -125,15 +157,17 @@ namespace FrbaOfertas.AbmUsuario
             direccion.piso = pisoTxt.Text;
             direccion.depto = dptotxt.Text;
             int ciudadIndex = ciudadCombo.SelectedIndex;
-            Ciudad ciudad = ciudades[ciudadIndex];
-           
+            if (ciudadIndex >= 0)
+            {
+                Ciudad ciudad = ciudades[ciudadIndex];
+                direccion.ciudad = ciudad.id;
+            }
+            
             int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
             direccion.codigoPostal = postalCodeId;
             direccion.localidad = localidadTxt.Text;
-            direccion.ciudad = ciudad.id;
             
-
-            direccionService.CreateDireccion(direccion);
+            direccionService.CreateDireccion(direccion, false);
 
             proovedor.direccion = direccion;
             proovedor.usuario = usuario.userName;
@@ -143,9 +177,25 @@ namespace FrbaOfertas.AbmUsuario
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
-            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm();
+            ABMUsuarioAltaForm altaUsuario = new ABMUsuarioAltaForm(isFromLogin,null,null);
             this.Dispose();
             altaUsuario.Show();
+        }
+        
+        private void solo_numero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+            }
+        }
+
+        private void AltaProovedorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }

@@ -33,5 +33,30 @@ namespace FrbaOfertas.Service
         {
             return proovedorRepository.getProveedorConUsuario(userName);
         }
+
+        public List<Proovedor> searchProovedoresPorFiltro(string razonsocialFiltro, string cuitFiltro, string mailFiltro)
+        {
+            return proovedorRepository.searchProovedoresPorFiltro(razonsocialFiltro, cuitFiltro, mailFiltro);
+        }
+
+        public void Delete(int id)
+        {
+            proovedorRepository.Delete(id);
+        }
+
+        public void update(Proovedor proveedor)
+        {
+            proovedorRepository.update(proveedor);
+        }
+
+        public bool esRazonSocialRepetido(int idProv, string razonSocial)
+        {
+            return proovedorRepository.esRazonSocialRepetido(idProv, razonSocial);
+        }
+
+        public bool esCUITRepetido(int idProv, string cuit)
+        {
+            return proovedorRepository.esCUITRepetido(idProv, cuit);
+        }
     }
 }

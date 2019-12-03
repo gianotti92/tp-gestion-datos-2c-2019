@@ -20,14 +20,28 @@ namespace FrbaOfertas.AbmUsuario
 
         private void CargarUsuarios()
         {
-            List<Usuario> usuarios = UsuarioService.GetAll();
-            this.dataGridView1.DataSource = new BindingSource(usuarios, null);
+            if (! (UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.PROVEEDOR) 
+                || UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.CLIENTE)))
+            {
+                List<Usuario> usuarios = UsuarioService.GetAll();
+                this.dataGridView1.DataSource = new BindingSource(usuarios, null);
+            }
+            else
+            {
+                List<Usuario> usuarios = new List<Usuario>();
+                usuarios.Add(UsuarioUtil.Usuario);
+                this.dataGridView1.DataSource = new BindingSource(usuarios, null);
+
+            }
+                
+
+
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ABMUsuarioAltaForm abmUsuarioAltaForm = new ABMUsuarioAltaForm();
+            ABMUsuarioAltaForm abmUsuarioAltaForm = new ABMUsuarioAltaForm(false,null, null);
             abmUsuarioAltaForm.Show();
         }
 
@@ -55,6 +69,10 @@ namespace FrbaOfertas.AbmUsuario
             }
         }
 
-        
+        private void ABMUsuarioForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
     }
 }

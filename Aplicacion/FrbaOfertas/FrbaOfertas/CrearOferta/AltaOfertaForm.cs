@@ -71,27 +71,51 @@ namespace FrbaOfertas.CrearOferta
 
         private void CrearBtn_Click_1(object sender, EventArgs e)
         {
-            Oferta oferta = new Oferta();
-            oferta.descripcion = DescripcionTxt.Text;
-            oferta.precio = int.Parse(PrecioTxt.Text);
-            oferta.precioLista = int.Parse(PrecioListaTxt.Text);
-            oferta.stockDisponible = int.Parse(stockTxt.Text);
-            // fecha debe ser igual o mayor a la fecha actual
+            try
+            {
+                validarDatosOferta();
+                Oferta oferta = new Oferta();
+                oferta.descripcion = DescripcionTxt.Text;
+                oferta.precio = int.Parse(PrecioTxt.Text);
+                oferta.precioLista = int.Parse(PrecioListaTxt.Text);
+                oferta.stockDisponible = int.Parse(stockTxt.Text);
+                // fecha debe ser igual o mayor a la fecha actual
+                oferta.fechaPublicacion = fechaPublicPicker.Value;
+                oferta.fechaVencimiento = fechaVencPicker.Value;
+                oferta.cantidadMaximaPorCompra = int.Parse(MaxPorClienteTxt.Text);
+                Proovedor proovedorSeleccionado = (Proovedor) ProovedorCmb.SelectedItem;
 
-            
-            oferta.fechaPublicacion = fechaPublicPicker.Value;
-            oferta.fechaVencimiento = fechaVencPicker.Value;
-            oferta.cantidadMaximaPorCompra = int.Parse(MaxPorClienteTxt.Text);
-            Proovedor proovedorSeleccionado = (Proovedor)ProovedorCmb.SelectedItem;
-           
-            oferta.proovedorId = proovedorSeleccionado.id;
-            
-           oferta.id = ofertaService.saveOferta(oferta);
+                oferta.proovedorId = proovedorSeleccionado.id;
 
-            MessageBox.Show("Se creo la oferta N°: "+oferta.id.ToString() , "Oferta Creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()), new ProveedorService(new ProveedorDao()));
-            this.Hide();
-            form.Show();
+                oferta.id = ofertaService.saveOferta(oferta);
+
+                MessageBox.Show("Se creo la oferta N°: " + oferta.id.ToString(), "Oferta Creada", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                AbmOfertasForm form = new AbmOfertasForm(new OfertaService(new OfertaDao()),
+                    new ProveedorService(new ProveedorDao()));
+                this.Hide();
+                form.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
+        }
+
+        private void validarDatosOferta()
+        {
+            SystemException ex = null;
+            if (string.IsNullOrEmpty(DescripcionTxt.Text)) 
+                ex = new SystemException("Descripción es obligatorio");
+            if (string.IsNullOrEmpty(stockTxt.Text)) 
+                ex = new SystemException("Stock Disponible es obligatorio");
+            if (string.IsNullOrEmpty(MaxPorClienteTxt.Text)) 
+                ex = new SystemException("Cantidad Maxima por Cliente es obligatorio");
+            if (string.IsNullOrEmpty(PrecioListaTxt.Text)) 
+                ex = new SystemException("Precio de Lista es obligatorio");
+            if (string.IsNullOrEmpty(PrecioTxt.Text)) 
+                ex = new SystemException("Precio de Oferta es obligatorio");
+            if (ex != null) throw ex;
         }
 
         private void PrecioTxt_KeyPress(object sender, KeyPressEventArgs e)
@@ -130,6 +154,11 @@ namespace FrbaOfertas.CrearOferta
         private void AltaOfertaForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             System.Windows.Forms.Application.Exit();
+
+        }
+
+        private void fechaPublicPicker_ValueChanged(object sender, EventArgs e)
+        {
 
         }
     }

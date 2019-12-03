@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -31,11 +32,37 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
             return ofertas;
         }
+        public Oferta searchOfertabyId(int id)
+        {
+            SqlCommand cmd_oferta = new SqlCommand("SELECT * FROM GESTION_BDD_2C_2019.OFERTA where id = '" + id + "'", ConnectionQuery.Instance());
+            ConnectionQuery.abrirConexion();
+            SqlDataReader r_rol = cmd_oferta.ExecuteReader();
+            Oferta oferta = new Oferta();
+            if (r_rol.Read())
+            {
+                
+                oferta.id = Convert.ToInt32(r_rol["ID"]);
+                oferta.idold = Convert.ToString(r_rol["IDold"]);
+                oferta.proovedorId = Convert.ToInt32(r_rol["PROV_ID"]);
+                oferta.precio = Convert.ToInt64(r_rol["PRECIO"]);
+                oferta.precioLista = Convert.ToInt64(r_rol["PRECIO_LISTO"]);
+                oferta.stockDisponible = Convert.ToInt32(r_rol["STOCK_DISPONIBLE"]);
+                oferta.fechaPublicacion = (DateTime)r_rol["FECHA_PUBLIC"];
+                oferta.fechaVencimiento = (DateTime)r_rol["FECHA_VENC"];
+                oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
+                
+            }
+            ConnectionQuery.cerrarConexion();
+            return oferta;
+        }
+
 
         public List<Oferta> searchOfertasVigentes(string descripcion, int provId)
         {
@@ -59,7 +86,6 @@ namespace FrbaOfertas.Dao
                 builder.Append("DESCRIPCION LIKE '%" + descripcion + "%' AND PROV_ID = " + provId);
             }
 
-
             SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
             SqlDataReader r_rol = cmd_oferta.ExecuteReader();
@@ -77,6 +103,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -87,7 +114,7 @@ namespace FrbaOfertas.Dao
         {
             string fechaDia = System.Configuration.ConfigurationManager.AppSettings.Get("fecha_dia");
             
-            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC > '" +fechaDia + "'");
+            StringBuilder builder = new StringBuilder("SELECT * FROM GESTION_BDD_2C_2019.OFERTA WHERE FECHA_VENC >= '" +fechaDia + "'");
             
             SqlCommand cmd_oferta = new SqlCommand(builder.ToString() , ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
@@ -106,6 +133,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_rol["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_rol["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_rol["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_rol["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -127,6 +155,7 @@ namespace FrbaOfertas.Dao
             cmd_oferta.Parameters.Add("@fechaPublicacion", oferta.fechaPublicacion);
             cmd_oferta.Parameters.Add("@fechaVencimiento", oferta.fechaVencimiento);
             cmd_oferta.Parameters.Add("@cantidadMaximaPorCompra", oferta.cantidadMaximaPorCompra);
+            cmd_oferta.Parameters.Add("@descripcion", oferta.descripcion);
 
 
             int id = Convert.ToInt32(cmd_oferta.ExecuteScalar());
@@ -159,6 +188,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime) r_oferta["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime) r_oferta["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_oferta["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();
@@ -187,7 +217,7 @@ namespace FrbaOfertas.Dao
             cmd_oferta.Parameters.Add("@id_proveedor", proveedorId);
             cmd_oferta.Parameters.Add("@fecha_inicio", fechaInicio);
             cmd_oferta.Parameters.Add("@fecha_fin", fechaFin);
-
+           
             SqlDataReader r_oferta = cmd_oferta.ExecuteReader();
             List<Oferta> ofertas = new List<Oferta>();
 
@@ -203,6 +233,7 @@ namespace FrbaOfertas.Dao
                 oferta.fechaPublicacion = (DateTime)r_oferta["FECHA_PUBLIC"];
                 oferta.fechaVencimiento = (DateTime)r_oferta["FECHA_VENC"];
                 oferta.cantidadMaximaPorCompra = Convert.ToInt32(r_oferta["MAX_X_COMPRA"]);
+                oferta.descripcion = Convert.ToString(r_oferta["DESCRIPCION"]);
                 ofertas.Add(oferta);
             }
             ConnectionQuery.cerrarConexion();

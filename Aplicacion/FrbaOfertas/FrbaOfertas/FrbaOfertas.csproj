@@ -45,11 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCliente\AltaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCliente\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmCliente\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmProveedor\AltaProovedorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor\AltaProovedorForm.Designer.cs">
+      <DependentUpon>AltaProovedorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmProveedor\Form1.cs">
       <SubType>Form</SubType>
@@ -175,6 +187,7 @@
     <Compile Include="Entities\EstadoRol.cs" />
     <Compile Include="Entities\Factura.cs" />
     <Compile Include="Entities\Funcionalidad.cs" />
+    <Compile Include="Entities\ListadoTop5Descuento.cs" />
     <Compile Include="Entities\ListadoTop5VendorFact.cs" />
     <Compile Include="Entities\Oferta.cs" />
     <Compile Include="Entities\Proovedor.cs" />
@@ -189,23 +202,17 @@
     <Compile Include="Facturar\FacturarProveedorForm1.Designer.cs">
       <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\TopCincoMayorDescuentoForm.Designer.cs">
-      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\TopCincoRecaudacionForm.cs">
       <SubType>Form</SubType>
@@ -246,6 +253,18 @@
     <Compile Include="Service\UsuarioService.cs" />
     <Compile Include="Utils\FuncionalidadUtil.cs" />
     <Compile Include="Utils\UsuarioUtil.cs" />
+    <EmbeddedResource Include="AbmCliente\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\AltaProovedorForm.resx">
+      <DependentUpon>AltaProovedorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AltaRolViewForm.resx">
       <DependentUpon>AltaRolViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,14 +310,11 @@
     <EmbeddedResource Include="Facturar\FacturarProveedorForm1.resx">
       <DependentUpon>FacturarProveedorForm1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\TopCincoMayorDescuentoForm.resx">
-      <DependentUpon>TopCincoMayorDescuentoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\TopCincoRecaudacionForm.resx">
       <DependentUpon>TopCincoRecaudacionForm.cs</DependentUpon>
@@ -312,6 +328,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\FrbaOfertas.Entities.Compra.datasource" />
     <None Include="Properties\DataSources\FrbaOfertas.Entities.Proovedor.datasource" />
     <None Include="Properties\DataSources\FrbaOfertas.Entities.Rol.datasource" />
     <None Include="Properties\Settings.settings">

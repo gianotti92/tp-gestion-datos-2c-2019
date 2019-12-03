@@ -1,5 +1,6 @@
 ﻿using FrbaOfertas.Entities;
 using FrbaOfertas.Service;
+using FrbaOfertas.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,23 @@ namespace FrbaOfertas.AbmUsuario
             CargarTiposUsuario();
             CargarRoles();
             CargarUsuario(usuario);
+            habilitarBotones();
+        }
+
+        private void habilitarBotones()
+        {
+            if (!((UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.ADMIN)
+          || UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.ADMINISTRACION))))
+            {
+                cbTipoUsuario.Visible = false;
+                cbRol.Visible = false;
+                lblRol.Visible = false;
+                btnAgregarRol.Visible = false;
+                btnEliminarRol.Visible = false;
+                lbRoles.Visible = false;
+                lblTipoUsuario.Visible = false;
+
+            }
         }
 
         private void CargarTiposUsuario()
@@ -36,10 +54,12 @@ namespace FrbaOfertas.AbmUsuario
         }
 
         private void CargarRoles()
-        {
+        {   
             roles = RolService.GetAll();
             cbRol.Items.Add("Seleccionar");
             roles.ForEach(x => cbRol.Items.Add(x.nombre));
+        
+
         }
 
         private void CargarUsuario(Usuario usuario)
@@ -66,6 +86,8 @@ namespace FrbaOfertas.AbmUsuario
                     rolesSeleccionados.Add(rol);
                 }
             }
+            else
+                 MessageBox.Show("Solo se permite agregar 1 Rol.");
         }
 
         private void btnEliminarRol_Click(object sender, EventArgs e)
@@ -100,7 +122,7 @@ namespace FrbaOfertas.AbmUsuario
                 Usuario usuario = new Usuario();
                 usuario.userName = txtUsername.Text;
                 usuario.contrasena = txtPassword.Text;
-                usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex-1));
+                usuario.tipoUsuario = (TipoUsuario)(Convert.ToInt32(cbTipoUsuario.SelectedIndex));
                 usuario.roles = rolesSeleccionados;
 
                 UsuarioService.UpdateUsuario(usuario);
@@ -136,6 +158,12 @@ namespace FrbaOfertas.AbmUsuario
             }
 
             return esValido;
+        }
+
+        private void ABMUsuarioEditarForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }

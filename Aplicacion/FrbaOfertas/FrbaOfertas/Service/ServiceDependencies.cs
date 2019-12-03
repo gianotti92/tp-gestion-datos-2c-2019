@@ -15,6 +15,12 @@ namespace FrbaOfertas.Service
         private static RolService RolService { get; set; }
         private static UsuarioDao UsuarioDao {get; set;}
 
+        private static FuncionalidadPorRolService _funcionalidadPorRolService { get; set; }
+
+        private static FuncionalidadService FuncionalidadService{ get; set; }
+
+        private static UsuarioLoginService _usuarioLoginService { get; set; }
+
         private static OfertaService ofertaService { get; set; }
         private static UsuarioService UsuarioService {get; set;}
         private static DireccionService direccionService { get; set; }
@@ -35,6 +41,20 @@ namespace FrbaOfertas.Service
         private static CompraDao compraDao { get; set; }
         private static CompraService compraService { get; set; }
 
+        private static ListadosDao listadoDao { get; set; }
+        private static ListadoService listadoService { get; set; }
+
+        private static FuncionalidadDao _funcionalidadDao { get; set; }
+
+        public static FuncionalidadDao getFuncionalidadDao()
+        {
+            if (_funcionalidadDao == null)
+            {
+                _funcionalidadDao = new FuncionalidadDao();
+            }
+
+            return _funcionalidadDao;
+        }
 
         public static RolDao GetRolDao()
         {
@@ -181,6 +201,56 @@ namespace FrbaOfertas.Service
                 compraService = new CompraService(compraDao);
             }
             return compraService;
+        }
+
+        public static ListadosDao getListadoDao()
+        {
+            if (listadoDao == null)
+            {
+                listadoDao = new ListadosDao();
+            }
+
+            return listadoDao;
+        }
+
+        public static ListadoService getListadoService()
+        {
+            if (listadoService == null)
+            {
+                listadoDao = getListadoDao();
+                listadoService = new ListadoService(listadoDao);
+            }
+            return listadoService;
+        }
+
+        public static UsuarioLoginService getUsuarioLoginService()
+        {
+            if (_usuarioLoginService == null)
+            {
+                _usuarioLoginService = new UsuarioLoginService(getFuncionalidadService(), GetRolService(),
+                    GetUsuarioService());
+            }
+
+            return _usuarioLoginService;
+        }
+
+        public static FuncionalidadService getFuncionalidadService()
+        {
+            if (FuncionalidadService == null)
+            {
+                FuncionalidadService = new FuncionalidadService(getFuncionalidadDao());
+            }
+            return FuncionalidadService;
+        }
+
+        public static FuncionalidadPorRolService getFuncionalidadPorRolService()
+        {
+            if (_funcionalidadPorRolService == null)
+            {
+                _funcionalidadPorRolService = new FuncionalidadPorRolService(GetRolService(), getFuncionalidadService());
+            }
+
+            return _funcionalidadPorRolService;
         }
     }
 }

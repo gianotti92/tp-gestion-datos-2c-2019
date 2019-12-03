@@ -64,17 +64,36 @@ namespace FrbaOfertas.AbmRol
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Rol rolAGuardar = new Rol();
-            rolAGuardar.activo = Boolean.Parse(habilitadoComboBox.Text);
-            rolAGuardar.funcionalidades = funcionalidadesSeleccionadas;
-            rolAGuardar.nombre = nombreTxt.Text; 
-            rolService.Create(rolAGuardar);
-            this.Hide();
+
+            try {
+                validarCreacion();
+                Rol rolAGuardar = new Rol();
+                rolAGuardar.activo = Boolean.Parse(habilitadoComboBox.Text);
+                rolAGuardar.funcionalidades = funcionalidadesSeleccionadas;
+                rolAGuardar.nombre = nombreTxt.Text;
+                rolService.Create(rolAGuardar);
+                this.Hide();
+
+                RolRepository rolRepository = new RolDao();
+                FuncionalidadPorRolService funcionalidadPorRolService = new FuncionalidadPorRolService(rolService, new FuncionalidadService(new FuncionalidadDao()));
+                AbmRolMenuForm form = new AbmRolMenuForm(rolService, funcionalidadPorRolService);
+                form.Show();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Error:" + ex.Message);
+                    }
+
+        }
+
+        private void validarCreacion()
+        {
+
+            if (nombreTxt.Text.Equals("") || rolesListBox.Items.Count.Equals(0))
+            {
+                SystemException ex = new SystemException("Debe completar el nombre y la lista de Funcionalidades");
+                throw ex;
+            }
             
-            RolRepository rolRepository = new RolDao();
-            FuncionalidadPorRolService funcionalidadPorRolService = new FuncionalidadPorRolService(rolService, new FuncionalidadService(new FuncionalidadDao()));
-            AbmRolMenuForm form = new AbmRolMenuForm(rolService,funcionalidadPorRolService);
-            form.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -82,6 +101,12 @@ namespace FrbaOfertas.AbmRol
             this.Hide();
             AbmRolMenuForm form = new AbmRolMenuForm(rolService, new FuncionalidadPorRolService(rolService,funcionalidadService));
             form.Show();
+        }
+
+        private void AltaRolViewForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
         }
     }
 }

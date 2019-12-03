@@ -75,10 +75,26 @@ IF(OBJECT_ID('SP_SAVE_COMPRA') IS NOT NULL)
 	DROP PROCEDURE SP_SAVE_COMPRA
 IF(OBJECT_ID('SP_TOP5PROVMAYORFACTURACION') IS NOT NULL)
 	DROP PROCEDURE SP_TOP5PROVMAYORFACTURACION
+IF(OBJECT_ID('SP_TOP5MAYORDESCUENTO') IS NOT NULL)
+	DROP PROCEDURE SP_TOP5MAYORDESCUENTO
 IF(OBJECT_ID('SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER') IS NOT NULL)
 	DROP PROCEDURE SP_GET_OFERTAS_ADQUIRIDAS_BY_PROVIDER
-	
+IF(OBJECT_ID('SP_ELIMINAR_CLIENTE') IS NOT NULL)
+	DROP PROCEDURE SP_ELIMINAR_CLIENTE
+IF(OBJECT_ID('SP_HABILITAR_CLIENTE') IS NOT NULL)
+	DROP PROCEDURE SP_HABILITAR_CLIENTE
+IF(OBJECT_ID('SP_ELIMINAR_PROVEEDOR') IS NOT NULL)
+	DROP PROCEDURE SP_ELIMINAR_PROVEEDOR
+IF(OBJECT_ID('SP_UPDATE_PROVIDER') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_PROVIDER
+IF(OBJECT_ID('SP_UPDATE_DIRECCION') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_DIRECCION
+IF(OBJECT_ID('SP_UPDATE_COMPRA') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_COMPRA
+IF(OBJECT_ID('SP_UPDATE_FECHA_CONSUMO') IS NOT NULL)
+	DROP PROCEDURE SP_UPDATE_FECHA_CONSUMO
 GO
+
 
 CREATE PROCEDURE SP_CREAR_TABLAS
 AS
@@ -240,7 +256,7 @@ AS
 		OFERTA_ID INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.OFERTA(ID),
 		CLIENTE_ID NUMERIC(18,0) FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CLIENTE(ID),
 		FECHA DATETIME,
-		CUPON DECIMAL(18,2) NULL,
+		--CUPON DECIMAL(18,2) NULL,
 		FECHA_CONSUMO DATETIME NULL,
 		FACTURA_ID INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.FACTURA(ID),
 
@@ -280,7 +296,7 @@ GO
 
 		/* DATOS FUNCIONALIDAD */
 		INSERT INTO GESTION_BDD_2C_2019.FUNCIONALIDAD (id, nombre) 
-		VALUES	(1, 'Login y seguridad'),
+		VALUES	(1, 'Entrega Oferta'),
 				(2, 'ABM de Rol'),
 				(3, 'Registro de Usuario'),
 				(4, 'ABM de Cliente'),
@@ -295,22 +311,15 @@ GO
 		INSERT INTO GESTION_BDD_2C_2019.ROL(nombre) 
 		VALUES	('Cliente'),
 				('Proveedor'),
-				('Administrativo');
+				('Administrativo'),
+				('Administrador General');
 				
 
-		/* DATOS ROL_FUNCION le doy todo el poder al administrativo */
+		/* DATOS ROL_FUNCION le doy todo el poder al administrativo y ademas funcionalidad x usuario 
+		1 Cliente, 2 Provedor, 3 Admin*/
 		INSERT INTO GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD(rol_id, funcionalidad_id) 
-		VALUES	(3, 1),
-				(3, 2),
-				(3, 3),
-				(3, 4),
-				(3, 5),
-				(3, 6),
-				(3, 7),
-				(3, 8),
-				(3, 9),
-				(3, 10),
-				(2,8);
+		VALUES	(3,10),(3, 2),(3, 4),(3, 5), (3, 9), (3, 8),(1, 3), (1, 6), (1, 7), (2, 8),(2, 3), (2, 1), (4, 1), (4,2),(4,3),(4,4),(4,5),(4,6), (4,7), (4,8),(4,9),(4,10)
+					
 
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.USUARIO
 	(username,tipo,pass,habilitado,intentos)
@@ -492,9 +501,27 @@ SELECT DISTINCT
 	(username,tipo,pass,habilitado,intentos)
      VALUES ('admin','3',HASHBYTES('SHA2_256','w23e'),1,0)
 	 
+	 INSERT INTO GESTION_BDD_2C_2019.CLIENTE
+	 (NOMBRE, APELLIDO, DNI, MAIL, SALDO, USUARIO, TELEFONO, DIRECCION, FNANCIAMIENTO)
+	 values
+	 ('', '', 0, '', 10000, 'admin', 0, 1, '1946-06-29 00:00:00.000') 
+
+	 INSERT INTO GESTION_BDD_2C_2019.PROVEEDOR
+	 (CONTACTO, USUARIO, RAZON_SOCIAL, MAIL, CUIT,TELEFONO, RUBRO, DIRECCION)
+	 values
+	 ('','admin','','', '', 0, 1, 1)
+
 	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
 	(rol_id,username)
-     VALUES (3, 'admin')
+     VALUES (4, 'admin')
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.Usuario
+	(username,tipo,pass,habilitado,intentos)
+     VALUES ('administrativo','3',HASHBYTES('SHA2_256','w23e'),1,0)
+	 
+	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
+	(rol_id,username)
+     VALUES (3, 'administrativo')
 
 /*
 	SELECT M.Oferta_Codigo,m.Cli_Dni
@@ -628,6 +655,39 @@ GO
 		END
 		GO
 
+		CREATE PROCEDURE SP_UPDATE_PROVIDER
+			(
+			@id_prov NUMERIC(18,0),
+			@razonSocial NVARCHAR(255),
+			@tel NUMERIC(18),
+			@direc INT,
+			@ciut NVARCHAR(20),
+			@rubro INT,
+			@mail NVARCHAR(255),
+			@contacto NVARCHAR(255),
+            
+			@calle VARCHAR(255),
+			@nro VARCHAR(10),
+			@piso NVARCHAR(255),
+			@dpto  VARCHAR(10),
+			@localidad NVARCHAR(255),
+			@cp INT,
+			@ciudad INT)
+			AS 
+			BEGIN
+				
+				update GESTION_BDD_2C_2019.DIRECCION set CALLE = @calle, DPTO = @dpto, NUMERO = @nro,
+				CODIGO_POSTAL = @cp, CIUDAD = @ciudad, PISO = @piso, LOCALIDAD = @localidad
+				where id = @direc
+				
+				update GESTION_BDD_2C_2019.PROVEEDOR set RAZON_SOCIAL = @razonSocial, TELEFONO = @tel,
+				CUIT = @ciut, RUBRO = @rubro, MAIL = @mail, CONTACTO = @contacto, DIRECCION = @direc
+				where ID = @id_prov
+				
+			END
+			GO
+	
+
 		CREATE PROCEDURE SP_SAVE_USER
 		(@username VARCHAR(40),
 		 @pass VARCHAR(40),
@@ -639,6 +699,7 @@ GO
 		insert into GESTION_BDD_2C_2019.USUARIO (username, pass, tipo) 
 		values (@username,HASHBYTES('SHA2_256',@pass) , @tipo);
 		END
+		
 		GO
 
 		CREATE PROCEDURE SP_UPDATE_USER
@@ -690,6 +751,13 @@ GO
 			nombre = @nombre,
 			estado = @estado
 		WHERE id = @id; 
+
+		if (@estado = 0)
+		begin
+			delete from GESTION_BDD_2C_2019.ROL_USUARIO where rol_id = @id;
+		end
+
+
 		END
 		GO
 
@@ -709,12 +777,22 @@ GO
 		 @piso NVARCHAR(255),
 		 @depto VARCHAR(10),
 		 @localidad NVARCHAR(255),
-		 @id_cod_postal INT)
+		 @id_cod_postal INT,
+		 @id_ciudad INT)
 		 AS
 		 BEGIN
-			INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
-			OUTPUT inserted.id
-			VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+			IF @id_ciudad = -1
+			BEGIN
+				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
+				OUTPUT inserted.id
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+			END
+			ELSE
+			BEGIN
+				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL, CIUDAD)
+				OUTPUT inserted.id
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal, @id_ciudad)
+			END
 		 END
 		GO
 
@@ -726,13 +804,14 @@ GO
 		 @telefono NUMERIC(18),
 		 @fechaNac datetime,
 		 @direccion_id INT,
-		 @usuario_id VARCHAR(40))
+		 @usuario_id VARCHAR(40),
+		 @saldo DECIMAL(18,2))
 	
 		AS
 		BEGIN
 
-		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO) 
-		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id);
+		insert into GESTION_BDD_2C_2019.CLIENTE (APELLIDO, DNI, MAIL, TELEFONO, FNANCIAMIENTO, NOMBRE, DIRECCION, USUARIO, SALDO) 
+		values ( @apellido, @dni, @mail, @telefono, @fechaNac, @nombre, @direccion_id, @usuario_id, @saldo);
 		END
 		GO
 
@@ -766,14 +845,37 @@ GO
 
 		GO
 
+		CREATE PROCEDURE SP_UPDATE_DIRECCION
+		(	@id INT,
+			@calle VARCHAR(255),
+			@nro VARCHAR(10),
+			@piso NVARCHAR(255),
+			@dpto  VARCHAR(10),
+			@localidad NVARCHAR(255),
+			@cp INT)
+		AS
+		BEGIN
+			update GESTION_BDD_2C_2019.DIRECCION set CALLE = @calle,
+				NUMERO = @nro, PISO = @piso, DPTO = @dpto, CODIGO_POSTAL = @cp,
+				LOCALIDAD = @localidad where ID = @id
+		END
+		GO
+
+
 		/******SP delete rol ***********/
 		CREATE PROCEDURE SP_DELETE_ROL	
 		(@rol_id INT)
 		AS
 		BEGIN
 			delete from GESTION_BDD_2C_2019.ROL_USUARIO where rol_id = @rol_id;
-			delete from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD where rol_id = @rol_id
-			delete from GESTION_BDD_2C_2019.ROL where id = @rol_id
+		--delete from GESTION_BDD_2C_2019.ROL_FUNCIONALIDAD where rol_id = @rol_id
+		--	delete from GESTION_BDD_2C_2019.ROL where id = @rol_id
+			
+			UPDATE GESTION_BDD_2C_2019.ROL 
+			SET
+				estado = 0
+				WHERE id = @rol_id; 
+
 		END
 		GO
 
@@ -797,15 +899,16 @@ GO
 		@stockDisponible numeric,
 		@fechaPublicacion datetime,
 		@fechaVencimiento datetime,
-		@cantidadMaximaPorCompra numeric
+		@cantidadMaximaPorCompra numeric,
+		@descripcion NVARCHAR(255) 
 		)
 		AS
 		BEGIN
 			insert into GESTION_BDD_2C_2019.OFERTA 
-			(PRECIO,PROV_ID, PRECIO_LISTO, STOCK_DISPONIBLE, FECHA_PUBLIC, FECHA_VENC, MAX_X_COMPRA)
+			(PRECIO,PROV_ID, PRECIO_LISTO, STOCK_DISPONIBLE, FECHA_PUBLIC, FECHA_VENC, MAX_X_COMPRA, DESCRIPCION)
 			OUTPUT inserted.ID
 			values
-			( @precio, @proovedor_id,@precioLista,@stockDisponible,@fechaPublicacion,@fechaVencimiento,@cantidadMaximaPorCompra)
+			( @precio, @proovedor_id,@precioLista,@stockDisponible,@fechaPublicacion,@fechaVencimiento,@cantidadMaximaPorCompra, @descripcion)
 		END
 		GO
 
@@ -886,11 +989,11 @@ GO
 		@fecha_fin DATETIME)
 		AS
 		BEGIN
-			SELECT o.* FROM GESTION_BDD_2C_2019.OFERTA o
-			JOIN GESTION_BDD_2C_2019.COMPRAS c
-			ON o.ID = c.ID
-			WHERE o.PROV_ID = @id_proveedor
-			AND o.FECHA_PUBLIC >= @fecha_inicio AND o.FECHA_VENC <= @fecha_fin 
+			SELECT DISTINCT o.* from GESTION_BDD_2C_2019.COMPRAS c
+			JOIN GESTION_BDD_2C_2019.OFERTA o
+			ON o.ID = c.OFERTA_ID
+			WHERE o.PROV_ID = @id_proveedor AND @fecha_inicio <= c.FECHA AND c.FECHA <= @fecha_fin
+				  AND C.FACTURA_ID IS NULL
 		END
 		GO
 
@@ -913,6 +1016,7 @@ GO
 			@idOferta INT,
 			@idCliente NUMERIC(18,0),
 			@fecha DATETIME
+			--@cantidad int
 		)
 		AS
 		BEGIN
@@ -920,43 +1024,156 @@ GO
 			OUTPUT inserted.ID
 			VALUES 
 				(@idOferta, @idCliente, @fecha)
+
+			update GESTION_BDD_2C_2019.OFERTA
+			set STOCK_DISPONIBLE = (
+			select (STOCK_DISPONIBLE-1 )
+			from GESTION_BDD_2C_2019.OFERTA o
+			where o.ID = @idOferta)
+			where OFERTA.ID = @idOferta
+
+		END
+		GO
+		
+		CREATE PROCEDURE SP_ELIMINAR_CLIENTE
+		(@id INT)
+		AS
+		BEGIN
+			declare @id_usuario varchar(40)
+
+			set @id_usuario = (select USUARIO from GESTION_BDD_2C_2019.CLIENTE where ID = @id)
+			
+			update GESTION_BDD_2C_2019.USUARIO set habilitado = 0 where username = @id_usuario
 		END
 		GO
 
-CREATE PROCEDURE SP_TOP5PROVMAYORFACTURACION
- @anio int, @semestre int
-AS
-BEGIN	
-	
-	DECLARE @mes_comienzo_semestre int
-	DECLARE @mes_fin_semestre int
-	DECLARE @fecha_comienzo_semestre datetime
-	DECLARE @fecha_fin_semestre datetime
-	
-		IF @semestre = 1	
-		BEGIN	
-		SET @mes_comienzo_semestre = 1	
-		SET @mes_fin_semestre = 6
-		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
-		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+CREATE PROCEDURE SP_HABILITAR_CLIENTE
+	(@id INT)
+	AS
+	BEGIN
+		declare @id_usuario varchar(40)
+		set @id_usuario = (select USUARIO from GESTION_BDD_2C_2019.CLIENTE where ID = @id)
+		update GESTION_BDD_2C_2019.USUARIO set habilitado = 1 where username = @id_usuario
+	END
+GO
+
+		CREATE PROCEDURE SP_ELIMINAR_PROVEEDOR
+		(@id INT)
+		AS
+		BEGIN
+			declare @id_usuario varchar(40)
+
+			set @id_usuario = (select c.USUARIO from GESTION_BDD_2C_2019.PROVEEDOR c where ID = @id)
+			
+			update GESTION_BDD_2C_2019.USUARIO set habilitado = 0 where username = @id_usuario
 		END
-	
-		IF @semestre = 2	
+		GO
+
+		CREATE PROCEDURE SP_TOP5PROVMAYORFACTURACION
+		 @anio int, @semestre int
+		AS
 		BEGIN	
-		SET @mes_comienzo_semestre = 7	
-		SET @mes_fin_semestre = 12	
-		SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
-		SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+	
+			DECLARE @mes_comienzo_semestre int
+			DECLARE @mes_fin_semestre int
+			DECLARE @fecha_comienzo_semestre datetime
+			DECLARE @fecha_fin_semestre datetime
+	
+				IF @semestre = 1	
+				BEGIN	
+				SET @mes_comienzo_semestre = 1	
+				SET @mes_fin_semestre = 6
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+				END
+	
+				IF @semestre = 2	
+				BEGIN	
+				SET @mes_comienzo_semestre = 7	
+				SET @mes_fin_semestre = 12	
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+				END
+
+				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO) as total_facturado
+				FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
+				JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
+				JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
+				WHERE C.FECHA >= @fecha_comienzo_semestre
+				AND C.FECHA <= @fecha_fin_semestre
+				GROUP BY O.PROV_ID, P.RAZON_SOCIAL
+				order by 3 desc
 		END
 
-		SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO)
-		FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
-		JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
-		JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
-		WHERE C.FECHA >= @fecha_comienzo_semestre
-		AND C.FECHA <= @fecha_fin_semestre
-		GROUP BY O.PROV_ID, P.RAZON_SOCIAL
-		order by 3 desc
+		GO
+
+		CREATE PROCEDURE SP_TOP5MAYORDESCUENTO
+		 @anio int, @semestre int
+		AS
+		BEGIN	
+	
+			DECLARE @mes_comienzo_semestre int
+			DECLARE @mes_fin_semestre int
+			DECLARE @fecha_comienzo_semestre datetime
+			DECLARE @fecha_fin_semestre datetime
+	
+				IF @semestre = 1	
+				BEGIN	
+				SET @mes_comienzo_semestre = 1	
+				SET @mes_fin_semestre = 6
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 30, 0, 0, 0, 0)		
+				END
+	
+				IF @semestre = 2	
+				BEGIN	
+				SET @mes_comienzo_semestre = 7	
+				SET @mes_fin_semestre = 12	
+				SET @fecha_comienzo_semestre = DATETIMEFROMPARTS(@anio, @mes_comienzo_semestre, 1, 0, 0, 0, 0)
+				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
+				END
+
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
+				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
+				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
+				WHERE o.FECHA_PUBLIC >= @fecha_comienzo_semestre
+				AND o.FECHA_PUBLIC <= @fecha_fin_semestre
+				GROUP BY  p.ID, P.RAZON_SOCIAL
+				order by 3 desc
+		END
+
+		GO
+
+		create procedure SP_UPDATE_COMPRA
+		(@id_compra INT,
+		 @factura_id int)
+		 as
+		 begin
+			update GESTION_BDD_2C_2019.COMPRAS set FACTURA_ID = @factura_id
+			where ID = @id_compra
+		 end
+		
+		go
+
+create procedure SP_UPDATE_FECHA_CONSUMO
+(@compra_id INT,
+@fecha_consumo datetime)
+as
+	begin
+		update GESTION_BDD_2C_2019.COMPRAS set FECHA_CONSUMO = @fecha_consumo
+					where ID = @compra_id 
+	end
+go
 
 
-END
+
+/*exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
+exec SP_TOP5MAYORDESCUENTO '2020', '1'
+
+go
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
+				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
+				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
+				GROUP BY  p.ID, P.RAZON_SOCIAL
+				order by 3 desc
+				*/

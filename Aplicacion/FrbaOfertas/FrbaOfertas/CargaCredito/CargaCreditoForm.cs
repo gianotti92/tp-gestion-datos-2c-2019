@@ -4,6 +4,7 @@ using FrbaOfertas.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -81,13 +82,37 @@ namespace FrbaOfertas.CargaCredito
                 cargaSaldo.codigoSeguridadTarjeta = Convert.ToInt32(txtCodigoSeguridad.Text);
 
                 CargarSalgoService.SaveCargarSaldo(cargaSaldo);
-
+                MessageBox.Show("Credito cargado correctamente");
                 Volver();
             }
         }
 
         private bool SonCamposValidos()
         {
+            bool sonNumericos = true;
+
+            try
+            {
+                Convert.ToInt32(txtNumeroTarjeta.Text);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("La cantidad de números de la tarjeta de credito sobrepasa a la cantidad esperada");
+                sonNumericos = false;
+            }
+            
+            try
+            {
+               
+                Convert.ToDouble(txtMonto.Text);
+                Convert.ToInt32(txtCodigoSeguridad.Text);
+            }
+            catch (Exception e)
+            {
+                sonNumericos = false;
+            }
+
+
             if(txtMonto.Text == "" || txtNumeroTarjeta.Text == "" || txtNombreTarjeta.Text == "" || txtCodigoSeguridad.Text == "")
             {
                 MessageBox.Show("No puede haber campos vacios");
@@ -98,12 +123,36 @@ namespace FrbaOfertas.CargaCredito
                 MessageBox.Show("Debe seleccionar un tipo de pago");
                 return false;
             }
-            if (Convert.ToDouble(txtMonto.Text) < 0)
+            if (sonNumericos && Convert.ToDouble(txtMonto.Text) < 0)
             {
                 MessageBox.Show("El monto a acreditar no puede ser negativo");
                 return false;
             }
+
+            if (!sonNumericos)
+            {
+                MessageBox.Show("Campos numericos invalidos");
+                return false;  
+            }
+            
+            DateTime fechaDelDia = DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]);
+            if (DateTime.Parse(dtpFechaVencimientoTarjeta.Text) < fechaDelDia)
+            {
+                MessageBox.Show("La tarjeta no puede estar vencida");
+                return false;
+            }
+            
             return true;
+        }
+
+        private void txtMonto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar que la tecla presionada no sea CTRL u otra tecla no numerica
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                MessageBox.Show("Solo se permiten numeros Enteros ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+            }
         }
     }
 }
