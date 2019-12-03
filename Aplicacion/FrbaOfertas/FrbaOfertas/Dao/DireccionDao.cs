@@ -33,7 +33,7 @@ namespace FrbaOfertas.Dao
                 direccion.localidad = r_direccion["LOCALIDAD"].ToString();
                 if (!string.IsNullOrEmpty(r_direccion["CIUDAD"].ToString()))
                     direccion.ciudad = Convert.ToInt32(r_direccion["CIUDAD"]);
-                direccion.codigoPostal = Convert.ToInt32(r_direccion["CODIGO_POSTAL"]);
+                direccion.codigoPostal = (r_direccion["CODIGO_POSTAL"]).ToString();
             }
 
           
