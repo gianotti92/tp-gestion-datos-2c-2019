@@ -14,8 +14,11 @@ namespace FrbaOfertas.ConsumoOferta
     {
         private CompraService compraService;
         private List<Compra> ofertasCompradas;
-        public ConsumoOferta(CompraService compraService)
+        private OfertaService ofertaService;
+        private DateTime fechaDelDia = DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]);
+        public ConsumoOferta(CompraService compraService, OfertaService ofertaService)
         {
+            this.ofertaService = ofertaService;
             this.compraService = compraService;
             InitializeComponent();
             //cargarDataDridView();
@@ -28,8 +31,8 @@ namespace FrbaOfertas.ConsumoOferta
             //.ToList();
 
             //OfertaDataGridView.DataSource = new BindingSource(ofertasCompradas, null);
-            compraBindingSource.DataSource = ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.fechaConsumo == null)
-        .ToList();
+            compraBindingSource.DataSource = ofertasCompradas = compraService.GetTodasCompras().Where(compra => compra.fechaConsumo == null &&
+                ofertaService.searchOfertabyId(compra.idOferta).fechaVencimiento >= fechaDelDia ).ToList();
         }
 
         private void volverBtn1_Click(object sender, EventArgs e)
@@ -77,10 +80,15 @@ namespace FrbaOfertas.ConsumoOferta
             Compra ofertaConsumida = (Compra)OfertaDataGridView.CurrentRow.DataBoundItem;
             if (ofertaConsumida.fechaConsumo.Equals(null))
             {
-                compraService.updateCompra(ofertaConsumida.id, DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
+                if (ofertaService.searchOfertabyId(ofertaConsumida.idOferta).fechaVencimiento >= fechaDelDia)
+                {
+                    compraService.updateCompra(ofertaConsumida.id, DateTime.Parse(ConfigurationManager.AppSettings["fecha_dia"]));
 
-                MessageBox.Show("la compra: " + ofertaConsumida.id + " fue consumida");
-                cargarDataDridView();
+                    MessageBox.Show("la compra: " + ofertaConsumida.id + " fue consumida");
+                    cargarDataDridView();
+                }
+                else
+                    MessageBox.Show("la compra se encuentra vencida");
             }
             else
                 MessageBox.Show("la compra ya se encuentra consumida");

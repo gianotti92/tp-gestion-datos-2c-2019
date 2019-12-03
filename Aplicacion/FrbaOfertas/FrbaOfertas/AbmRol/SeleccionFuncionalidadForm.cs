@@ -50,7 +50,7 @@ namespace FrbaOfertas.AbmRol
         private void button1_Click(object sender, EventArgs e)
         {
             this.Dispose();
-            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService(), ServiceDependencies.getOfertaService());
             entregaCupon.Show();
         }
 
