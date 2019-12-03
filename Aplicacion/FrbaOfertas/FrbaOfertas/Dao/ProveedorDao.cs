@@ -36,6 +36,8 @@ namespace FrbaOfertas.Dao
                 proovedor.mail = Convert.ToString(r_proovedor["MAIL"]);
                 proovedor.telefono = Convert.ToInt32(r_proovedor["TELEFONO"]);
                 proovedor.contacto = Convert.ToString(r_proovedor["CONTACTO"]);
+                proovedor.usuario = Convert.ToString(r_proovedor["USUARIO"]);
+                proovedor.rubro = Convert.ToInt32(r_proovedor["RUBRO"]);
                 Direccion direccion = new Direccion();
                 direccion.id = Convert.ToInt32(r_proovedor["DIRECCION"]);
                 //Direccion direccion = ServiceDependencies.getDireccionDao().GetById(idDIreccion);
@@ -245,15 +247,19 @@ namespace FrbaOfertas.Dao
             ConnectionQuery.cerrarConexion();
         }
 
-        public bool esRazonSocialRepetido(string razonSocial)
+        public bool esRazonSocialRepetido(int idProv, string razonSocial)
         {
-            SqlCommand cmd = new SqlCommand("select * from GESTION_BDD_2C_2019.PROVEEDOR WHERE RAZON_SOCIAL = @razonSocial", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand(
+                "select * from GESTION_BDD_2C_2019.PROVEEDOR WHERE RAZON_SOCIAL = @razonSocial AND id <> @prov_id", 
+                ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
 
             bool razonSocialRepetido = false;
 
             cmd.Parameters.Add("@razonSocial", SqlDbType.VarChar);
+            cmd.Parameters.Add("@prov_id", SqlDbType.Int);
             cmd.Parameters["@razonSocial"].Value = razonSocial;
+            cmd.Parameters["@prov_id"].Value = idProv;
 
             SqlDataReader r_proveedor = cmd.ExecuteReader();
 
@@ -267,16 +273,20 @@ namespace FrbaOfertas.Dao
             return razonSocialRepetido;
         }
 
-        public bool esCUITRepetido(string cuit)
+        public bool esCUITRepetido(int idProv, string cuit)
         {
-            SqlCommand cmd = new SqlCommand("SELECT * from GESTION_BDD_2C_2019.PROVEEDOR WHERE CUIT = @cuit", ConnectionQuery.Instance());
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * from GESTION_BDD_2C_2019.PROVEEDOR WHERE CUIT = @cuit AND id <> @prov_id ", 
+                ConnectionQuery.Instance());
             ConnectionQuery.abrirConexion();
 
             bool cuitRepetido = false;
 
             cmd.Parameters.Add("@cuit", SqlDbType.VarChar);
+            cmd.Parameters.Add("@prov_id", SqlDbType.Int);
             cmd.Parameters["@cuit"].Value = cuit;
-
+            cmd.Parameters["@prov_id"].Value = idProv;
+                
             SqlDataReader r_proveedor = cmd.ExecuteReader();
 
             if (r_proveedor.Read())

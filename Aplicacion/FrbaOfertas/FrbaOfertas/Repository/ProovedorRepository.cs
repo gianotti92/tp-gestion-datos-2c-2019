@@ -12,7 +12,7 @@ namespace FrbaOfertas.Repository
         List<Proovedor> searchProovedoresPorFiltro(string razonsocialFiltro, string cuitFiltro, string mailFiltro);
         void Delete(int id);
         void update(Proovedor proveedor);
-        bool esRazonSocialRepetido(string razonSocial);
-        bool esCUITRepetido(string cuit);
+        bool esRazonSocialRepetido(int idProv, string razonSocial);
+        bool esCUITRepetido(int idProv, string cuit);
     }
 }

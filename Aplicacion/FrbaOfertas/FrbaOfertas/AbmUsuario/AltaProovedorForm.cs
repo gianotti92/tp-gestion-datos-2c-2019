@@ -78,11 +78,11 @@ namespace FrbaOfertas.AbmUsuario
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
-            if (proveedorService.esRazonSocialRepetido(razonSocialTxt.Text))
+            if (proveedorService.esRazonSocialRepetido(0, razonSocialTxt.Text))
                 MessageBox.Show("Existe un proveedor con esa razon social");
             else
             {
-                if (proveedorService.esCUITRepetido(cuitTxt.Text))
+                if (proveedorService.esCUITRepetido(0, cuitTxt.Text))
                     MessageBox.Show("Existe un proveedor con ese cuit");
                 else
                 {
@@ -102,7 +102,8 @@ namespace FrbaOfertas.AbmUsuario
                     }
                     else
                     {
-                        MessageBox.Show("Hay campos con datos incorrectos");
+                        MessageBox.Show("Los campos con * son obligatorios y para aquellos que poseen "
+                        + "un desplegable, se debe seleccionar una opcion de ellas", "Advertencia");
                     }
                 }
             }
@@ -120,11 +121,17 @@ namespace FrbaOfertas.AbmUsuario
                 esnumero = false;
             }
 
-            return !string.IsNullOrEmpty(razonSocialTxt.Text) && !string.IsNullOrEmpty(mailTxt.Text) && !string.IsNullOrEmpty(cuitTxt.Text)&& !string.IsNullOrEmpty(telTxt.Text)&&
+            return !string.IsNullOrEmpty(razonSocialTxt.Text) &&
+                   !string.IsNullOrEmpty(mailTxt.Text) && 
+                   !string.IsNullOrEmpty(cuitTxt.Text) && 
+                   !string.IsNullOrEmpty(telTxt.Text) &&
                    rubroCombo.SelectedIndex != -1 &&
-                   ciudadCombo.SelectedIndex != -1 && !string.IsNullOrEmpty(calleTxt.Text)&&!string.IsNullOrEmpty(nroTxt.Text)&&
-                   !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(pisoTxt.Text)&& !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(dptotxt.Text)&&
-                   !string.IsNullOrEmpty(codigoPostaltxt.Text)&& !string.IsNullOrEmpty(localidadTxt.Text) && esnumero;
+                   ciudadCombo.SelectedIndex != -1 && 
+                   !string.IsNullOrEmpty(calleTxt.Text) &&
+                   !string.IsNullOrEmpty(nroTxt.Text) &&
+                   !string.IsNullOrEmpty(codigoPostaltxt.Text) && 
+                   !string.IsNullOrEmpty(localidadTxt.Text) && 
+                   esnumero;
         }
 
         private void crearProovedor()
@@ -139,22 +146,27 @@ namespace FrbaOfertas.AbmUsuario
 
             int rubroIndex = rubroCombo.SelectedIndex;
 
-            proovedor.rubro = rubros[rubroIndex].id;
-
+            if (rubroIndex >= 0)
+            {
+                proovedor.rubro = rubros[rubroIndex].id;  
+            }
+            
             Direccion direccion = new Direccion();
             direccion.calle = calleTxt.Text;
             direccion.nro = nroTxt.Text;
             direccion.piso = pisoTxt.Text;
             direccion.depto = dptotxt.Text;
             int ciudadIndex = ciudadCombo.SelectedIndex;
-            Ciudad ciudad = ciudades[ciudadIndex];
-
+            if (ciudadIndex >= 0)
+            {
+                Ciudad ciudad = ciudades[ciudadIndex];
+                direccion.ciudad = ciudad.id;
+            }
+            
             int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
             direccion.codigoPostal = postalCodeId;
             direccion.localidad = localidadTxt.Text;
-            direccion.ciudad = ciudad.id;
-
-
+            
             direccionService.CreateDireccion(direccion, false);
 
             proovedor.direccion = direccion;
