@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using FrbaOfertas.Entities;
 using FrbaOfertas.Service;
@@ -17,6 +18,10 @@ namespace FrbaOfertas.AbmCliente
             llenarCampos();
         }
 
+        private DireccionService direccionService
+        {
+            get { return ServiceDependencies.getDireccionService(); }
+        }
         private void llenarCampos()
         {
             apellidotxt.Text = c.apellido;
@@ -38,10 +43,6 @@ namespace FrbaOfertas.AbmCliente
 
         private void creatBtn_Click(object sender, EventArgs e)
         {
-
-
-
-
             if (isValid())
             {
                     c.apellido = apellidotxt.Text;
@@ -56,8 +57,9 @@ namespace FrbaOfertas.AbmCliente
                     c.direccion.nro = nroTxt.Text;
                     c.direccion.depto = dptotxt.Text;
                     c.direccion.localidad = localidadTxt.Text;
-                    c.direccion.codigoPostal = Convert.ToInt16(codigoPostaltxt.Text);
+                    c.direccion.codigoPostal = codigoPostaltxt.Text;
                     _clienteService.UpdateCliente(c);
+
                     ServiceDependencies.getDireccionDao().updateDireccion(c.direccion);
 
                     MessageBox.Show("Usuario actualizado correctamente");
@@ -69,7 +71,8 @@ namespace FrbaOfertas.AbmCliente
             }
             else
             {
-                MessageBox.Show("Hay campos incompletos o con datos incorrectos");
+                MessageBox.Show("Los campos con * son obligatorios y para aquellos que poseen "
+                                + "un desplegable, se debe seleccionar una opcion de ellas", "Advertencia");
             }
         }
 
@@ -120,23 +123,16 @@ namespace FrbaOfertas.AbmCliente
 
         private bool camposValidos()
         {
-            //nombreTxt = nombreTxt.Text;
-            //apellidotxt = apellidotxt.Text;
-            //dniTxt = dniTxt.Text;
-            //mail = mailTxt.Text;
-            //telefono = telefonoTxt.Text;
-            //fechaNac = fechaNacPicker1.Text;
-            //calle = calleTxt.Text;
-            //nro = nroTxt.Text;
-            //piso = pisoTxt.Text;
-            //dpto = dptotxt.Text;
-            //codigoPostal = codigoPostaltxt.Text;
-            //localidad = localidadTxt.Text;
-
-
-            return !string.IsNullOrEmpty(nombreTxt.Text) && !string.IsNullOrEmpty(dniTxt.Text) && !string.IsNullOrEmpty(mailTxt.Text) && !string.IsNullOrEmpty(telefonoTxt.Text)
-                   && !string.IsNullOrEmpty(fechaNacPicker1.Text) && !string.IsNullOrEmpty(calleTxt.Text) && !string.IsNullOrEmpty(nroTxt.Text) && !string.IsNullOrEmpty(pisoTxt.Text) && !string.IsNullOrEmpty(dptotxt.Text)
-                   && !string.IsNullOrEmpty(codigoPostaltxt.Text) && !string.IsNullOrEmpty(localidadTxt.Text) && !string.IsNullOrEmpty(apellidotxt.Text);
+           return !string.IsNullOrEmpty(nombreTxt.Text) && 
+                  !string.IsNullOrEmpty(dniTxt.Text) && 
+                  !string.IsNullOrEmpty(mailTxt.Text) && 
+                  !string.IsNullOrEmpty(telefonoTxt.Text) && 
+                  !string.IsNullOrEmpty(fechaNacPicker1.Text) && 
+                  !string.IsNullOrEmpty(calleTxt.Text) && 
+                  !string.IsNullOrEmpty(nroTxt.Text) && 
+                  !string.IsNullOrEmpty(codigoPostaltxt.Text) && 
+                  !string.IsNullOrEmpty(localidadTxt.Text) && 
+                  !string.IsNullOrEmpty(apellidotxt.Text);
         }
 
         private void volverBtn_Click(object sender, EventArgs e)

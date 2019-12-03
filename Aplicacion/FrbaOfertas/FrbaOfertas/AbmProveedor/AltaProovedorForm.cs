@@ -72,75 +72,95 @@ namespace FrbaOfertas.AbmProveedor
         }
         private void creatBtn_Click(object sender, EventArgs e)
         {
-            if (proveedorService.esRazonSocialRepetido(this.proveedor.id, razonSocialTxt.Text))
-                MessageBox.Show("Existe un proveedor con esa razon social");
+            if (!validoCamposObligatorios())
+            {
+                MessageBox.Show("Los campos con * son obligatorios y para aquellos que poseen "
+                                + "un desplegable, se debe seleccionar una opcion de ellas", "Advertencia");
+            }
             else
             {
-                if (proveedorService.esCUITRepetido(this.proveedor.id, cuitTxt.Text))
-                    MessageBox.Show("Existe un proveedor con ese cuit");
+                if (proveedorService.esRazonSocialRepetido(this.proveedor.id, razonSocialTxt.Text))
+                {
+                    MessageBox.Show("Existe un proveedor con esa razon social");
+                }
                 else
                 {
-                    proveedor.razonSocial = razonSocialTxt.Text;
-                    proveedor.cuit = cuitTxt.Text;
-                    proveedor.mail = mailTxt.Text;
-                    proveedor.mail = mailTxt.Text;
-                    proveedor.telefono = Convert.ToInt32(telTxt.Text);
-                    proveedor.contacto = contactotxt.Text;
-
-                    int rubroIndex = rubroCombo.SelectedIndex;
-
-                    if (rubroIndex >= 0)
+                    if (proveedorService.esCUITRepetido(this.proveedor.id, cuitTxt.Text))
                     {
-                        proveedor.rubro = rubros[rubroIndex].id ;
-                    }
-                    
-                    int id_direccion;
-                    if (proveedor.direccion == null)
-                    {
-                        Direccion d = new Direccion();
-
-                        d.calle = calleTxt.Text;
-                        d.nro = nroTxt.Text;
-                        d.piso = pisoTxt.Text;
-                        d.depto = dptotxt.Text;
-                        d.localidad = localidadTxt.Text;
-
-                        int cityIndex = ciudadCombo.SelectedIndex;
-                        Ciudad city = ciudades[cityIndex];
-
-                        int pcIdId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
-
-                        d.ciudad = city.id;
-                        d.codigoPostal = pcIdId;
-
-                        d = direccionService.CreateDireccion(d, false);
-                        proveedor.direccion = d;
+                        MessageBox.Show("Existe un proveedor con ese cuit");
                     }
                     else
                     {
-                        proveedor.direccion.calle = calleTxt.Text;
-                        proveedor.direccion.nro = nroTxt.Text;
-                        proveedor.direccion.piso = pisoTxt.Text;
-                        proveedor.direccion.depto = dptotxt.Text;
-                        int ciudadIndex = ciudadCombo.SelectedIndex;
-                        Ciudad ciudad = ciudades[ciudadIndex];
+                        proveedor.razonSocial = razonSocialTxt.Text;
+                        proveedor.cuit = cuitTxt.Text;
+                        proveedor.mail = mailTxt.Text;
+                        proveedor.mail = mailTxt.Text;
+                        proveedor.telefono = Convert.ToInt32(telTxt.Text);
+                        proveedor.contacto = contactotxt.Text;
 
-                        int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
-                        proveedor.direccion.codigoPostal = postalCodeId;
-                        proveedor.direccion.localidad = localidadTxt.Text;
-                        proveedor.direccion.ciudad = ciudad.id;
+                        int rubroIndex = rubroCombo.SelectedIndex;
+
+                        if (rubroIndex >= 0)
+                        {
+                            proveedor.rubro = rubros[rubroIndex].id;
+                        }
+
+                        int id_direccion;
+                        if (proveedor.direccion == null)
+                        {
+                            Direccion d = new Direccion();
+
+                            d.calle = calleTxt.Text;
+                            d.nro = nroTxt.Text;
+                            d.piso = pisoTxt.Text;
+                            d.depto = dptotxt.Text;
+                            d.localidad = localidadTxt.Text;
+                            d.codigoPostal = codigoPostaltxt.Text;
+                            int cityIndex = ciudadCombo.SelectedIndex;
+                            Ciudad city = ciudades[cityIndex];
+                            d.ciudad = city.id;
+                            
+                            d = direccionService.CreateDireccion(d, false);
+                            proveedor.direccion = d;
+                        }
+                        else
+                        {
+                            proveedor.direccion.calle = calleTxt.Text;
+                            proveedor.direccion.nro = nroTxt.Text;
+                            proveedor.direccion.piso = pisoTxt.Text;
+                            proveedor.direccion.depto = dptotxt.Text;
+                            int ciudadIndex = ciudadCombo.SelectedIndex;
+                            Ciudad ciudad = ciudades[ciudadIndex];
+                            proveedor.direccion.codigoPostal = codigoPostaltxt.Text;
+                            proveedor.direccion.localidad = localidadTxt.Text;
+                            proveedor.direccion.ciudad = ciudad.id;
+                        }
+
+
+                        proveedorService.update(proveedor);
+
+                        MessageBox.Show("Proveedor actualizado correctamente");
+
+                        Form1 form = new Form1(ServiceDependencies.getProveedorService());
+                        this.Hide();
+                        form.Show();
                     }
-
-
-                    proveedorService.update(proveedor);
-
-                    MessageBox.Show("Proveedor actualizado correctamente");
-
-                    Form1 form = new Form1(ServiceDependencies.getProveedorService());
-                    this.Hide();
-                    form.Show();
                 }
             }
+        }
+
+        private bool validoCamposObligatorios()
+        {
+            return !string.IsNullOrEmpty(razonSocialTxt.Text) &&
+                   !string.IsNullOrEmpty(mailTxt.Text) &&
+                   !string.IsNullOrEmpty(cuitTxt.Text) &&
+                   !string.IsNullOrEmpty(telTxt.Text) &&
+                   rubroCombo.SelectedIndex != -1 &&
+                   ciudadCombo.SelectedIndex != -1 &&
+                   !string.IsNullOrEmpty(calleTxt.Text) &&
+                   !string.IsNullOrEmpty(nroTxt.Text) &&
+                   !string.IsNullOrEmpty(codigoPostaltxt.Text) &&
+                   !string.IsNullOrEmpty(localidadTxt.Text);
         }
 
         private void volverBtn_Click(object sender, EventArgs e)

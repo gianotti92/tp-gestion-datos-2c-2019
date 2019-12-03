@@ -17,7 +17,7 @@ namespace FrbaOfertas.AbmRol.ejecutores
         public override void execute(object sender, EventArgs e)
         {
             pantallaACerrar.Hide();
-            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService());
+            Form entregaCupon = new ConsumoOferta.ConsumoOferta(ServiceDependencies.getCompraService(), ServiceDependencies.getOfertaService());
             entregaCupon.Show();
         }
     }

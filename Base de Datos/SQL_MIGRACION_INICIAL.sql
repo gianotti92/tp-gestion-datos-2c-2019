@@ -126,8 +126,6 @@ AS
 
 	IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'GESTION_BDD_2C_2019.CIUDAD'))
 		DROP TABLE GESTION_BDD_2C_2019.CIUDAD
-	IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'GESTION_BDD_2C_2019.CODIGO_POSTAL'))
-		DROP TABLE GESTION_BDD_2C_2019.CODIGO_POSTAL
 
 	IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'GESTION_BDD_2C_2019.CLIENTE'))
 		DROP TABLE GESTION_BDD_2C_2019.CLIENTE
@@ -163,10 +161,7 @@ AS
 		ID INT IDENTITY NOT NULL PRIMARY KEY,
 		CIUDAD_NOMBRE NVARCHAR(255)
 		)
-	CREATE TABLE GESTION_BDD_2C_2019.CODIGO_POSTAL(
-		ID INT IDENTITY NOT NULL PRIMARY KEY, 
-		DESCRIPCION NVARCHAR (255),
-		)
+
 
 	CREATE TABLE GESTION_BDD_2C_2019.DIRECCION (
 		id INT IDENTITY NOT NULL PRIMARY KEY,
@@ -176,7 +171,7 @@ AS
 		LOCALIDAD NVARCHAR(255),
 		PISO NVARCHAR(255),
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
-		CODIGO_POSTAL INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CODIGO_POSTAL(ID) --FK CODIGO_POSTAL,
+		CODIGO_POSTAL NVARCHAR(255)
 		)
 	
 
@@ -193,7 +188,7 @@ AS
 		APELLIDO NVARCHAR(255),
 		MAIL NVARCHAR(255),
 		TELEFONO NUMERIC(18),
-		DIRECCION INT, --FK DIRECCION
+		DIRECCION INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.DIRECCION(ID), --FK DIRECCION
 		FNANCIAMIENTO DATETIME, 
 		USUARIO VARCHAR(40) NOT NULL FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.USUARIO(username), --FK USUARIO
 		SALDO DECIMAL(18,2) DEFAULT(0)
@@ -365,7 +360,7 @@ GO
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
 	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL)
 	select distinct left(m.Cli_Direccion, len(m.Cli_Direccion )-4), dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)),NULL,NULL,
-	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Cli_Ciudad = c.CIUDAD_NOMBRE),1
+	(select c.id from GD2C2019.GESTION_BDD_2C_2019.CIUDAD  c where m.Cli_Ciudad = c.CIUDAD_NOMBRE),0
 	from GD2C2019.gd_esquema.Maestra M 
 	WHERE M.Cli_Direccion IS NOT NULL
 
@@ -522,37 +517,6 @@ SELECT DISTINCT
 	 INSERT INTO GD2C2019.GESTION_BDD_2C_2019.ROL_USUARIO
 	(rol_id,username)
      VALUES (3, 'administrativo')
-
-/*
-	SELECT M.Oferta_Codigo,m.Cli_Dni
-	,M.Oferta_Fecha_Compra,Oferta_Entregado_Fecha,Factura_Nro
-	Into #t_ofer2
-	FROM GD2C2019.gd_esquema.Maestra M
-	where M.Oferta_Codigo is not null
-	ORDER BY Oferta_Codigo
-
-	SELECT M.Oferta_Codigo,(SELECT C.ID FROM GD2C2019.GESTION_BDD_2C_2019.CLIENTE C WHERE C.DNI = M.Cli_Dni ) AS CLIENTE
-	,M.Oferta_Fecha_Compra,NULL as cupon,
-	(select top 1 t.Oferta_Entregado_Fecha from #t_ofer2 t 
-	where t.Cli_Dni = m.Cli_Dni and t.Oferta_Codigo = m.Oferta_Codigo and t.Oferta_Fecha_Compra =m.Oferta_Fecha_Compra 
-	and t.Oferta_Entregado_Fecha is not null ) ,
-	(select top 1 t2.Factura_Nro from #t_ofer2 t2 where t2.Cli_Dni = m.Cli_Dni and t2.Oferta_Codigo = m.Oferta_Codigo 
-	and t2.Factura_Nro =m.Factura_Nro and t2.Factura_Nro is not null )
-	FROM GD2C2019.gd_esquema.Maestra M
-	where M.Oferta_Codigo is not null
-	ORDER BY Oferta_Codigo
-
-	select Oferta_Codigo,Cli_Dni,Oferta_Fecha_Compra, SUM(isnull(Oferta_Entregado_Fecha,0)), sum(isnull(Factura_Nro,0))
-	from #t_ofer2
-	where Oferta_Entregado_Fecha is not null
-	and Factura_Nro is not null
-	group by Oferta_Codigo, Cli_Dni, Oferta_Fecha_Compra
-	order by 1,2
-
---	INSERT INTO ICE_CUBES.Usuario(USERID, USER_TIPO,USER_PASS,USER_ROL)
---	VALUES ('admin','A',HASHBYTES('SHA2_256','w23e'),1)
-*/
-
 
 
 	END
@@ -765,9 +729,13 @@ GO
 		(@descripcion varchar(40))
 		AS
 		BEGIN
-		insert into GESTION_BDD_2C_2019.CODIGO_POSTAL (DESCRIPCION)
-		values
-		(@descripcion)
+		IF NOT EXISTS (SELECT * FROM GESTION_BDD_2C_2019.CODIGO_POSTAL
+                   WHERE DESCRIPCION = @descripcion)
+  			BEGIN
+			insert into GESTION_BDD_2C_2019.CODIGO_POSTAL (DESCRIPCION)
+			values
+			(@descripcion)
+			END
 		END
 		GO
 
@@ -1164,16 +1132,3 @@ as
 					where ID = @compra_id 
 	end
 go
-
-
-
-/*exec SP_TOP5PROVMAYORFACTURACION '2020', '1'
-exec SP_TOP5MAYORDESCUENTO '2020', '1'
-
-go
-				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
-				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
-				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
-				GROUP BY  p.ID, P.RAZON_SOCIAL
-				order by 3 desc
-				*/

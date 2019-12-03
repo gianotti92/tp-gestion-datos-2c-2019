@@ -23,11 +23,13 @@ namespace FrbaOfertas.AbmUsuario
             if (! (UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.PROVEEDOR) 
                 || UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.CLIENTE)))
             {
+                
                 List<Usuario> usuarios = UsuarioService.GetAll();
                 this.dataGridView1.DataSource = new BindingSource(usuarios, null);
             }
             else
             {
+                this.btnAgregar.Visible = false;
                 List<Usuario> usuarios = new List<Usuario>();
                 usuarios.Add(UsuarioUtil.Usuario);
                 this.dataGridView1.DataSource = new BindingSource(usuarios, null);
@@ -63,9 +65,13 @@ namespace FrbaOfertas.AbmUsuario
             }
             else if (e.ColumnIndex == 1)
             {
-                Usuario usuario = (Usuario)dataGridView1.CurrentRow.DataBoundItem;
-                UsuarioService.DeleteUsuario(usuario);
-                CargarUsuarios();
+                if (!(UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.PROVEEDOR)
+                || UsuarioUtil.Usuario.tipoUsuario.Equals(TipoUsuario.CLIENTE)))
+                {
+                    Usuario usuario = (Usuario)dataGridView1.CurrentRow.DataBoundItem;
+                    UsuarioService.DeleteUsuario(usuario);
+                    CargarUsuarios();
+                }
             }
         }
 

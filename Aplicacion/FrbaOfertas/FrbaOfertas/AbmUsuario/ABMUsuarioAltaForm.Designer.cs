@@ -40,9 +40,6 @@
             this.btnLimpiarCampos = new System.Windows.Forms.Button();
             this.gbDatosUsuario.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // gbDatosUsuario
-            // 
             this.gbDatosUsuario.Controls.Add(this.cbTipoUsuario);
             this.gbDatosUsuario.Controls.Add(this.lblTipoUsuario);
             this.gbDatosUsuario.Controls.Add(this.txtPassword);
@@ -57,62 +54,41 @@
             this.gbDatosUsuario.TabIndex = 0;
             this.gbDatosUsuario.TabStop = false;
             this.gbDatosUsuario.Text = "Datos Usuario";
-            // 
-            // cbTipoUsuario
-            // 
             this.cbTipoUsuario.FormattingEnabled = true;
             this.cbTipoUsuario.Location = new System.Drawing.Point(124, 158);
             this.cbTipoUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbTipoUsuario.Name = "cbTipoUsuario";
             this.cbTipoUsuario.Size = new System.Drawing.Size(233, 28);
             this.cbTipoUsuario.TabIndex = 9;
-            // 
-            // lblTipoUsuario
-            // 
             this.lblTipoUsuario.AutoSize = true;
             this.lblTipoUsuario.Location = new System.Drawing.Point(35, 161);
             this.lblTipoUsuario.Name = "lblTipoUsuario";
             this.lblTipoUsuario.Size = new System.Drawing.Size(93, 20);
             this.lblTipoUsuario.TabIndex = 8;
             this.lblTipoUsuario.Text = "Tipo Usuario";
-            // 
-            // txtPassword
-            // 
             this.txtPassword.Location = new System.Drawing.Point(124, 98);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(183, 27);
             this.txtPassword.TabIndex = 5;
-            // 
-            // lblPassword
-            // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Location = new System.Drawing.Point(35, 108);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(70, 20);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password";
-            // 
-            // txtUsername
-            // 
             this.txtUsername.Location = new System.Drawing.Point(124, 45);
             this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(233, 27);
             this.txtUsername.TabIndex = 3;
-            // 
-            // lblUsername
-            // 
             this.lblUsername.AutoSize = true;
             this.lblUsername.Location = new System.Drawing.Point(35, 55);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(75, 20);
             this.lblUsername.TabIndex = 2;
             this.lblUsername.Text = "Username";
-            // 
-            // siguienteBtn
-            // 
             this.siguienteBtn.Location = new System.Drawing.Point(356, 339);
             this.siguienteBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.siguienteBtn.Name = "siguienteBtn";
@@ -121,9 +97,6 @@
             this.siguienteBtn.Text = "Siguiente";
             this.siguienteBtn.UseVisualStyleBackColor = true;
             this.siguienteBtn.Click += new System.EventHandler(this.btnCrear_Click);
-            // 
-            // btnCancelar
-            // 
             this.btnCancelar.Location = new System.Drawing.Point(76, 338);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancelar.Name = "btnCancelar";
@@ -132,9 +105,6 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // btnLimpiarCampos
-            // 
             this.btnLimpiarCampos.Location = new System.Drawing.Point(189, 338);
             this.btnLimpiarCampos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
@@ -143,9 +113,6 @@
             this.btnLimpiarCampos.Text = "Limpiar Campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
             this.btnLimpiarCampos.Click += new System.EventHandler(this.btnLimpiarCampos_Click);
-            // 
-            // ABMUsuarioAltaForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 439);

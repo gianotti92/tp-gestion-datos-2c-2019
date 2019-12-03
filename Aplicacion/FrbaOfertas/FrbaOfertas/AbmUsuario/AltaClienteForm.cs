@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using FrbaOfertas.Dao;
 using FrbaOfertas.Entities;
@@ -20,7 +21,7 @@ namespace FrbaOfertas.AbmUsuario
         private string dpto;
         private string codigoPostal;
         private string localidad;
-
+        
         private RolService RolService
         {
             get { return ServiceDependencies.GetRolService(); }
@@ -53,6 +54,7 @@ namespace FrbaOfertas.AbmUsuario
             InitializeComponent();
         }
 
+       
         private bool camposValidos()
         {
             nombre = nombreTxt.Text;
@@ -69,9 +71,16 @@ namespace FrbaOfertas.AbmUsuario
             localidad = localidadTxt.Text;
 
 
-            return !string.IsNullOrEmpty(nombre)  && !string.IsNullOrEmpty(dni) && !string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(telefono)
-                   && !string.IsNullOrEmpty(fechaNac) && !string.IsNullOrEmpty(calle) && !string.IsNullOrEmpty(nro) && !string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(dpto) 
-                   && !string.IsNullOrEmpty(codigoPostal) && !string.IsNullOrEmpty(localidad) && !string.IsNullOrEmpty(apellido);
+            return !string.IsNullOrEmpty(nombre) &&
+                   !string.IsNullOrEmpty(dni) &&
+                   !string.IsNullOrEmpty(mail) &&
+                   !string.IsNullOrEmpty(telefono) &&
+                   !string.IsNullOrEmpty(fechaNac) &&
+                   !string.IsNullOrEmpty(calle) &&
+                   !string.IsNullOrEmpty(nro) &&
+                   !string.IsNullOrEmpty(codigoPostal) &&
+                   !string.IsNullOrEmpty(localidad) &&
+                   !string.IsNullOrEmpty(apellido);
         }
 
         private void crearUsuario()
@@ -93,9 +102,7 @@ namespace FrbaOfertas.AbmUsuario
             direccion.piso = pisoTxt.Text;
             direccion.depto = dptotxt.Text;
             direccion.localidad = localidadTxt.Text;
-
-            int postalCodeId = direccionService.createCodigoPostal(codigoPostal);
-            direccion.codigoPostal = postalCodeId;
+            direccion.codigoPostal = codigoPostaltxt.Text;
             direccion = direccionService.CreateDireccion(direccion, true);
             cliente.direccion = direccion;
 
@@ -105,7 +112,6 @@ namespace FrbaOfertas.AbmUsuario
 
             clienteService.createCliente(cliente);
         }
-
         private void creatBtn_Click(object sender, EventArgs e)
         {
             if (camposValidos())
@@ -129,7 +135,8 @@ namespace FrbaOfertas.AbmUsuario
             }
             else
             {
-                MessageBox.Show("Hay campos con datos incompletos");
+                MessageBox.Show("Los campos con * son obligatorios y para aquellos que poseen "
+                                + "un desplegable, se debe seleccionar una opcion de ellas", "Advertencia");
             }
         }
 

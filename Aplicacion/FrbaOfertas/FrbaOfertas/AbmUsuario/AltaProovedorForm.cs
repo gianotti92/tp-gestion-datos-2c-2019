@@ -28,12 +28,6 @@ namespace FrbaOfertas.AbmUsuario
         {
             get { return ServiceDependencies.getRubroService(); }
         }
-
-        private ClienteService clienteService
-        {
-            get { return ServiceDependencies.getClienteService(); }
-        }
-
         private ProveedorService proveedorService
         {
             get { return ServiceDependencies.getProveedorService(); }
@@ -162,9 +156,8 @@ namespace FrbaOfertas.AbmUsuario
                 Ciudad ciudad = ciudades[ciudadIndex];
                 direccion.ciudad = ciudad.id;
             }
-            
-            int postalCodeId = direccionService.createCodigoPostal(codigoPostaltxt.Text);
-            direccion.codigoPostal = postalCodeId;
+
+            direccion.codigoPostal = codigoPostaltxt.Text;
             direccion.localidad = localidadTxt.Text;
             
             direccionService.CreateDireccion(direccion, false);

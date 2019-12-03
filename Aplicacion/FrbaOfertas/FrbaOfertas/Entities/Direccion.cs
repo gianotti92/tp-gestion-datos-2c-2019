@@ -9,7 +9,7 @@
         public string depto { get; set; }
         public string localidad { get; set; }
         public int ciudad { get; set; }
-        public int codigoPostal { get; set; }
+        public string codigoPostal { get; set; }
     }
     
     
