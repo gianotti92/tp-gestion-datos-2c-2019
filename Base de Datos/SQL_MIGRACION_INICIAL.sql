@@ -414,7 +414,7 @@ SELECT DISTINCT
 	  ,[Oferta_Descripcion]
       ,[Oferta_Fecha]
       ,[Oferta_Fecha_Venc]
-	  ,(select Max(oferta_cantidad) FROM [GD2C2019].[gd_esquema].[Maestra] M2 where M2.oferta_codigo = M.oferta_codigo)
+	  ,(select Max(isnull(oferta_cantidad,0)) FROM [GD2C2019].[gd_esquema].[Maestra] M2 where M2.oferta_codigo = M.oferta_codigo)
   FROM [GD2C2019].[gd_esquema].[Maestra] M
   where oferta_codigo is not null
   order by oferta_codigo
@@ -477,7 +477,7 @@ SELECT DISTINCT
 	where m.Carga_Credito is not null
 
 
-	SELECT C.CLIENTE_ID id, sum(C.MONTO) total
+	SELECT C.CLIENTE_ID id, sum(isnull(C.MONTO,0)) total
 	Into #t_cargas_total
 	FROM GD2C2019.GESTION_BDD_2C_2019.CARGA_SALDO C
 	GROUP BY C.Cliente_ID
@@ -1062,7 +1062,7 @@ GO
 				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
 				END
 
-				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL ,SUM(O.PRECIO) as total_facturado
+				SELECT TOP 5 o.PROV_ID,P.RAZON_SOCIAL , SUM(isnull(O.PRECIO,0)) as total_facturado
 				FROM GD2C2019.GESTION_BDD_2C_2019.COMPRAS C
 				JOIN GD2C2019.GESTION_BDD_2C_2019.OFERTA O ON C.OFERTA_ID = O.ID
 				JOIN GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR P ON O.PROV_ID = P.ID
@@ -1100,7 +1100,7 @@ GO
 				SET @fecha_fin_semestre = DATETIMEFROMPARTS(@anio, @mes_fin_semestre, 31, 0, 0, 0, 0)
 				END
 
-				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(o.PRECIO) / sum(o.PRECIO_LISTO)) * 100 as mayorPorcentaje
+				SELECT distinct TOP 5   p.ID, p.RAZON_SOCIAL, ( sum(isnull(o.PRECIO,0)) / sum(isnull(o.PRECIO_LISTO,0))) * 100 as mayorPorcentaje
 				from GD2C2019.GESTION_BDD_2C_2019.OFERTA o
 				join GD2C2019.GESTION_BDD_2C_2019.PROVEEDOR p on p.ID = o.PROV_ID
 				WHERE o.FECHA_PUBLIC >= @fecha_comienzo_semestre
