@@ -53,7 +53,7 @@ namespace FrbaOfertas.Dao
             cmd_direccion.Parameters.Add("@piso", direccion.piso);
             cmd_direccion.Parameters.Add("@depto", direccion.depto);
             cmd_direccion.Parameters.Add("@localidad", direccion.localidad);
-            cmd_direccion.Parameters.Add("@id_cod_postal", direccion.codigoPostal);
+            cmd_direccion.Parameters.Add("@cod_postal", direccion.codigoPostal);
             if (esCliente)
                 cmd_direccion.Parameters.Add("@id_ciudad", -1);
             else

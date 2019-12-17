@@ -174,8 +174,6 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'GESTION_BDD_2
 		CIUDAD INT FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.CIUDAD(ID), --FK CIUDAD
 		CODIGO_POSTAL NVARCHAR(255)
 		)
-	
-
 
 	CREATE TABLE GESTION_BDD_2C_2019.ROL_USUARIO (
 		rol_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_BDD_2C_2019.ROL(id),
@@ -500,7 +498,7 @@ SELECT DISTINCT
 	 INSERT INTO GESTION_BDD_2C_2019.CLIENTE
 	 (NOMBRE, APELLIDO, DNI, MAIL, SALDO, USUARIO, TELEFONO, DIRECCION, FNANCIAMIENTO)
 	 values
-	 ('', '', 0, '', 10000, 'admin', 0, 1, '1946-06-29 00:00:00.000') 
+	 ('', '', 0, '', 10000, 'admin', 0, 1, '1946-06-29T00:00:00.000') 
 
 	 INSERT INTO GESTION_BDD_2C_2019.PROVEEDOR
 	 (CONTACTO, USUARIO, RAZON_SOCIAL, MAIL, CUIT,TELEFONO, RUBRO, DIRECCION)
@@ -746,7 +744,7 @@ GO
 		 @piso NVARCHAR(255),
 		 @depto VARCHAR(10),
 		 @localidad NVARCHAR(255),
-		 @id_cod_postal INT,
+		 @cod_postal NVARCHAR(255),
 		 @id_ciudad INT)
 		 AS
 		 BEGIN
@@ -754,13 +752,13 @@ GO
 			BEGIN
 				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL)
 				OUTPUT inserted.id
-				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal)
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @cod_postal)
 			END
 			ELSE
 			BEGIN
 				INSERT INTO GESTION_BDD_2C_2019.DIRECCION (NUMERO, CALLE, PISO, DPTO, LOCALIDAD, CODIGO_POSTAL, CIUDAD)
 				OUTPUT inserted.id
-				VALUES (@nro, @calle, @piso, @depto, @localidad, @id_cod_postal, @id_ciudad)
+				VALUES (@nro, @calle, @piso, @depto, @localidad, @cod_postal, @id_ciudad)
 			END
 		 END
 		GO
