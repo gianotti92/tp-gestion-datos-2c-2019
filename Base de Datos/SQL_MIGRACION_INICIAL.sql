@@ -353,10 +353,6 @@ GO
 	where Provee_Ciudad is not null
 	ORDER BY 1
 
-	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.CODIGO_POSTAL
-	(DESCRIPCION)
-	values ('No Informado')
-		
 	INSERT INTO GD2C2019.GESTION_BDD_2C_2019.DIRECCION
 	(CALLE,NUMERO,DPTO,LOCALIDAD,CIUDAD,CODIGO_POSTAL)
 	select distinct left(m.Cli_Direccion, len(m.Cli_Direccion )-4), dbo.udf_GetNumeric(RIGHT(m.Cli_Direccion,5)),NULL,NULL,
